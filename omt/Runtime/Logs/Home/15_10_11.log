@@ -1,0 +1,94 @@
+[ 2015-10-11T20:19:23+08:00 ] ::1 /omt/index.php/home/index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000030s ]
+INFO: [ app_init ] --END-- [ RunTime:0.020895s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.009981s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.010111s ]
+SQL: SHOW COLUMNS FROM `omt_news` [ RunTime:0.0225s ]
+NOTIC: [8] Undefined index: page D:\wamp\www\omt\omt\Home\Controller\IndexController.class.php 第 10 行.
+SQL: SELECT * FROM `omt_news` LIMIT 0,5   [ RunTime:0.0004s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `omt_news` LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `omt_movie` [ RunTime:0.0072s ]
+SQL: SELECT * FROM `omt_movie`  [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000157s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000262s ]
+NOTIC: [8] Undefined variable: email D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 234 行.
+NOTIC: [8] Undefined variable: name D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 235 行.
+NOTIC: [8] Undefined index: m_id D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 277 行.
+NOTIC: [8] Undefined index: type D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 285 行.
+NOTIC: [8] Undefined index: m_id D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 277 行.
+NOTIC: [8] Undefined index: type D:\wamp\www\omt\omt\Runtime\Cache\Home\3c2c9cb91072b4e04b2cf78ff5c8ed58.php 第 285 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.316142s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.316248s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.017560s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.017669s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001705s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001866s ]
+
+[ 2015-10-11T20:19:30+08:00 ] ::1 /omt/index.php/home/index/order_t
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000029s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000548s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000537s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000674s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000148s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000254s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.043670s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.043778s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000428s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000520s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000665s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000788s ]
+
+[ 2015-10-11T20:19:30+08:00 ] ::1 /omt/index.php/Home/OrderTicket/theater_r.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000393s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000484s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000569s ]
+SQL: SHOW COLUMNS FROM `omt_theater` [ RunTime:0.0097s ]
+SQL: SELECT * FROM `omt_theater`  [ RunTime:0.0003s ]
+
+[ 2015-10-11T20:19:30+08:00 ] ::1 /omt/index.php/Home/OrderTicket/movie_r.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000665s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000617s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000704s ]
+SQL: SHOW COLUMNS FROM `omt_session` [ RunTime:0.0073s ]
+SQL: SELECT `mo_id` FROM `omt_session` WHERE `t_id` = 1 AND `date` = '2015-10-11'  [ RunTime:0.0143s ]
+
+[ 2015-10-11T20:19:34+08:00 ] ::1 /omt/index.php/home/index/order
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000412s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000495s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000598s ]
+SQL: SHOW COLUMNS FROM `omt_food` [ RunTime:0.0095s ]
+SQL: SELECT * FROM `omt_food`  [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000124s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000250s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.108695s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.108835s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000480s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000607s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000695s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000818s ]
+
