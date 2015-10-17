@@ -231,8 +231,8 @@
 						<a class="nav_list" id="order" data-color="#4FE29E">訂餐去</a>
 					</li>
 
-					<li id="nav_user" user="<?php echo ($email); ?>" class="cd-selected">
-						<a class="nav_list" id="index"  data-color="#485274"><?php echo ($name); ?></a>
+					<li id="nav_user" user="<?php echo ($auth["email"]); ?>" class="cd-selected">
+						<a class="nav_list" id="member"  data-color="#485274"><?php echo ($auth["name"]); ?></a>
 					</li>
 
 					<li>
@@ -263,7 +263,7 @@
 			                <div style="text-align:center;">
 				                <ul class='pagination'>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=1">最前頁</a></li>
-				                	<?php $__FOR_START_18646__=1;$__FOR_END_18646__=$news_count+1;for($i=$__FOR_START_18646__;$i < $__FOR_END_18646__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				                	<?php $__FOR_START_15622__=1;$__FOR_END_15622__=$news_count+1;for($i=$__FOR_START_15622__;$i < $__FOR_END_15622__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($news_count); ?>">最後頁</a></li>
 				                </ul>
 			                </div>
@@ -380,7 +380,7 @@
 											    <i class="form-control-feedback glyphicon glyphicon-user" style="left: 0px;"></i>
 										    </div>
 										    <div class="form-group has-feedback">
-											    <input type="text" name="birthday" style="padding-left: 35px; font-size:18px;" placeholder="生日" />
+											    <input type="date" name="birthday" style="padding-left: 35px; font-size:18px;" placeholder="生日" />
 											    <i class="form-control-feedback glyphicon glyphicon-gift" style="left: 0px;"></i>
 										    </div>
 										    <div class="form-group has-feedback">

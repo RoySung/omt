@@ -20,8 +20,7 @@ class IndexController extends Controller {
     	//auth
         if(session('auth')){
             $session_auth = session('auth');
-            $this->assign('email',$session_auth['email']);
-            $this->assign('name',$session_auth['name']);
+            $this->assign('auth',$session_auth);
         }
         $this->display();
     }
@@ -35,6 +34,9 @@ class IndexController extends Controller {
         $this->display();
     }
     public function member(){
+        $db = M('Member');
+        $session_auth = session('auth');
+        $this->assign('auth',$session_auth);
         $this->display();
     }
     public function ticket(){

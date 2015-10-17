@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Home\Common\PublicFunction;
 class OrderTicketController extends Controller {
     public function theater_r(){
         $db = M('Theater');
@@ -25,6 +26,8 @@ class OrderTicketController extends Controller {
             $movie = $db->where($cond_movie)->field('mo_id,movie_name')->select();
             array_push($data,$movie[0]);
         }
+        $handle = new PublicFunction;
+        $data = $handle->ArrayUnique($data);
         $this->ajaxReturn($data);
     }
     public function session_r(){
