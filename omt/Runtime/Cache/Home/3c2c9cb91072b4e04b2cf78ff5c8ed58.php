@@ -263,7 +263,7 @@
 			                <div style="text-align:center;">
 				                <ul class='pagination'>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=1">最前頁</a></li>
-				                	<?php $__FOR_START_15622__=1;$__FOR_END_15622__=$news_count+1;for($i=$__FOR_START_15622__;$i < $__FOR_END_15622__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				                	<?php $__FOR_START_23792__=1;$__FOR_END_23792__=$news_count+1;for($i=$__FOR_START_23792__;$i < $__FOR_END_23792__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($news_count); ?>">最後頁</a></li>
 				                </ul>
 			                </div>
@@ -274,7 +274,7 @@
 			            <ul data-role="listview" data-inset="true" >
 			            	<?php if(is_array($movie)): $i = 0; $__LIST__ = $movie;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false" style="font-family:微軟正黑體;">
 					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="<?php echo ($data["video"]); ?>">
-						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["m_id"]); ?>.jpg"></div>
+						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["mo_id"]); ?>.jpg"></div>
 				                        <div class=" col-xs-8">
 					                        <div style="padding:2px;"></div>
 							          		<div class="m_title" style="text-align:center; font-size:24px;"><?php echo ($data["movie_name"]); ?></div> <!-- 片名 -->
