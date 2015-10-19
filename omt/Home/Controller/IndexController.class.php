@@ -31,6 +31,11 @@ class IndexController extends Controller {
         $this->display();
     }
     public function order_t(){
+        //auth
+        if(session('auth')){
+            $session_auth = session('auth');
+            $this->assign('auth',$session_auth);
+        }
         $this->display();
     }
     public function member(){

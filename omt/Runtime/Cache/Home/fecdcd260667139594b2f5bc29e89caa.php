@@ -175,7 +175,9 @@
                                 mo_id:$('#movie').val(),
                                 s_id:$('#session').val(),
                                 seat:seat.substr(0,seat.length-1),
-                                quantity:parseInt($('#counter').html())
+                                quantity:parseInt($('#counter').html()),
+                                spending:parseInt($('#total').html()),
+                                m_id:"<?php echo ($auth["m_id"]); ?>"
                             },
                             type:"POST",
                             async:false,
