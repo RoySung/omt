@@ -138,23 +138,25 @@
                                 </div> 
                             </li> 
                             <!-- 有票劵 -->
+                            <volist name="ticket" id="data">
                             <li data-icon="false">
                                 <a href="#" class="list" code= 12345 style="padding:0px 0px 1px;">
                                     <div class=" col-xs-4 m_img" ><img class=" img-responsive" src=img/4.jpg></div>
                                     <div class="col-xs-8">
                                         <!-- 電影名稱 -->
-                                        <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px;">新時代</div>
+                                        <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px;">{$data.theater_name}</div>
                                         <div class="m_content" style="font-family:微軟正黑體; font-size:14px; color:#000; padding:10px;">
-                                            <h3 class="movie">片名: 多拉A夢 </h3>
-                                            <h3>場次日期: 20150619 </h3>
-                                            <h3>場次時間: 1 </h3>
-                                            <h3>人數: 1 </h3> 
-                                            <h3>場次位置: J10- </h3>
+                                            <h3 class="movie">片名: {$data.movie_name} </h3>
+                                            <h3>場次日期: {$data.date} </h3>
+                                            <h3>場次時間: {$data.time} </h3>
+                                            <h3>人數: {$data.quantity} </h3> 
+                                            <h3>場次位置: {$data.seat} </h3>
                                             <h3>票價: 180 </h3>
                                         </div>
                                     </div> 
                                 </a>
                             </li>
+                            </volist>
                         </ul>
                     </div>
                 </div>
