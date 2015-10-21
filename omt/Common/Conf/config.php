@@ -4,9 +4,9 @@ return array(
 	//資料庫宣告
 	'DB_TYPE'=>'mysql',     // 數據庫類型
 	'DB_HOST'=>'localhost', // IP位置
-	'DB_NAME'=>'omt',          // 資料庫名稱
-	'DB_USER'=>'root',      // 用戶名
-	'DB_PWD'=>'',          // 密碼
+	'DB_NAME'=>'omtgithub',          // 資料庫名稱
+	'DB_USER'=>'admin35XyRpQ',      // 用戶名
+	'DB_PWD'=>'vTwR9BbkvXF9',          // 密碼
 	'DB_PORT'=>'3306',        // port
 	'DB_PREFIX'=>'omt_',    // 資料表前綴
 	'DB_CHARSET'=>'utf8',      // 資料庫編碼
