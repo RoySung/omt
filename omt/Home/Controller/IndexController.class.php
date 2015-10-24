@@ -45,12 +45,7 @@ class IndexController extends Controller {
         $this->display();
     }
     public function ticket(){
-        $this->display();
-    }
-    public function discount(){
-<<<<<<< HEAD
-=======
-        $db = M('Discount');
+        $db = M('Orderticketview');
         $session_auth = session('auth');
         $condit['m_id'] = $session_auth['m_id'];
         $data = $db->where($condit)->select();
@@ -60,8 +55,31 @@ class IndexController extends Controller {
         {
             $this->result = 0;
         }
+        $this->assign('ticket',$data);
+        $this->display();
+    }
+    public function discount(){
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> ticket
+        $db = M('Discount');
+        $session_auth = session('auth');
+        $condit['m_id'] = $session_auth['m_id'];
+        $data = $db->where($condit)->select();
+
+<<<<<<< HEAD
+        $this->result = 1;
+        if(!$data)
+        {
+            $this->result = 0;
+        }
         $this->assign('discount',$data);
 >>>>>>> 9d6183d... fix discount.html indexcontroller.php
+=======
+        $this->assign('discount',$data);
+>>>>>>> ticket
         $this->display();
     }
 
