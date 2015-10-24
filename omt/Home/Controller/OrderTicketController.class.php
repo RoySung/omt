@@ -60,6 +60,8 @@ class OrderTicketController extends Controller {
         $data['seat'] = $_REQUEST['seat'];
         $data['quantity'] = $_REQUEST['quantity'];
         $data['enable'] = 1;
+        $data['m_id'] = $_REQUEST['m_id'];;
+        $data['spending'] = $_REQUEST['spending'];
         $result = $db->add($data);
         if($result) {
             $this->ajaxReturn(true);
