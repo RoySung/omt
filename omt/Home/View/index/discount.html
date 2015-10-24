@@ -144,6 +144,7 @@
                           <!--     以下新增      -->
                         <div class="table-responsive" style="padding:10px; background-color:#FFF; font-size:20px; font-family:微軟正黑體; font-weight:bold; ">
                             <table class="table table-hover table-striped">
+<<<<<<< HEAD
                                   <thead>
                                       <tr>
                                           <div style="text-align:center; font-size:24px; padding:15px;">收藏優惠</div>
@@ -166,6 +167,35 @@
                                           <td style="width:33%;text-align:center;font-size: 14px;vertical-align: bottom;">2015/09/24-2015/09/30</td>
                                       </tr>
                                   </tbody>
+=======
+                                <thead>
+                                    <tr>
+                                        <div style="text-align:center; font-size:24px; padding:15px;">收藏優惠</div>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <if condition="$result == 1" >
+                                    <tr>
+                                        <td style="width:33%;color:#006; text-align:center;">優惠類型</td>
+                                        <td style="width:33%;color:#006; text-align:center;">折扣</td>
+                                        <td style="width:33%;color:#006; text-align:center;">優惠期限</td>
+                                    </tr>
+                                    <volist name="discount" id="data">
+                                        <tr>
+                                            <td style="width:33%;text-align:center;vertical-align: bottom;">{$data.type_name}</td>
+                                            <td style="width:33%;text-align:center;vertical-align: bottom;">{$data.discount}</td>
+                                            <td style="width:33%;text-align:center;font-size: 12px;vertical-align: bottom;">起始日：{$data.start_date}</br>
+                                            截止日：{$data.end_date}</td>
+                                        </tr>
+                                    </volist>
+                                    <else />
+                                    <tr>
+                                        <td style="width:33%;color:#006; text-align:center;">尚未有優惠項目</td>
+                                    </tr>
+                                    </if>
+                                </tbody>                                 
+>>>>>>> 9d6183d... fix discount.html indexcontroller.php
                             </table>
                         </div>
                     </div>

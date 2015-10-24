@@ -48,6 +48,20 @@ class IndexController extends Controller {
         $this->display();
     }
     public function discount(){
+<<<<<<< HEAD
+=======
+        $db = M('Discount');
+        $session_auth = session('auth');
+        $condit['m_id'] = $session_auth['m_id'];
+        $data = $db->where($condit)->select();
+
+        $this->result = 1;
+        if(!$data)
+        {
+            $this->result = 0;
+        }
+        $this->assign('discount',$data);
+>>>>>>> 9d6183d... fix discount.html indexcontroller.php
         $this->display();
     }
 
