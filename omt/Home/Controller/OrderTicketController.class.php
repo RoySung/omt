@@ -54,17 +54,27 @@ class OrderTicketController extends Controller {
         }
     }
     public function orderticket_c(){
-        $db = M('Orderticket');
-        $data['mo_id'] = $_REQUEST['mo_id'];
         $data['s_id'] = $_REQUEST['s_id'];
         $data['seat'] = $_REQUEST['seat'];
         $data['quantity'] = $_REQUEST['quantity'];
         $data['enable'] = 1;
         $data['m_id'] = $_REQUEST['m_id'];;
-        $data['spending'] = $_REQUEST['spending'];
+        $data['cost'] = $_REQUEST['cost'];
+        $data['order_date'] = date("Y-m-d");
+        //cost
+        $db = M('Member');
+        $condit['m_id'] = $data['m_id'];
+        $condit['cash'] = array('egt',$data['cost']);
+        $result = $db->where($condit)->setDec('cash',$data['cost']);
+        if(!$result) {
+            $this->ajaxReturn(false);
+        }
+        //add Order Ticket
+        $db = M('Orderticket');
         $result = $db->add($data);
-        if($result) {
+        if(!$result) {
             $this->ajaxReturn(true);
         }
+        
     }
 }
