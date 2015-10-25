@@ -144,14 +144,8 @@
                           <!--     以下新增      -->
                         <div class="table-responsive" style="padding:10px; background-color:#FFF; font-size:20px; font-family:微軟正黑體; font-weight:bold; ">
                             <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <div style="text-align:center; font-size:24px; padding:15px;">收藏優惠</div>
-                                    </tr>
-                                </thead>
-
                                 <tbody>
-                                    <tr>
+                                    <?php if($result == 1): ?><tr>
                                         <td style="width:33%;color:#006; text-align:center;">優惠類型</td>
                                         <td style="width:33%;color:#006; text-align:center;">折扣</td>
                                         <td style="width:33%;color:#006; text-align:center;">優惠期限</td>
@@ -159,8 +153,13 @@
                                     <?php if(is_array($discount)): $i = 0; $__LIST__ = $discount;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><tr>
                                             <td style="width:33%;text-align:center;vertical-align: bottom;"><?php echo ($data["type_name"]); ?></td>
                                             <td style="width:33%;text-align:center;vertical-align: bottom;"><?php echo ($data["discount"]); ?></td>
-                                            <td style="width:33%;text-align:center;font-size: 14px;vertical-align: bottom;"><?php echo ($data["start_date"]); ?> - <?php echo ($data["end_date"]); ?></td>
+                                            <td style="width:33%;text-align:center;font-size: 12px;vertical-align: bottom;">起始日：<?php echo ($data["start_date"]); ?></br>
+                                            截止日：<?php echo ($data["end_date"]); ?></td>
                                         </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    <?php else: ?>
+                                    <tr>
+                                        <td style="width:33%;color:#006; text-align:center;">尚未有優惠項目</td>
+                                    </tr><?php endif; ?>
                                 </tbody>                                 
                             </table>
                         </div>
