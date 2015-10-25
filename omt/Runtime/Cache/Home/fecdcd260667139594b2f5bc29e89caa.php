@@ -151,7 +151,18 @@
                                 price = parseInt(result[0].price);
                             }
                         });
-                        set_seat();
+                        //check sold ticket
+                        $.ajax({
+                            url:"<?php echo U('OrderTicket/sold_ticket');?>",
+                            data:{
+                                s_id:$('#session').val()
+                            },
+                            type:"POST",
+                            async:false,
+                            success:function(result){
+                                set_seat(result);
+                            }
+                        });
                         $.mobile.changePage($("#oreder_seat"),{transition:"slide"});
                         $("#movie_title").empty();
                         $("#movie_title").append($('#movie-button span').html());
@@ -172,7 +183,6 @@
                         $.ajax({
                             url: "<?php echo U('OrderTicket/orderticket_c');?>",
                             data:{
-                                mo_id:$('#movie').val(),
                                 s_id:$('#session').val(),
                                 seat:seat.substr(0,seat.length-1),
                                 quantity:parseInt($('#counter').html()),
@@ -183,6 +193,14 @@
                             async:false,
                             success: function(result){
                                 console.log(result);
+
+                                if(result){
+                                    $('#message').html("購買成功");
+                                    $('#message_btn').attr("onclick","location.href='<?php echo U('index/ticket');?>'");
+                                } else {
+                                    $('#message').html("購買失敗，餘額不足");
+                                }
+                                $('#dialog').modal('show');
                             },
                         });
                     }  else {
@@ -323,7 +341,7 @@
                         </li>
 
                         <li >
-                            <a class="nav_list" id="index" data-color="#485274" >User</a>
+                            <a class="nav_list" id="member" data-color="#485274" >個人資料</a>
                         </li>
 
                         <li>
@@ -362,11 +380,30 @@
                     </div>
                 </main>
             </div>
-
+            <!-- /.modal -->
+            <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:300px;">
+                    <div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
+                        <div class="modal-header" style="background-color: #DA4453">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">訊　息</h4>
+                        </div>
+                        <div class="modal-body">
+                            </br>
+                            <div id="message" style="font-size:20px;"></div>
+                            </br>       
+                        </div>
+                        <div class="modal-footer" style="text-align:center;">
+                            
+                            <button id="message_btn" type="button" class="btn btn-default" data-dismiss="modal" style="width:47%;" onclick="">確認</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!--seat-->
         <script type="text/javascript" src="/omt/Public/js/jquery.seat-charts.min.js"></script>
         <script type="text/javascript">
-            function set_seat(){
+            function set_seat(sold){
                 //reset selected seat
                 $(".selected").click();
                 var eng=["","A","B","C","D","E","F","G","H","I","J"];
@@ -427,7 +464,9 @@
                     }
                 });
                 //已售出的座位
-                sc.get(['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
+                //var sold =['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2'];
+                //sold.push('9_3');
+                sc.get(sold).status('unavailable');
             }
             //計算訂票總金額
             function recalculateTotal(sc) {

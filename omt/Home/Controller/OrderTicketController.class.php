@@ -40,6 +40,34 @@ class OrderTicketController extends Controller {
             $this->ajaxReturn($result);
         }
     }
+    public function sold_ticket(){
+        $db = M('Orderticket');
+        $conit['s_id'] = array('eq',$_REQUEST['s_id']);
+        $seat = $db->where($conit)->field('seat')->select();
+        $seats = "";
+        foreach($seat as $value){
+            $seats =$seats . $value['seat'] . "-"; 
+        }
+        $seats = substr($seats,0,$seats.length-1);
+        $split_seat = explode('-',$seats);
+        $list = array(
+            "A"=>1,
+            "B"=>2,
+            "C"=>3,
+            "D"=>4,
+            "E"=>5,
+            "F"=>6,
+            "G"=>7,
+            "H"=>8,
+            "I"=>9,
+            "J"=>10
+            );
+        $result= array();
+        foreach ($split_seat as $value) {
+            array_push($result,$list[substr($value,0,1)] . "_" . substr($value,1,strlen($value)-1));
+        }
+        $this->ajaxReturn($result);
+    }
     public function ticketPrice_r(){
         $db = M('Movie');
         $cond_movie['mo_id'] = $_REQUEST['mo_id'];
@@ -72,7 +100,7 @@ class OrderTicketController extends Controller {
         //add Order Ticket
         $db = M('Orderticket');
         $result = $db->add($data);
-        if(!$result) {
+        if($result) {
             $this->ajaxReturn(true);
         }
         
