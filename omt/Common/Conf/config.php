@@ -3,7 +3,7 @@ return array(
 		//'配置项'=>'配置值'
 	//資料庫宣告
 	'DB_TYPE'=>'mysql',     // 數據庫類型
-	'DB_HOST'=>'localhost', // IP位置
+	'DB_HOST'=>'127.10.28.130', // IP位置
 	'DB_NAME'=>'omt',          // 資料庫名稱
 	'DB_USER'=>'root',      // 用戶名
 	'DB_PWD'=>'',          // 密碼
