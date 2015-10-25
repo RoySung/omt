@@ -65,6 +65,8 @@
         </style>
         <script>
             $(document).ready(function(){
+                var send_android; 
+
                 window.requestAnimationFrame(updateSelectedNav);
                 $('body').toggleClass("visible");
                 $(".nav_list").click(function(){
@@ -77,16 +79,28 @@
                 });
 
                 $(".list").click(function(){
+                    var ot_id = $(this).attr('otId');
                     $('.cd-3d-nav-trigger-user').trigger('click');
                     $('#send_title').empty();
                     $('#send_title').append($(this).find('.movie').html());
-                    $('#myModal').attr('code',$(this).attr('code'));
-                    //$('#myModal').modal('show');
+                    //get ticket json
+                    $.ajax({
+                            url:"{:U('Ticket/get_ticket')}",
+                            data:{
+                                ot_id:ot_id
+                            },
+                            type:"POST",
+                            async:false,
+                            success:function(result){
+                                
+                                send_android = JSON.stringify(result[0]);
+                                console.log(send_android);
+                            }
+                        });
                     $.mobile.changePage("#myModal", { transition: "pop",role: "dialog" });
                 });
                 $("#send").click(function(){
-                    //alert($('#myModal').attr('code'));
-                    window.demo.clickOnAndroid($('#myModal').attr('code'));
+                    window.demo.clickOnAndroid(send_android);
                 });
             });
         </script>
@@ -134,7 +148,7 @@
                             <if condition="$result == 1" >
                                 <volist name="ticket" id="data">
                                     <li data-icon="false">
-                                        <a href="#" class="list" code= 12345 style="padding:0px 0px 1px;">
+                                        <a href="#" class="list" otId="{$data.ot_id}" style="padding:0px 0px 1px;">
                                             <div class=" col-xs-4 m_img" ><img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
                                             <div class="col-xs-8">
                                                 <!-- 電影名稱 -->
