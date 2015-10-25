@@ -65,6 +65,8 @@
         </style>
         <script>
             $(document).ready(function(){
+                var send_android; 
+
                 window.requestAnimationFrame(updateSelectedNav);
                 $('body').toggleClass("visible");
                 $(".nav_list").click(function(){
@@ -77,16 +79,28 @@
                 });
 
                 $(".list").click(function(){
+                    var ot_id = $(this).attr('otId');
                     $('.cd-3d-nav-trigger-user').trigger('click');
                     $('#send_title').empty();
                     $('#send_title').append($(this).find('.movie').html());
-                    $('#myModal').attr('code',$(this).attr('code'));
-                    //$('#myModal').modal('show');
+                    //get ticket json
+                    $.ajax({
+                            url:"<?php echo U('Ticket/get_ticket');?>",
+                            data:{
+                                ot_id:ot_id
+                            },
+                            type:"POST",
+                            async:false,
+                            success:function(result){
+                                
+                                send_android = JSON.stringify(result[0]);
+                                console.log(send_android);
+                            }
+                        });
                     $.mobile.changePage("#myModal", { transition: "pop",role: "dialog" });
                 });
                 $("#send").click(function(){
-                    //alert($('#myModal').attr('code'));
-                    window.demo.clickOnAndroid($('#myModal').attr('code'));
+                    window.demo.clickOnAndroid(send_android);
                 });
             });
         </script>
@@ -95,11 +109,11 @@
         <div id="order_t" data-role="page">
             <header class="cd-header navbar-fixed-top" > 
                 <a href="#0" class="cd-3d-nav-trigger " >
-                    <img src="img/icon-user.svg" style="width:100%;height:100%;">
+                    <img src="/omt/Public/images/icon-user.svg" style="width:100%;height:100%;">
                     <span></span>
                 </a>
-                <a href="index.php" class="cd-3d-nav-trigger-home " data-ajax="false" >
-                    <img src="img/icon-home.svg" style="width:100%;height:100%;">
+                <a href="<?php echo U('index/index');?>" class="cd-3d-nav-trigger-home " data-ajax="false" >
+                    <img src="/omt/Public/images/icon-home.svg" style="width:100%;height:100%;">
                 </a>
             </header> <!-- .cd-header -->
             <nav class="cd-3d-nav-container navbar-fixed-top">
@@ -121,7 +135,7 @@
                     </li>
 
                     <li>
-                        <a class="nav_list" id="order_t" data-color="#4FE29E">優惠收藏</a>
+                        <a class="nav_list" id="discount" data-color="#4FE29E">優惠收藏</a>
                     </li>
                 </ul> <!-- .cd-3d-nav -->
                 <span class="cd-marker color-4"></span> 
@@ -131,30 +145,30 @@
                 <div class="ui-content" style="position: relative;top: 80px;">
                     <div  class="content next">
                         <ul data-role="listview" data-inset="true" >
-                            <!-- 沒有票劵 --> 
-                            <li data-icon="false"> 
-                                <div class="col-xs-8"> 
-                                    <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px;">你尚未購買票劵</div> 
-                                </div> 
-                            </li> 
-                            <!-- 有票劵 -->
-                            <?php if(is_array($ticket)): $i = 0; $__LIST__ = $ticket;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false">
-                                <a href="#" class="list" code= 12345 style="padding:0px 0px 1px;">
-                                    <div class=" col-xs-4 m_img" ><img class=" img-responsive" src=img/4.jpg></div>
-                                    <div class="col-xs-8">
-                                        <!-- 電影名稱 -->
-                                        <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px;"><?php echo ($data["theater_name"]); ?></div>
-                                        <div class="m_content" style="font-family:微軟正黑體; font-size:14px; color:#000; padding:10px;">
-                                            <h3 class="movie">片名: <?php echo ($data["movie_name"]); ?> </h3>
-                                            <h3>場次日期: <?php echo ($data["date"]); ?> </h3>
-                                            <h3>場次時間: <?php echo ($data["time"]); ?> </h3>
-                                            <h3>人數: <?php echo ($data["quantity"]); ?> </h3> 
-                                            <h3>場次位置: <?php echo ($data["seat"]); ?> </h3>
-                                            <h3>票價: 180 </h3>
-                                        </div>
-                                    </div> 
-                                </a>
-                            </li><?php endforeach; endif; else: echo "" ;endif; ?>
+                            <?php if($result == 1): if(is_array($ticket)): $i = 0; $__LIST__ = $ticket;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false">
+                                        <a href="#" class="list" otId="<?php echo ($data["ot_id"]); ?>" style="padding:0px 0px 1px;">
+                                            <div class=" col-xs-4 m_img" ><img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["mo_id"]); ?>.jpg"></div>
+                                            <div class="col-xs-8">
+                                                <!-- 電影名稱 -->
+                                                <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px;"><?php echo ($data["theater_name"]); ?></div>
+                                                <div class="m_content" style="font-family:微軟正黑體; font-size:14px; color:#000; padding:10px;">
+                                                    <h3 class="movie">片名: <?php echo ($data["movie_name"]); ?> </h3>
+                                                    <h3>場次日期: <?php echo ($data["date"]); ?> </h3>
+                                                    <h3>場次時間: <?php echo ($data["time"]); ?> </h3>
+                                                    <h3>人數: <?php echo ($data["quantity"]); ?> </h3> 
+                                                    <h3>場次位置: <?php echo ($data["seat"]); ?> </h3>
+                                                    <h3>票價: 180 </h3>
+                                                </div>
+                                            </div> 
+                                        </a>
+                                    </li><?php endforeach; endif; else: echo "" ;endif; ?>
+                            <?php else: ?>
+                                <li data-icon="false" > 
+                                    <div class="m_title" style="text-align:center; font-family:微軟正黑體; font-size:24px; color:#B20000;">您尚未購買票劵！</div> </br></br>
+                                    <div style="text-align:center;">
+                                        <a id="sign_out"  class="btn btn-primary" style="width:40%;font-weight:bold;font-size:20px;padding:8px; color:#FFF;" onClick="location.href='<?php echo U('index/order_t');?>'">前往訂票</a>
+                                    </div>
+                                </li><?php endif; ?>
                         </ul>
                     </div>
                 </div>
