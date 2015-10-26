@@ -64,40 +64,31 @@
             }
         </style>
         <script>
-        		$(document).ready(function(){
+    		$(document).ready(function(){
                 window.requestAnimationFrame(updateSelectedNav);
-          			$('body').toggleClass("visible");
-          			$(".nav_list").click(function(){
-            				event.preventDefault();
-            				// Sets the new destination to the href of the link
-            				color = $(this).data("color");
-            				$('body').css('background-color', color );
-            				$('body').css('opacity','0' );
-            				setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
-          			});
-          		//js取select值 傳給php
-        		});
-        		function express(){
-          			var add_cash = select_cash.select_cash.value; //取select value="" 值
-          			$.ajax({
-                    url: "Stored_Cash.php",
-                    data:{value:add_cash},
-                    type:"GET",
-                    dataType:'text',
-
-                    success: function(msg){
-                        alert(msg);
+      			$('body').toggleClass("visible");
+      			$(".nav_list").click(function(){
+        				event.preventDefault();
+        				// Sets the new destination to the href of the link
+        				color = $(this).data("color");
+        				$('body').css('background-color', color );
+        				$('body').css('opacity','0' );
+        				setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
+      			});
+    		});
+            function add_discount(from_android){
+                from_android = JSON.parse(from_android);
+                console.log(from_android);
+                $.ajax({
+                    url: "{:U('Discount/discount_c')}",
+                    data:{
+                        discount:from_android
                     },
-
-                     error:function(xhr, ajaxOptions, thrownError){ 
-                        alert(xhr.status); 
-                        alert(thrownError); 
+                    type:"POST",
+                    success: function(result){
+                        setTimeout("location.href='{:U('Index/discount')}'",0);
                     }
                 });
-                setTimeout("location.href='user.php'",850);
-        		}
-            function sign_out(){
-
             }
         </script>
     </head>

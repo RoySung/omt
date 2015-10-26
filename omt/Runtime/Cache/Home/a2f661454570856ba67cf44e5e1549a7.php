@@ -75,29 +75,22 @@
             				$('body').css('opacity','0' );
             				setTimeout("location.href='<?php echo U('index/"+this.id+"');?>'",850);
           			});
-          		//js取select值 傳給php
+
+                    add_discount('{"type":1,"type_name":"飲品","discount":10,"m_id":12,"start_date":"2015-10-20","end_date":"2015-10-30","enable":1}');
         		});
-        		function express(){
-          			var add_cash = select_cash.select_cash.value; //取select value="" 值
-          			$.ajax({
-                    url: "Stored_Cash.php",
-                    data:{value:add_cash},
-                    type:"GET",
-                    dataType:'text',
-
-                    success: function(msg){
-                        alert(msg);
+            function add_discount(from_android){
+                from_android = JSON.parse(from_android);
+                console.log(from_android);
+                $.ajax({
+                    url: "<?php echo U('Discount/discount_c');?>",
+                    data:{
+                        discount:from_android
                     },
-
-                     error:function(xhr, ajaxOptions, thrownError){ 
-                        alert(xhr.status); 
-                        alert(thrownError); 
+                    type:"POST",
+                    success: function(result){
+                        console.log(result);
                     }
                 });
-                setTimeout("location.href='user.php'",850);
-        		}
-            function sign_out(){
-
             }
         </script>
     </head>
