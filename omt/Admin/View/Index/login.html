@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic CRUD Application - jQuery EasyUI CRUD Demo</title>
+	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="themes/color.css">
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.edatagrid.js"></script>
+</head>
+<body>
+	
+	
+	<form id="ff" method="post">
+		<img src="image/title.png">
+		<p>登入E訂沒問題</p>
+		<table cellpadding="5">
+			<tr>
+				<td>帳號</td>
+				<td><input class="easyui-textbox" type="text" name="mail" data-options="required:true" style="width:250px;"></input></td>
+			</tr>
+			<tr>
+				<td>密碼</td>
+				<td><input class="easyui-textbox" type="text" name="password"  style="width:250px;"></input></td>
+			</tr>
+		</table>
+		<div id="toolbar">
+			<a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="javascript:$('#dlg').dialog('open')">登入</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="formclear()">清除</a>
+		</div>
+	</form>
+<script>
+function formclear()
+{
+	$('#ff').form('clear');
+}
+</script>
+</body>
+</html>
