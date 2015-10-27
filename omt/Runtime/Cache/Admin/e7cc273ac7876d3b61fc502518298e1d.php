@@ -59,21 +59,21 @@
 			<div id="item" class="easyui-penal" style="padding:30px;">
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('系統資訊')"><span style="font-size:12pt;">系統資訊</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('會員資料','member.html')"><span style="font-size:12pt;">會員資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("會員資料","<?php echo U("Index/member");?>")'><span style="font-size:12pt;">會員資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('訂票資料','ticket.html')"><span style="font-size:12pt;">訂票資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂票資料","<?php echo U("Index/ticket");?>")'><span style="font-size:12pt;">訂票資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('訂餐資料','food.html')"><span style="font-size:12pt;">訂餐資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂餐資料","<?php echo U("Index/food");?>")'><span style="font-size:12pt;">訂餐資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('優惠資料','discount.html')"><span style="font-size:12pt;">優惠資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("優惠資料","<?php echo U("Index/discount");?>")'><span style="font-size:12pt;">優惠資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('各電影院','theater.html')"><span style="font-size:12pt;">各電影院</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各電影院","<?php echo U("Index/theater");?>")'><span style="font-size:12pt;">各電影院</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('電影資訊','movie.html')"><span style="font-size:12pt;">電影資訊</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影資訊","<?php echo U("Index/movie");?>")'><span style="font-size:12pt;">電影資訊</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('各片票價','ticketprice.html')"><span style="font-size:12pt;">各片票價</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各片票價","<?php echo U("Index/ticketprice");?>")'><span style="font-size:12pt;">各片票價</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('電影場次','session.html')"><span style="font-size:12pt;">電影場次</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影場次","<?php echo U("Index/session");?>")'><span style="font-size:12pt;">電影場次</span></a>
 			</div>
 		</div>
 

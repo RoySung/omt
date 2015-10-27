@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Build CRUD DataGrid with jQuery EasyUI - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/color.css">
-	<script type="text/javascript" src="__PUBLIC__/include/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/color.css">
+	<script type="text/javascript" src="/omt/Public/include/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
 <body>
-    <div id="dlg" class="easyui-dialog" title="訂餐資料" closed="true" style="width:450px;height:350px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="各片票價" closed="true" style="width:450px;height:300px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -31,28 +31,20 @@
 		<form id="ff" method="post">
 			<table cellpadding="5">
 				<tr>
-					<td>會員名稱</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					<td>電影名稱</td>
+					<td><input class="easyui-textbox" type="text" name="movie_name" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>電影院</td>
-					<td><input class="easyui-textbox" type="text" name="theater_name"  style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" name="theater_name" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>食物名稱</td>
-					<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>食物類型</td>
-					<td><input class="easyui-textbox" name="type" data-options="required:true" style="width:250px;"></input></td>
+					<td>類型</td>
+					<td><input class="easyui-textbox" type="text" name="type" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>價格</td>
 					<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>大小</td>
-					<td><input class="easyui-textbox" name="size" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
 		</form>
@@ -60,16 +52,15 @@
 	</div>
     <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'{:U('Food/food_c')}',method:'get',fit:true">
+	data-options="url:'<?php echo U('Ticketprice/ticketprice_c');?>',method:'get',fit:true">
 			<thead>
 			<tr>
-				<th field="name" width="50" editor="text">會員名稱</th>
+				<th field="movie_name" width="50" editor="text">電影名稱</th>
 				<th field="theater_name" width="50" editor="text">電影院</th>
-				<th field="food" width="50" editor="{type:'validatebox',options:{required:true}}">食物名稱</th>
-				<th field="type" width="50" editor="text">食物類型</th>
+				<th field="type" width="50" editor="{type:'validatebox',options:{required:true}}">類型</th>
 				<th field="price" width="50" editor="{type:'validatebox',options:{required:true}}">價格</th>
-				<th field="size" width="50" editor="{type:'validatebox',options:{required:true}}">大小</th>
-				<th field="f_id" width="50" data-options="hidden:true" editor="text">f_id</th>
+				<th field="t_id"  width="50" data-options="hidden:true" editor="text">t_id</th>
+				<th field="tp_id"  width="50" data-options="hidden:true" editor="text">t_id</th>
 			</tr>
 		</thead>
 	</table>

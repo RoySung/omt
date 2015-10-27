@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Build CRUD DataGrid with jQuery EasyUI - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/color.css">
-	<script type="text/javascript" src="__PUBLIC__/include/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/color.css">
+	<script type="text/javascript" src="/omt/Public/include/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
 <body>
     	<div id="dlg" class="easyui-dialog" title="新增會員" closed="true" style="width:450px;height:400px;padding:10px;"
@@ -69,7 +69,7 @@
 		<div id="insidelayout" class="easyui-layout" data-options="fit:true">
 			<table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
 			toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-			data-options="url:'{:U('Member/member_c')}',method:'get',fit:'true'">
+			data-options="url:'<?php echo U('Member/member_c');?>',method:'get',fit:'true'">
 					<thead>
 					<tr>
 						<th field="name" width="50" editor="{type:'validatebox',options:{required:true}}">會員名稱</th>
