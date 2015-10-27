@@ -13,10 +13,18 @@ class IndexController extends Controller {
     	$this->assign('news',$news);
     	$news_count = $db->count();
     	$this->assign('news_count',round($news_count/5));
-    	//movie
+    	//recent_movie
     	$db = M('Movie');
-    	$movie = $db->select();
-    	$this->assign('movie',$movie);
+        $date = date("Y-m-d");
+        $condit['start_date'] = array('lt',$date);
+    	$movie = $db->where($condit)->select();
+    	$this->assign('recent_movie',$movie);
+        //soon_movie
+        $db = M('Movie');
+        $date = date("Y-m-d");
+        $condit['start_date'] = array('gt',$date);
+        $movie = $db->where($condit)->select();
+        $this->assign('soon_movie',$movie);
     	//auth
         if(session('auth')){
             $session_auth = session('auth');
@@ -55,6 +63,17 @@ class IndexController extends Controller {
         {
             $this->result = 0;
         }
+        //$data_seat = 'A7-B5';
+        $test = explode('-', $data[0]['seat']);
+        for ($i=0;$i<count($test);$i++)
+        {
+            $seat_row[$i] = substr($test[$i],0,1);
+            $seat_num[$i] = substr($test[$i],1,1);   
+        }
+        $this->seat_row = $seat_row;
+        $this->seat_num = $seat_num;
+        $this->test=$seat_row;
+
         $this->assign('ticket',$data);
         $this->display();
     }
