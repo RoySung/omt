@@ -6,6 +6,7 @@ class TicketController extends Controller {
         $db = M('Orderticket');
         $condit['ot_id'] = array('eq',$_REQUEST['ot_id']);
         $result = $db->where($condit)->select();
+
         if($result) {
             $this->ajaxReturn($result);
         }

@@ -84,6 +84,7 @@
                     $('body').css('opacity','0' );
                     setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
                 });
+                //$('#A1').attr("bgcolor","red");
 
                 $(".list").click(function(){
                     var ot_id = $(this).attr('otId');
@@ -99,12 +100,17 @@
                             type:"POST",
                             async:false,
                             success:function(result){
-                                
                                 send_android = JSON.stringify(result[0]);
                                 console.log(send_android);
+                                //show order_t seat
+                                var seat = result[0]['seat'].split("-");
+                                for(var i=0;i<seat.length;i++)
+                                {
+                                    $("#"+seat[i]).attr("bgcolor","red");
+                                }
                             }
                         });
-                    $.mobile.changePage("#myModal", { transition: "pop",role: "dialog" });
+                    $.mobile.changePage("#myModal", { transition: "pop",role: "dialog" });  
                 });
                 $("#send").click(function(){
                     window.demo.clickOnAndroid(send_android);
@@ -165,7 +171,7 @@
                                                     <h3>場次日期: {$data.date} </h3>
                                                     <h3>場次時間: {$data.time} </h3>
                                                     <h3>人數: {$data.quantity} </h3> 
-                                                    <h3>場次位置: {$data.seat} </h3>
+                                                    <h3 seatId="{$data.seat}">場次位置: {$data.seat} </h3>
                                                     <h3>票價: 180 </h3>
                                                 </div>
                                             </div> 
@@ -190,167 +196,70 @@
                 <div id="header" data-role="header" style="height: 40px;">
                    <h1 id="send_title" class="d_title"></h1>
                 </div>
-                <div id="content" data-role="content"style="text-align:center;">
+                <div id="content" data-role="content"style="text-align:center; color:white;">
                     <table class="table table-bordered">
                         <tr>
-                        <!--A-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == A">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">A{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">A{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">A{$i}</td>
-                            </if>                 
-                        </for>
+                            <for start="1" end="11" step="1">                            
+                                <td id="A{$i}" bgcolor="#696969">A{$i}</td>               
+                            </for>
                         </tr>
-
                         <tr>
-                        <!--B-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == B">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">B{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">B{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">B{$i}</td>
-                            </if>                 
-                        </for>
+                            <for start="1" end="11" step="1">                            
+                                <td id="B{$i}" bgcolor="#696969">B{$i}</td>               
+                            </for>
                         </tr>
-
-                        <!--C-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == C">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">C{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">C{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">C{$i}</td>
-                            </if>                 
-                        </for>
-                        </tr>
-
                         <tr>
-                        <!--D-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == D">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">D{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">D{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">D{$i}</td>
-                            </if>                 
-                        </for>
+                            <for start="1" end="11" step="1">                            
+                                <td id="C{$i}" bgcolor="#696969">C{$i}</td>
+                            </for>
                         </tr>
-
-                        <!--E-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == E">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">E{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">E{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">E{$i}</td>
-                            </if>                 
-                        </for>
-                        </tr>
-
                         <tr>
-                        <!--F-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == F">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">F{$i}</td>
+                            <for start="1" end="11" step="1">
+                                <if condition=" (($i == 9)||($i == 10))"> 
+                                    <td bgcolor="FFFFFF">　</td>      
                                 <else/>
-                                    <td bgcolor="grean">F{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">F{$i}</td>
-                            </if>                 
-                        </for>
+                                    <td id="D{$i}" bgcolor="#696969">D{$i}</td> 
+                                </if>              
+                            </for>
                         </tr>
-
-                        <!--G-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == G">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">G{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">G{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">G{$i}</td>
-                            </if>                 
-                        </for>
-                        </tr>
-
                         <tr>
-                        <!--H-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == H">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">H{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">B{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">B{$i}</td>
-                            </if>                 
-                        </for>
+                            <for start="1" end="11" step="1">                            
+                                <td id="E{$i}" bgcolor="#696969">E{$i}</td>               
+                            </for>
                         </tr>
-
-                        <!--I-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == I">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">I{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">I{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">I{$i}</td>
-                            </if>                 
-                        </for>
-                        </tr>
-
                         <tr>
-                        <!--J-->
-                        <for start="1" end="11" step="1">
-                            <if condition="$seat_row.$i == J">
-                                <if condition="$seat_num.$i == $i">
-                                    <td bgcolor="red">J{$i}</td>
-                                <else/>
-                                    <td bgcolor="grean">J{$i}</td>
-                                </if>
-                            <else/>
-                                <td bgcolor="grean">J{$i}</td>
-                            </if>   {$test.$i}   {$seat_num.$i}           
-                        </for>
+                            <for start="1" end="11" step="1">                            
+                                <td id="F{$i}" bgcolor="#696969">F{$i}</td>               
+                            </for>
                         </tr>
-                        
+                        <tr>
+                            <for start="1" end="11" step="1">                            
+                                <td id="G{$i}" bgcolor="#696969">G{$i}</td>               
+                            </for>
+                        </tr>
+                        <tr>
+                            <for start="1" end="11" step="1">                            
+                                <td id="H{$i}" bgcolor="#696969">H{$i}</td>               
+                            </for>
+                        </tr>
+                        <tr>
+                            <for start="1" end="11" step="1">                            
+                                <td id="I{$i}" bgcolor="#696969">I{$i}</td>               
+                            </for>
+                        </tr>
+                        <tr>
+                            <for start="1" end="11" step="1">                            
+                                <if condition=" (($i == 3)||($i == 4)||($i == 7)||($i == 8))"> 
+                                    <td bgcolor="FFFFFF">　</td>      
+                                <else/>
+                                    <td id="J{$i}" bgcolor="#696969">J{$i}</td> 
+                                </if>                
+                            </for>
+                        </tr>
                     </table>
-                    
-                    <!--A-
-                    <a id="A1"class="btn">A1</a><a id="A2"class="btn">A2</a><a id="A3"class="btn">A3</a><a id="A4"class="btn">A4</a><a id="A5"class="btn">A5</a><a id="A6"class="btn">A6</a><a id="A7"class="btn">A7</a><a id="A8"class="btn">A8</a><a id="A9"class="btn">A9</a><a id="A10"class="btn">A10</a>
-                    <!--B-
-                    <a id="B1"class="btn">B1</a><a id="B2"class="btn">B2</a><a id="B3"class="btn">B3</a><a id="B4"class="btn">B4</a><a id="B5"class="btn">B5</a><a id="B6"class="btn">B6</a><a id="A7"class="btn">B7</a><a id="A8"class="btn">B8</a><a id="B9"class="btn">B9</a><a id="B10"class="btn">B10</a>
-                    <!--C-
-                    <a id="C1"class="btn">C1</a><a id="C2"class="btn">C2</a><a id="C3"class="btn">C3</a><a id="C4"class="btn">C4</a><a id="C5"class="btn">C5</a><a id="C6"class="btn">C6</a><a id="C7"class="btn">C7</a><a id="C8"class="btn">C8</a><a id="C9"class="btn">C9</a><a id="C10"class="btn">C10</a>
-                    <!--D-
-                    <a id="D1"class="btn">D1</a><a id="D2"class="btn">D2</a><a id="D3"class="btn">D3</a><a id="D4"class="btn">D4</a><a id="D5"class="btn">D5</a><a id="D6"class="btn">D6</a><a id="D7"class="btn">D7</a><a id="D8"class="btn">D8</a><a id="D9"class="btn">D9</a><a id="D10"class="btn">D10</a>-->
-
                     <button id="send" style="height:50px;">感應位置</button>
                 </div>
             </div>
+        </div>
     </body>
 </html>
