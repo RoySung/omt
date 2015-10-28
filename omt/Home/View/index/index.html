@@ -276,7 +276,7 @@
 					<div id="p2" index='2' class="content next">
 						<h1>最新上映</h1>
 			            <ul data-role="listview" data-inset="true" >
-			            	<volist name="movie" id="data">
+			            	<volist name="recent_movie" id="data">
 			            		<li data-icon="false" style="font-family:微軟正黑體;">
 					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
 						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
@@ -299,9 +299,27 @@
 					</div>
 					<div id="p3" index='3' class="content next">
 						<h1>即將上映</h1>
-						<h2>小小兵</h2>
-						<br/>
-						<div><img  style=" margin:0px auto;" class="img-responsive " src="__PUBLIC__/images/02.jpg"/></div>
+						<ul data-role="listview" data-inset="true" >
+			            	<volist name="soon_movie" id="data">
+			            		<li data-icon="false" style="font-family:微軟正黑體;">
+					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
+						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
+				                        <div class=" col-xs-8">
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_title" style="text-align:center; font-size:24px;">{$data.movie_name}</div> <!-- 片名 -->
+							          		<div class="m_content" style="font-size:18px; color:#000;">上映日期：{$data.start_date}</div>
+					                        <div style="padding:2px;"></div>
+					                        <div class="m_content" style="font-size:18px; color:#000;">下映日期：{$data.end_date}</div>
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_content" style="font-size:18px; color:#000;">類型：{$data.type} </div>
+					                        <div class="m_content" style="font-size:18px; color:#000;">片長：{$data.film_length} 分 </div>
+					                        <div class="m_content" style="word-break: break-all; font-size:18px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
+					                        <div class="m_content" style="word-break: break-all; font-size:18px; white-space:normal;color:#003;"> {$data.synopsis}</div>
+				                        </div>
+					        		</a>
+			      				</li>
+			            	</volist>
+			  			</ul>
 					</div>
 					<div id="p4" index='4' class="content next">
 						<h1>排行榜</h1>
