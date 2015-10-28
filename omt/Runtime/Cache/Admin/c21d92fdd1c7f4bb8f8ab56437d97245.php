@@ -1,0 +1,49 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic CRUD Application - jQuery EasyUI CRUD Demo</title>
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="/omt/Public/include/easyui.1.4.3/themes/color.css">
+	<script type="text/javascript" src="/omt/Public/include/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/omt/Public/include/easyui.1.4.3/jquery.edatagrid.js"></script>
+	<style>
+		.form {
+			position: absolute;
+		    left: 50%;
+		    top: 50%;
+		    margin: -150px 0 0 -255px;
+		}
+	</style>
+</head>
+<body>
+	
+	
+	<form id="ff" method="post" class="form" action="<?php echo U('Login/login');?>">
+		<img src="/omt/Public/images/title.png">
+		<p>登入E訂沒問題</p>
+		<table cellpadding="5">
+			<tr>
+				<td>帳號</td>
+				<td><input class="easyui-textbox" type="text" name="account" data-options="required:true" style="width:250px;"></input></td>
+			</tr>
+			<tr>
+				<td>密碼</td>
+				<td><input class="easyui-textbox" type="text" name="password"  style="width:250px;"></input></td>
+			</tr>
+		</table>
+		<div id="toolbar">
+			<button type="submit" class="easyui-linkbutton">登入</button>
+			<button type="clear" class="easyui-linkbutton"  onclick="formclear()">清除</button>
+		</div>
+	</form>
+<script>
+function formclear()
+{
+	$('#ff').form('clear');
+}
+</script>
+</body>
+</html>

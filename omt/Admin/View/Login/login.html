@@ -14,14 +14,16 @@
 			position: absolute;
 		    left: 50%;
 		    top: 50%;
-		    margin: -123px 0 0 -255px;
+		    margin: -150px 0 0 -255px;
 		}
 	</style>
 </head>
 <body>
-	<form id="ff" class="form" method="post" action="{:U('Login/login')}" >
+	
+	
+	<form id="ff" method="post" class="form" action="{:U('Login/login')}">
 		<img src="__PUBLIC__/images/title.png">
-		<p>登入E訂沒問題test</p>
+		<p>登入E訂沒問題</p>
 		<table cellpadding="5">
 			<tr>
 				<td>帳號</td>
@@ -33,8 +35,8 @@
 			</tr>
 		</table>
 		<div id="toolbar">
-			<a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="javascript:$('#dlg').dialog('open')">登入</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="formclear()">清除</a>
+			<button type="submit" class="easyui-linkbutton">登入</button>
+			<button type="clear" class="easyui-linkbutton"  onclick="formclear()">清除</button>
 		</div>
 	</form>
 <script>

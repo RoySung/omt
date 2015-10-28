@@ -44,7 +44,7 @@
 				</tr>
 				<tr>
 					<td>日期</td>
-					<td><input class="easyui-textbox" name="data" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="date" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
 		</form>
@@ -52,13 +52,13 @@
 	</div>
     <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'{:U('Session/session_c')}',method:'get',fit:true">
+	data-options="url:'{:U('Session/session_r')}',method:'get',fit:true">
 			<thead>
 			<tr>
 				<th field="theater_name" width="50" editor="text">電影院</th>
 				<th field="movie_name" width="50" editor="text">電影名稱</th>
 				<th field="time" width="50" editor="{type:'validatebox',options:{required:true}}">場次時間</th>
-				<th field="data" width="50" editor="{type:'validatebox',options:{required:true}}">日期</th>
+				<th field="date" width="50" editor="{type:'validatebox',options:{required:true}}">日期</th>
 				<th field="t_id" width="50" data-options="hidden:true" editor="text">t_id</th>
 				<th field="s_id" width="50" data-options="hidden:true" editor="text">s_id</th>
 				<th field="mo_id" width="50" data-options="hidden:true" editor="text">mo_id</th>

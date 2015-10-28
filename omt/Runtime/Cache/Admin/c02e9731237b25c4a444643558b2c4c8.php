@@ -56,11 +56,11 @@
 				</tr>
 				<tr>
 					<td>上映時間</td>
-					<td><input class="easyui-textbox" name="start_data" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="start_date" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>下檔時間</td>
-					<td><input class="easyui-textbox" name="end_data" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>評分</td>
@@ -72,7 +72,7 @@
 	</div>
     <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'<?php echo U('Movie/movie_c');?>',method:'get',fit:true">
+	data-options="url:'<?php echo U('Movie/movie_r');?>',method:'get',fit:true">
 			<thead>
 			<tr>
 				<th field="theater_name" width="50" editor="text">電影院</th>
@@ -81,8 +81,8 @@
 				<th field="synopsis" width="50" editor="{type:'validatebox',options:{required:true}}">描述</th>
 				<th field="video" width="50" editor="{type:'validatebox',options:{required:true}}">預告片</th>
 				<th field="film_length" width="50" editor="text">影片長度</th>
-				<th field="start_data" width="50" editor="text">上映時間</th>
-				<th field="end_data" width="50" editor="text">下檔時間</th>
+				<th field="start_date" width="50" editor="text">上映時間</th>
+				<th field="end_date" width="50" editor="text">下檔時間</th>
 				<th field="grade" width="50" editor="text">評分</th>
 				<th field="m_id" width="50" data-options="hidden:true" editor="text">m_id</th>
 				<th field="film_type" width="50" data-options="hidden:true" editor="text">film_type</th>

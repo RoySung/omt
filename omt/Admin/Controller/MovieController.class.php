@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 use Think\Controller;
 class MovieController extends Controller {
-    public function member_c(){
+    public function Movie_r(){
         $db = M('Movie');
         $result = $db->select();
         if($result) {

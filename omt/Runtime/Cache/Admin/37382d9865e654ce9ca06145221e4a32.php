@@ -52,7 +52,7 @@
 	</div>
     <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'<?php echo U('Ticketprice/ticketprice_c');?>',method:'get',fit:true">
+	data-options="url:'<?php echo U('Ticketprice/ticketprice_r');?>',method:'get',fit:true">
 			<thead>
 			<tr>
 				<th field="movie_name" width="50" editor="text">電影名稱</th>
