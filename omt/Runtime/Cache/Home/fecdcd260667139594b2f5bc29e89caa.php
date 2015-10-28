@@ -59,7 +59,12 @@
         <script>
             var code="";
             var price;
+            var all_seat = new Array();
             $(document).ready(function(){
+                //all seat
+                for (var i=1;i<=10;i++)
+                    for(var j=1;j<=10;j++)
+                        all_seat.push(i+"_"+j);
                 //load theater data
                 $.ajax({
                     url:"<?php echo U('OrderTicket/theater_r');?>",
@@ -464,8 +469,7 @@
                     }
                 });
                 //已售出的座位
-                //var sold =['4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2'];
-                //sold.push('9_3');
+                sc.get(all_seat).status('available');
                 sc.get(sold).status('unavailable');
             }
             //計算訂票總金額
