@@ -263,7 +263,7 @@
 			                <div style="text-align:center;">
 				                <ul class='pagination'>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=1">最前頁</a></li>
-				                	<?php $__FOR_START_8327__=1;$__FOR_END_8327__=$news_count+1;for($i=$__FOR_START_8327__;$i < $__FOR_END_8327__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				                	<?php $__FOR_START_16975__=1;$__FOR_END_16975__=$news_count+1;for($i=$__FOR_START_16975__;$i < $__FOR_END_16975__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($news_count); ?>">最後頁</a></li>
 				                </ul>
 			                </div>
@@ -272,7 +272,7 @@
 					<div id="p2" index='2' class="content next">
 						<h1>最新上映</h1>
 			            <ul data-role="listview" data-inset="true" >
-			            	<?php if(is_array($movie)): $i = 0; $__LIST__ = $movie;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false" style="font-family:微軟正黑體;">
+			            	<?php if(is_array($recent_movie)): $i = 0; $__LIST__ = $recent_movie;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false" style="font-family:微軟正黑體;">
 					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="<?php echo ($data["video"]); ?>">
 						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["mo_id"]); ?>.jpg"></div>
 				                        <div class=" col-xs-8">
@@ -293,9 +293,25 @@
 					</div>
 					<div id="p3" index='3' class="content next">
 						<h1>即將上映</h1>
-						<h2>小小兵</h2>
-						<br/>
-						<div><img  style=" margin:0px auto;" class="img-responsive " src="/omt/Public/images/02.jpg"/></div>
+						<ul data-role="listview" data-inset="true" >
+			            	<?php if(is_array($soon_movie)): $i = 0; $__LIST__ = $soon_movie;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false" style="font-family:微軟正黑體;">
+					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="<?php echo ($data["video"]); ?>">
+						          		<div class=" col-xs-4 m_img" ><img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["mo_id"]); ?>.jpg"></div>
+				                        <div class=" col-xs-8">
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_title" style="text-align:center; font-size:24px;"><?php echo ($data["movie_name"]); ?></div> <!-- 片名 -->
+							          		<div class="m_content" style="font-size:18px; color:#000;">上映日期：<?php echo ($data["start_date"]); ?></div>
+					                        <div style="padding:2px;"></div>
+					                        <div class="m_content" style="font-size:18px; color:#000;">下映日期：<?php echo ($data["end_date"]); ?></div>
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_content" style="font-size:18px; color:#000;">類型：<?php echo ($data["type"]); ?> </div>
+					                        <div class="m_content" style="font-size:18px; color:#000;">片長：<?php echo ($data["film_length"]); ?> 分 </div>
+					                        <div class="m_content" style="word-break: break-all; font-size:18px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
+					                        <div class="m_content" style="word-break: break-all; font-size:18px; white-space:normal;color:#003;"> <?php echo ($data["synopsis"]); ?></div>
+				                        </div>
+					        		</a>
+			      				</li><?php endforeach; endif; else: echo "" ;endif; ?>
+			  			</ul>
 					</div>
 					<div id="p4" index='4' class="content next">
 						<h1>排行榜</h1>
