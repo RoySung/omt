@@ -247,7 +247,55 @@
 			</nav>
 			<main>
 				<div class="ui-content" data-role="content">
-					<div id="p1" index='1' class="content act">
+					<div id="p1" index='1' class="content pre">
+						<h1>最新上映</h1>
+			            <ul data-role="listview" data-inset="true" >
+			            	<volist name="recent_movie" id="data">
+			            		<li data-icon="false" style="font-family:微軟正黑體;">
+					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
+						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
+				                        <div class=" col-xs-8">
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}</div> <!-- 片名 -->
+							          		<div class="m_content" style="font-size:14px; color:#000;">上映日期：{$data.start_date}</div>
+					                        <div style="padding:2px;"></div>
+					                        <div class="m_content" style="font-size:14px; color:#000;">下映日期：{$data.end_date}</div>
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_content" style="font-size:14px; color:#000;">類型：{$data.movie_type} </div>
+					                        <div class="m_content" style="font-size:14px; color:#000;">片長：{$data.film_length} 分 </div>
+					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
+					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#003;"> {$data.synopsis}</div>
+				                        </div>
+					        		</a>
+			      				</li>
+			            	</volist>
+			  			</ul>
+					</div>
+					<div id="p2" index='2' class="content pre">
+						<h1>即將上映</h1>
+						<ul data-role="listview" data-inset="true" >
+			            	<volist name="soon_movie" id="data">
+			            		<li data-icon="false" style="font-family:微軟正黑體;">
+					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
+						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
+				                        <div class=" col-xs-8">
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}</div> <!-- 片名 -->
+							          		<div class="m_content" style="font-size:14px; color:#000;">上映日期：{$data.start_date}</div>
+					                        <div style="padding:2px;"></div>
+					                        <div class="m_content" style="font-size:14px; color:#000;">下映日期：{$data.end_date}</div>
+					                        <div style="padding:2px;"></div>
+							          		<div class="m_content" style="font-size:14px; color:#000;">類型：{$data.movie_type} </div>
+					                        <div class="m_content" style="font-size:14px; color:#000;">片長：{$data.film_length} 分 </div>
+					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
+					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#003;"> {$data.synopsis}</div>
+				                        </div>
+					        		</a>
+			      				</li>
+			            	</volist>
+			  			</ul>
+					</div>
+					<div id="p3" index='3' class="content act">
 						<h1>News</h1>
 			            <div class="container">
 			            	<volist name="news" id="data">
@@ -272,54 +320,6 @@
 				                </ul>
 			                </div>
 			            </div>		
-					</div>
-					<div id="p2" index='2' class="content next">
-						<h1>最新上映</h1>
-			            <ul data-role="listview" data-inset="true" >
-			            	<volist name="recent_movie" id="data">
-			            		<li data-icon="false" style="font-family:微軟正黑體;">
-					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
-						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
-				                        <div class=" col-xs-8">
-					                        <div style="padding:2px;"></div>
-							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}</div> <!-- 片名 -->
-							          		<div class="m_content" style="font-size:14px; color:#000;">上映日期：{$data.start_date}</div>
-					                        <div style="padding:2px;"></div>
-					                        <div class="m_content" style="font-size:14px; color:#000;">下映日期：{$data.end_date}</div>
-					                        <div style="padding:2px;"></div>
-							          		<div class="m_content" style="font-size:14px; color:#000;">類型：{$data.movie_type} </div>
-					                        <div class="m_content" style="font-size:14px; color:#000;">片長：{$data.film_length} 分 </div>
-					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
-					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#003;"> {$data.synopsis}</div>
-				                        </div>
-					        		</a>
-			      				</li>
-			            	</volist>
-			  			</ul>
-					</div>
-					<div id="p3" index='3' class="content next">
-						<h1>即將上映</h1>
-						<ul data-role="listview" data-inset="true" >
-			            	<volist name="soon_movie" id="data">
-			            		<li data-icon="false" style="font-family:微軟正黑體;">
-					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
-						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
-				                        <div class=" col-xs-8">
-					                        <div style="padding:2px;"></div>
-							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}</div> <!-- 片名 -->
-							          		<div class="m_content" style="font-size:14px; color:#000;">上映日期：{$data.start_date}</div>
-					                        <div style="padding:2px;"></div>
-					                        <div class="m_content" style="font-size:14px; color:#000;">下映日期：{$data.end_date}</div>
-					                        <div style="padding:2px;"></div>
-							          		<div class="m_content" style="font-size:14px; color:#000;">類型：{$data.movie_type} </div>
-					                        <div class="m_content" style="font-size:14px; color:#000;">片長：{$data.film_length} 分 </div>
-					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#000; text-align:center;">【關於電影】</div>
-					                        <div class="m_content" style="word-break: break-all; font-size:14px; white-space:normal;color:#003;"> {$data.synopsis}</div>
-				                        </div>
-					        		</a>
-			      				</li>
-			            	</volist>
-			  			</ul>
 					</div>
 					<div id="p4" index='4' class="content next">
 						<h1>排行榜</h1>
@@ -406,9 +406,9 @@
 			</main>
 			<div class="footer" data-role="footer" data-position="fixed" style="border-color: #485274;text-shadow: 0  5px  10px  #A70C1B ;font-weight: bolder;">
 				<ul class="tab_list">
-					<li  href="#p1" >News</li>
-					<li href="#p2" >最新上映</li>
-					<li href="#p3" >即將上映</li>
+					<li  href="#p1" >最近上映</li>
+					<li href="#p2" >即將上映</li>
+					<li href="#p3" >NEWS</li>
 					<li href="#p4" >排行榜</li>
 					<li class="slider"></li>
 				</ul>
