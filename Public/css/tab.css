@@ -32,7 +32,7 @@
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   height: 4px;
   background: #46CFB0;
   -webkit-transition: all 0.5s;
