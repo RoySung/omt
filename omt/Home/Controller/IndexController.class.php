@@ -49,7 +49,10 @@ class IndexController extends Controller {
     public function member(){
         $db = M('Member');
         $session_auth = session('auth');
-        $this->assign('auth',$session_auth);
+        $condit['m_id'] = array('eq',$session_auth['m_id']);
+        $auth = $db->where($condit)->select(); 
+        session('auth',$auth[0]);
+        $this->assign('auth',$auth[0]);
         $this->display();
     }
     public function ticket(){

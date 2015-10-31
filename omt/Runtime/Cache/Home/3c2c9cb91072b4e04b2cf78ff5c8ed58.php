@@ -307,7 +307,7 @@
 			                <div style="text-align:center;">
 				                <ul class='pagination'>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=1">最前頁</a></li>
-				                	<?php $__FOR_START_6046__=1;$__FOR_END_6046__=$news_count+1;for($i=$__FOR_START_6046__;$i < $__FOR_END_6046__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				                	<?php $__FOR_START_19050__=1;$__FOR_END_19050__=$news_count+1;for($i=$__FOR_START_19050__;$i < $__FOR_END_19050__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($news_count); ?>">最後頁</a></li>
 				                </ul>
 			                </div>
