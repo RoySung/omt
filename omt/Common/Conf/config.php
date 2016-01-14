@@ -6,7 +6,7 @@ return array(
 	'DB_HOST'=>'localhost', // IP位置
 	'DB_NAME'=>'omt',          // 資料庫名稱
 	'DB_USER'=>'root',      // 用戶名
-	'DB_PWD'=>'test',          // 密碼
+	'DB_PWD'=>'0000',          // 密碼
 	'DB_PORT'=>'3306',        // port
 	'DB_PREFIX'=>'omt_',    // 資料表前綴
 	'DB_CHARSET'=>'utf8',      // 資料庫編碼
