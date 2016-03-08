@@ -106,7 +106,7 @@
 				$('body').toggleClass("visible");
 
 				$(".nav_list").click(function(){
-					event.preventDefault();
+//					event.preventDefault();
 					// Sets the new destination to the href of the link
 					color = $(this).data("color");
 					$('body').css('background-color', color );
@@ -117,14 +117,13 @@
 				$("#b1").click(function(){
 	 				$('.nav-tabs > .active').prev('li').find('a').trigger('click');
 				});
-
 				window.requestAnimationFrame(updateSelectedNav);
-				$('.cd-3d-nav-trigger').click(function(){
-					if($("#nav_user").attr('user')!=""){
-						$(this).toggleClass('cd-3d-nav-trigger');
-						$(this).toggleClass('cd-3d-nav-trigger-user');
-					}
-				});
+//				$('.cd-3d-nav-trigger').click(function(){
+//					if($("#nav_user").attr('user')!=""){
+//						$(this).toggleClass('cd-3d-nav-trigger');
+//						$(this).toggleClass('cd-3d-nav-trigger-user');
+//					}
+//				});
 
 				$(".link").click(function(){
 					$('.cd-3d-nav-trigger-user').trigger('click');
@@ -220,7 +219,8 @@
 				<a href="<?php echo U('index/index');?>" class="cd-3d-nav-trigger-home " data-ajax="false" >
 					<img src="/omt/Public/images/icon-home.svg" style="width:100%;height:100%;">
 				</a>
-			</header> <!-- .cd-header -->
+			</header><!-- .cd-header -->
+
 			<nav class="cd-3d-nav-container navbar-fixed-top">
 				<ul class="cd-3d-nav">
 					<li >
@@ -252,6 +252,7 @@
 			            <ul data-role="listview" data-inset="true" >
 			            	<?php if(is_array($recent_movie)): $i = 0; $__LIST__ = $recent_movie;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><li data-icon="false" style="font-family:微軟正黑體;">
 					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="<?php echo ($data["video"]); ?>">
+<!--$data.video-->
 						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="/omt/Public/images/<?php echo ($data["mo_id"]); ?>.jpg"></div>
 				                        <div class=" col-xs-8">
 					                        <div style="padding:2px;"></div>
@@ -269,6 +270,7 @@
 			      				</li><?php endforeach; endif; else: echo "" ;endif; ?>
 			  			</ul>
 					</div>
+
 					<div id="p2" index='2' class="content pre">
 						<h1>即將上映</h1>
 						<ul data-role="listview" data-inset="true" >
@@ -299,15 +301,17 @@
 				                    <span class="label label-info">news</span>
 				                    <span class="news_left_padding_10" style="padding-left: 10px"></span>
 				                    <span class="news_href">
-										<a style='line-height:30px' href=""><?php echo ($data["title"]); ?></a>
-				                        <span class="new_date" style="font-size:9px;position:relative;float:right;"><?php echo ($data["date"]); ?></span>
+										<a style='line-height:30px' href="<?php echo ($data["content"]); ?>"><?php echo ($data["title"]); ?></a>
+				                        <span class="new_date" style="font-size:9px;position:relative;float:right;">
+				                        	<?php echo ($data["date"]); ?>
+				                        </span>
 				                    </span>	
 				                </ul><?php endforeach; endif; else: echo "" ;endif; ?>
 			                <!-- 下方分頁連結 ex:1,2,3,4-->
 			                <div style="text-align:center;">
 				                <ul class='pagination'>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=1">最前頁</a></li>
-				                	<?php $__FOR_START_19050__=1;$__FOR_END_19050__=$news_count+1;for($i=$__FOR_START_19050__;$i < $__FOR_END_19050__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				                	<?php $__FOR_START_18216__=1;$__FOR_END_18216__=$news_count+1;for($i=$__FOR_START_18216__;$i < $__FOR_END_18216__;$i+=1){ ?><li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				                	<li><a data-ajax='false' href="<?php echo U('index/index');?>?page=<?php echo ($news_count); ?>">最後頁</a></li>
 				                </ul>
 			                </div>
@@ -329,67 +333,26 @@
 	                                        <div style="font-size:14px; padding:5px;">下檔日期</div>
 	                                    </td>
 	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">滿意度</div>
-	                                    </td>
+				                        	<div style="font-size:14px; padding:5px;">分數</div>
+				                        </td>
                                 	</tr>
                                 </thead>
                                 <tbody>
-                                    <tr >
-                                        <td>
-                                        	<div style="font-size:20px; padding:5px;">1</div>
-                                        </td>
-	                                    <td>
-	                                    	<div style="font-size:14px; padding:5px;">火影忍者</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">2015-10-25</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:18px; padding:5px; color:red;">★★★★★</div>
-	                                    </td>
-                                    </tr>
-                                    <tr >
-                                        <td>
-	                                        <div style="font-size:20px; padding:5px;">2</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">多拉A夢</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">2015-10-31</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:18px; padding:5px; color:red;">★★★★☆</div>
-	                                    </td>
-                                    </tr>
-                                    <tr >
-                                        <td>
-	                                        <div style="font-size:20px; padding:5px;">3</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">復仇者聯盟</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">2015-11-04</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:18px; padding:5px; color:red;">★★★★☆</div>
-	                                    </td>
-                                    </tr>
-                                    <tr >
-                                        <td>
-	                                        <div style="font-size:20px; padding:5px;">4</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">侏儸紀公園</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">2015-11-10</div>
-	                                    </td>
-	                                    <td>
-	                                        <div style="font-size:18px; padding:5px; color:red;">★★★★☆</div>
-	                                    </td>
-                                    </tr>
+									<?php if(is_array($rank)): $i = 0; $__LIST__ = $rank;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><tr href="#" class="link" style="padding:0px 0px 1px;" url="<?php echo ($data["video"]); ?>">
+											<td class="col-xs-2">
+												<div><img class="img-responsive" style="display:block;line-height:30px; margin:auto; max-height:45px;" src="/omt/Public/images/rank<?php echo ($i); ?>.png" ></div>
+											</td>
+											<td class="col-xs-4" > 
+												<div style="text-align:center; font-size:16px;line-height:30px;"><?php echo ($data["movie_name"]); ?></div> 
+												<!-- 片名 -->
+											</td>
+											<td class="col-xs-4" >
+						                        <div style="font-size:12px;color:#000;line-height:30px;"><?php echo ($data["end_date"]); ?></div>
+				                        	</td>
+				                        	<td class="col-xs-2" >
+				                        		<div style="font-size:12px;color:#000;line-height:30px;"><?php echo ($data["grade"]); ?></div>
+				                        	</td>
+				                        </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -406,7 +369,8 @@
 				</ul>
 			</div>
 			<!-- sign Modal -->
-			<div class="modal fade" id="sign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+			<div class="modal fade" id="sign" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" >
+			<!--data-role="dialog"-->
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header" style="background-color:#2f889a;">
@@ -439,7 +403,7 @@
 										</div>
 										<div class="control-group">
 										    <div class="form-group has-feedback">
-											    <input type="password" name="password" style="padding-left: 35px; font-size:18px;" placeholder="密碼" />
+											    <input type="password" name="password" style="padding-left: 35px; font-size:18px;" placeholder="密碼" id="speedsubmit" />
 											    <i class="form-control-feedback glyphicon glyphicon-lock" style="left: 0px;"></i>
 										    </div>
 										</div>
@@ -498,7 +462,8 @@
 				</div>  
 			</div>
 			<!-- movie_info Modal -->
-			<div class="modal fade" id="movie_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="movie_info" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!--data-role="dialog"-->
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header" style="background-color: #DA4453">
@@ -517,9 +482,10 @@
 				</div>
 			</div><!-- /.modal -->
 			<!-- sign_info Message -->
-			<div class="modal fade" id="sign_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="sign_info" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!--data-role="dialog"-->
 				<div class="modal-dialog" style="width:300px;">
-					<div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
+					<div id="sign_content" class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
 						<div class="modal-header" style="background-color: #DA4453">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
 							<h4 class="modal-title" id="myModalLabel">訊　息</h4>
