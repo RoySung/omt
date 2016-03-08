@@ -91,6 +91,7 @@
                         $('#message_btn').attr("onclick","location.href='{:U('index/member')}'");
                         $('#message').html("已成功儲值"+result['add']+"元！</br></br>目前餘額為"+result['cash']+"元。");
                         $('#member_info').modal('show');
+                        
                     },
                     error:function(xhr, ajaxOptions, thrownError){ 
                         $('#message').html("儲值失敗！");
@@ -142,7 +143,7 @@
                   			</li>
 
                   			<li class="cd-selected" id="nav_user" user="user">
-                            <a class="nav_list" id="member" data-color="#485274" >個人資料</a>
+                            <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
                   			</li>
 
                   			<li >
@@ -200,9 +201,8 @@
                                         <td style="color:#006; text-align:center;">儲值</td>
                                         <td >
                                             <form name="select_cash" method="post" style="font-size:18px;"> 
-                                                <div> <div style="width:70%;"> 
+                                                <div style="width:70%;"> 請選擇儲值金額
                                                     <select name="select_cash"> 
-                                                        <option value="0">請選擇儲值金額</option> 
                                                         <option value="100">100</option> 
                                                         <option value="300">300</option> 
                                                         <option value="500">500</option> 
@@ -210,12 +210,6 @@
                                                     </select> 
                                                 </div> 
                                             </form>
-                                        </td>
-                                    </tr>
-
-                                    <tr >
-                                        <td ></td>
-                                        <td>
                                             <div style="width:50%; "> 
                                             <button type="submit" style="font-size:24px; padding:5px;" onclick="StoredValue()">儲值</button>
                                             </div>

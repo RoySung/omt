@@ -20,13 +20,12 @@
                 font-size: 10px;
             }
             .input_type1{
-                position: relative;right:10px;
                 float:right; 
-                margin:0; 
                 -webkit-border-radius:5px;
             }
             .input_type2{
-                float:right; margin:0; 
+                float:right;
+                margin:0; 
                 -webkit-border-radius:5px;
             }
             .ui-controlgroup{
@@ -35,11 +34,11 @@
             .list{
                 display: block;
                 height: 50px;
-                background-color: rgb(49, 171, 252);
+                //background-color: rgb(49, 171, 252);
                 color: #fff;
                 font-family:Microsoft JhengHei;
-                padding-top: 10px;
-                font-size: 24px;
+                padding-top: 20px;
+                font-size: 20px;
             }
             .ui-page-theme-a,body,
             .ui-page-theme-a .ui-panel-wrapper {
@@ -50,6 +49,10 @@
             }
             #drink_list li{
                 text-align: center;
+                background-color: black;
+            }
+            .list-group-item{
+
             }
             body{
                 transition: background-color .8s ease-in-out;
@@ -82,8 +85,14 @@
                     setTimeout("location.href='"+this.id+".html'",850);
                 });
                 $('#pay_btn').click(function(){
+
                     $('#pay_message').modal('show');
                 });
+
+                $("#Menu_suit").click(function(){
+
+                });
+                
             });
 
             var name, tel, add, orderList;
@@ -112,8 +121,10 @@
                     }
                 });
             });
-
+            
             $(document).on("pageshow", "#order", function () {
+                $('.input_type1').css('width','30px');
+                $('.input_type2').css('width','30px');
                 $('#user_name').text(name);
                 var drinkNum = $('#drink_list li').length;
                 var orderList = new Array(drinkNum);
@@ -152,30 +163,46 @@
                 $('#lets_order').on('click', function () {
                     orderList = "";
                     var sum=0;
-                    var img01='<img src="__PUBLIC__/images/';
+                    var img01='<div style=text-align:center;><img src="__PUBLIC__/images/';
                     var img02='.png" width="40px" height="40px">';
                     var tab1='<tr><td>';
                     var tab2='</tr></td>';
+                    
+                    
                     for (var ii = 0; ii < $('#drink_list li').length; ii++) {
                         var item1=$('div');
-                        var meal=$('#drink_list li').eq(ii).find('span').text();
-                        if((meal=="紅茶")||(meal=="可樂")||(meal=="咖啡")){meal='drinks';}else{meal='food';}
+                        var meal=$('#drink_list li').eq(ii).find('span').text()
+                        var single_money=$('#drink_list li').eq(ii).find(item1).text().trim().substring(6,10)
+
+//                        if((meal=="紅茶")||(meal=="可樂")||(meal=="咖啡")){meal='drinks';}else{meal='food';}
                         if ($('#drink_list li').eq(ii).attr('L')) {
+                            var L_mount=$('#drink_list li').eq(ii).attr('L')
+                            var little_sum=single_money*L_mount
                             orderList = orderList  + img01 +  meal + img02 + $('#drink_list li').eq(ii).find('span').text() +
-                            " (L) $" +$('#drink_list li').eq(ii).find(item1).text().substring(143,145)+"元："+ $('#drink_list li').eq(ii).attr('L') + "份 " + "</br>";
-                            
-                            sum=sum+parseInt($('#drink_list li').eq(ii).find(item1).text().substring(143,145))*$('#drink_list li').eq(ii).attr('L');
+                            "(L)X" +L_mount + '&nbsp&nbsp</br>$' +little_sum+ "</div></br>";
+
+                            console.log("test"+$('#drink_list li').eq(ii).find(item1).text().trim());
+                            sum=sum+parseInt(single_money)*L_mount;
                         }
-                        if ($('#drink_list li').eq(ii).attr('M')) {
-                        	console.log($('#drink_list li').eq(ii).find(item1).text().search("M"));
-                            orderList = orderList + img01 + meal + img02 +  $('#drink_list li').eq(ii).find('span').text() +
-                            " (M) $" +$('#drink_list li').eq(ii).find(item1).text().substring(36,38)+"元："+ $('#drink_list li').eq(ii).attr('M') + "份" + "<br/>";
+
+
+//                        if ($('#drink_list li').eq(ii).attr('M')) {
+//                        	console.log($('#drink_list li').eq(ii).find(item1).text().search("M"));
+//                          orderList = orderList + img01 + meal + img02 +  $('#drink_list li').eq(ii).find('span').text() +
+//                        " (M) " +$('#drink_list li').eq(ii).find(item1).text().substring(117,119)+"元 "+ $('#drink_list li').eq(ii).attr('M') + "份" + "<br/>";
+
+                            if ($('#drink_list li').eq(ii).attr('M')) {
+                            orderList = orderList  + img01 +  meal + img02 + $('#drink_list li').eq(ii).find('span').text() +
+                            " (M) X" +$('#drink_list li').eq(ii).attr('M') + $('#drink_list li').eq(ii).find(item1).text().substring(117,119)+"元 "+ "</div></br>";
+
                             console.log("test"+$('#drink_list li').eq(ii).find(item1).text());
-                            sum=sum+parseInt($('#drink_list li').eq(ii).find(item1).text().substring(36,38))*$('#drink_list li').eq(ii).attr('M');
+                            sum=sum+parseInt($('#drink_list li').eq(ii).find(item1).text().substring(117,119))*$('#drink_list li').eq(ii).attr('M');
                         }//$('#order_content').html(orderList+"總共 $"+sum)
                     }
-                    var sum_style='<div style="padding-left:10px;">';
-                    $('#order_content').html(orderList+"</br>"+sum_style+"總共 $"+sum+"</div></br></br>");
+                    var sum_style='<div style="padding-left:10px;text-align:center;">';
+                    $('#order_content').html(orderList+"</br>"+sum_style+
+                        "-------------------<br>"+
+                        "合計"+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+"$"+sum+"</div></br></br>");
                 });
             });
 
@@ -204,7 +231,10 @@
                     $('#bg').removeClass('bg-blur');
                     window.location.assign("../index.html");
                 });
+
             });
+
+            
         </script>
 
         <title>EZo App</title>
@@ -212,6 +242,191 @@
     <body>
         <!-- Page: order  -->
         <div id="order" data-role="page">
+            <div data-role="panel" id="myPanel" data-position-fixed="true"> 
+                
+                <div class="ui-content" style="position: relative;top: 80px;">
+                    <div>訂購單號： 001
+                        <span id="s1"></span>
+                    </div>
+                    <div style="font-family:微軟正黑體; font-size:20px; padding:10px; font-weight:bold;">
+                        <div style="text-align:center; font-size:24px; padding:5px; ">購買清單：</div>
+                            <div id="order_content"></div>
+                            <div class="col-xs-6">
+                                <div  style="text-align:center;">
+                                    <a class="btn btn-info" data-rel="close" style="width:100%;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;" data-transition="slide" data-direction="reverse" href="#order">取消</a>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div  style="text-align:center;">
+                                    <a id="pay_btn"  class="btn btn-info" style="width:100%;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;">結帳</a> 
+                                </div>
+                            </div>
+                        <!--<a  id="pay_bt" href="#pay" data-transition="flip" >確認</a>-->
+                        
+                    </div>
+                </div>
+            </div> 
+            <!--Main-->
+            <div data-role="main" class="ui-content" style="position:relative; top:100px; text-align:center;">
+                <header class="cd-header navbar-fixed-top"> 
+                    <a href="#0" class="cd-3d-nav-trigger " >
+                    <img src="__PUBLIC__/images/icon-user.svg" style="width:100%;height:100%;">
+                    <span></span>
+                    </a>
+
+                    <a href="{:U('index/index')}" class="cd-3d-nav-trigger-home " data-ajax="false" >
+                    <img src="__PUBLIC__/images/icon-home.svg" style="width:100%;height:100%;">
+                    </a>
+                </header> <!-- .cd-header -->
+
+                <nav class="cd-3d-nav-container navbar-fixed-top">
+
+                    <ul class="cd-3d-nav">
+                        <li >
+                            <a class="nav_list" id="order_t" data-color="#4FE29E" >訂票去</a>
+                        </li>
+
+                        <li class="cd-selected">
+                            <a class="nav_list" id="order" data-color="#4FE29E">訂餐去</a>
+                        </li>
+
+                        <li >
+                            <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
+                        </li>
+
+                        <li>
+                            <a class="nav_list" id="ticket" data-color="#4FE29E" >我的票卷</a>
+                        </li>
+
+                        <li>
+                            <a class="nav_list" id="discount" data-color="#4FE29E">收藏優惠</a>
+                        </li>
+                    </ul> <!-- .cd-3d-nav -->
+                    <span class="cd-marker color-2"></span> 
+
+                </nav>  <!--.cd-3d-nav-container -->
+                <div data-role="controlgroup"  data-type="horizontal" style="border:none">
+                    <a href="#" data-role="button" id="Menu" class="btn btn-info" style="width:200px;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;">Menu</a> 
+                    <a href="#myPanel" data-role="button" class="btn btn-info ui-btn ui-icon-shop ui-btn-icon-left ui-btn-icon-notext" style="height:42px;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;">My Order</a>
+                </div>
+                
+                <div class="container-fluid" >
+                    <span style="font-size:20px;font-family:Microsoft JhengHei;">Menu</span>
+                    <div data-role="main" class="ui-content">
+                        <div data-role="collapsibleset" data-expanded-icon="carat-u" data-collapsed-icon="carat-d" data-iconpos="right">
+                            <div data-role="collapsible">
+                                <h3>套餐</h3>
+                                <ul data-role="listview"  id="drink_list" >
+                                    <volist name="food" id="data" mod="2" offset="10" length="13">
+                                            <li style="border: 0;">
+                                                <div class=" col-xs-3">
+                                                    <img style="position: relative;left:5px;max-width:40px;" src="__PUBLIC__/images/{$data.food}.png">
+                                                    </br>
+                                                    ( {$data.size} )${$data.price}
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <span class="list" style="float:left;" >{$data.food}</span>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <div style="display:inline-block;"></div>
+                                                </div>          
+                                                <div class="col-xs-6">
+                                                    <input type="text" class="input_type2" data-role="spinbox"  name=""  data-options='{"type":"horizontal"}' value="0" min="0" max="100">
+                                                </div>
+                                                
+                                            </li>
+                                    </volist>
+                                    <li style="height: 100px; background-color: #8BC3D4;">
+                                        <div><a class="btn ui-state-disabled" href="#" data-transition="flip" id="lets_order" style="width:100%;height:100%;top:0;right:0;margin:0px;color:#000000;font-size:20px;">訂購</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>食物(L)</h3>
+                                <ul data-role="listview"  id="drink_list" >
+                                    <volist name="food" id="data" mod="2" offset="6" length="4">
+                                        <eq name="mod" value="0">
+                                            <li style="border: 0;">
+                                                <div class=" col-xs-3">
+                                                    <img style="position: relative;left:5px;max-width:40px;" src="__PUBLIC__/images/{$data.food}.png">
+                                                    </br>
+                                                    ( {$data.size} )${$data.price}
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <span class="list" style="float:left;" >{$data.food}</span>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <div style="display:inline-block;"></div>
+                                                </div>          
+                                                <div class="col-xs-6">
+                                                    <input type="text" class="input_type2" data-role="spinbox"  name=""  data-options='{"type":"horizontal"}' value="0" min="0" max="100">
+                                                </div>
+                                                
+                                            </li>
+                                        </eq>
+                                    </volist>
+                                    <li style="height: 100px; background-color: #8BC3D4;">
+                                        <div><a class="btn ui-state" href="#" data-transition="flip" id="bigfood" style="width:100%;height:100%;top:0;right:0;margin:0px;color:#000000;font-size:20px;">訂購</a></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>食物(M)</h3>
+                                <p>I'm the expanded content.</p>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>飲料(L)</h3>
+                                <p>I'm the expanded content.</p>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>飲料(M)</h3>
+                                <p>I'm the expanded content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+      <!--      <main>
+            
+                <div class="ui-content" style="position: relative;top: 80px;">
+                    <div style="font-size:20px;font-family:Microsoft JhengHei; text-align:center;">
+                        <span id="user_name" ></span>
+                        {$auth.name} 您好！<br><br>
+                        請選擇您欲訂購的餐點：
+                    </div>
+
+                    <ul data-role="listview"  id="drink_list" data-inset="true" >
+                        <volist name="food" id="data" mod="2">
+                            <eq name="mod" value="0">
+                                <li style="border: 0;">
+                                    <div class=" col-xs-3">
+                                        <img style="position: relative;left:5px;max-width:40px;" src="__PUBLIC__/images/{$data.food}.png">
+                                        </br>
+                                        ( {$data.size} )${$data.price}
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <span class="list" style="float:left;" >{$data.food}</span>
+                                    </div>
+        <                                <div class="col-xs-3">
+                                        <div style="display:inline-block;"></div>
+                                    </div>          >
+                                    <div class="col-xs-6">
+                                        <input type="text" class="input_type2" data-role="spinbox"  name=""  data-options='{"type":"horizontal"}' value="0" min="0" max="100">
+                                    </div>
+                                    
+                                </li>
+                            </eq>
+                        </volist>
+                        <li style="height: 100px; background-color: #8BC3D4;">
+                            <div><a class="btn ui-state-disabled" href="#ListPage" data-transition="flip" id="lets_order" style="width:100%;height:100%;top:0;margin:0;color:#000000;font-size:20px;">訂購</a></div>
+                        </li>
+                    </ul>
+                </div> 
+            </main>  -->
+        </div>
+        <div id="ListPage" data-role="page" style="background-color:yellow;">
             <header class="cd-header navbar-fixed-top" > 
                 <a href="#0" class="cd-3d-nav-trigger " >
                 <img src="__PUBLIC__/images/icon-user.svg" style="width:100%;height:100%;">
@@ -234,7 +449,7 @@
                     </li>
 
                     <li >
-                        <a class="nav_list" id="member" data-color="#485274" >member</a>
+                        <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
                     </li>
 
                     <li>
@@ -247,43 +462,9 @@
                 </ul> <!-- .cd-3d-nav -->
                 <span class="cd-marker color-2"></span> 
             </nav> <!-- .cd-3d-nav-container -->
-
-            <!--Main-->
+            <!-- Page: ListPage  -->
             <main>
                 <div class="ui-content" style="position: relative;top: 80px;">
-                    <div style="font-size:20px;font-family:Microsoft JhengHei; text-align:center;">
-                        <span id="user_name" ></span>
-                        阿松菌您好！<br><br>
-                        請選擇您欲訂購的餐點：
-                    </div>
-
-                    <ul data-role="listview"  id="drink_list" data-inset="true" >
-                        <volist name="food" id="data">
-                            <li style="  padding: 8px;border: 0;">
-                                <span class="list">{$data.food}</span><br/>
-                                <div class=" col-xs-6"><img style="position: relative;left:10px;width:165px;" src="__PUBLIC__/images/drink.png"></div>
-                                <div class="col-xs-6">
-                                    <div style="display:inline-block;">({$data.size}){$data.price}</div>
-                                    <input type="text" class="input_type1" data-role="spinbox" name=""  data-options='{"type":"horizontal"}' value="0" min="0" max="100">
-                                    <br/>
-                                </div>                            
-                            </li>
-                        </volist>
-                        <li style="height: 100px; background-color: #8BC3D4;">
-                            <div><a class="btn ui-state-disabled" href="#ListPage" data-transition="flip" id="lets_order" style="width:100%;height:100%;top:0;margin:0;color:#000000;font-size:14px;">訂購</a></div>
-                        </li>
-                    </ul>
-                </div>
-            </main>  
-        </div>
-        <!-- Page: ListPage  -->
-        <div id="ListPage" data-role="page" style="background-color: white;">
-                <div data-role="header" data-position="fixed" data-theme="b">
-                    <h3>您的訂購清單</h3>
-                    <a class="ui-btn ui-btn-right" href="#order" data-transition="slide" data-direction="reverse"> X </a>
-                    <!--<a class="ui-btn ui-btn-right" href="#payhome" data-transition="flip" >確認</a>-->
-                </div>
-                <div class="ui-content">
                     <div>訂購單號： 001
                         <span id="s1"></span>
                     </div>
@@ -292,15 +473,25 @@
                         <div class="col-xs-1"></div>
                         <div class="col-xs-10">
                             <div id="order_content"></div>
+                            <div class="col-xs-6">
+                                <div  style="text-align:center;">
+                                    <a class="btn btn-info" style="width:100%;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;" data-transition="slide" data-direction="reverse" href="#order">取消</a> 
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div  style="text-align:center;">
+                                    <a id="pay_btn"  class="btn btn-info" style="width:100%;font-weight:bold;font-size:20px; background-color:#2f889a; color:#FFF;">確認</a> 
+                                </div>
+                            </div>
                         </div>
                         <div class="col-xs-1"></div>
                         <!--<a  id="pay_bt" href="#pay" data-transition="flip" >確認</a>-->
-                        <div  style="text-align:center;">
-                            <a id="pay_btn"  class="btn btn-info" style="width:50%;font-weight:bold;font-size:20px;padding:8px; background-color:#2f889a; color:#FFF;">確認</a> 
-                        </div>
+                        
                     </div>
                 </div>
+            </main>
         </div>
+        
         <!-- pay_message  -->
         <div class="modal fade" id="pay_message"  role="dialog" aria-hidden="true">
             <div class="modal-dialog" style="width:300px;">

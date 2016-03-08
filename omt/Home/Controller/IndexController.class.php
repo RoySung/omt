@@ -7,7 +7,7 @@ class IndexController extends Controller {
     	$db = M('News');
     	//news page
     	$page = 0;
-    	if ($_REQUEST['page'])
+    	if ($_REQUEST['page'])//有沒有職收到 get保留有暫存 post 沒有暫存
     		$page=$_REQUEST['page'];
     	$news = $db->page("$page,5")->select();
     	$this->assign('news',$news);
@@ -30,10 +30,25 @@ class IndexController extends Controller {
             $session_auth = session('auth');
             $this->assign('auth',$session_auth);
         }
+        //rank
+        $db = M('Movie');
+        $date = date("Y-m-d");
+        $condit['start_date'] = array('lt',$date);
+        $movie = $db->where($condit)->limit(5)->order('grade desc')->select();
+        $this->assign('rank',$movie);
+
+
+
+
+
         $this->display();
     }
     public function order(){
         $db = M('Food');
+        if(session('auth')){
+            $session_auth = session('auth');
+            $this->assign('auth',$session_auth);
+        }
         $food = $db->select();
         $this->assign('food',$food);
         $this->display();
@@ -58,6 +73,7 @@ class IndexController extends Controller {
     public function ticket(){
         $db = M('Orderticketview');
         $session_auth = session('auth');
+        $this->assign('auth',$session_auth);
         $condit['m_id'] = $session_auth['m_id'];
         $data = $db->where($condit)->select();
 
@@ -83,6 +99,7 @@ class IndexController extends Controller {
     public function discount(){
         $db = M('Discount');
         $session_auth = session('auth');
+        $this->assign('auth',$session_auth);
         $condit['m_id'] = $session_auth['m_id'];
         $data = $db->where($condit)->select();
         $this->result = 1;
