@@ -17,7 +17,8 @@
 				text:'確定',
 				iconCls:'icon-ok',
 				handler:function(){
-					alert('ok');
+					append();
+					$('#dlg').dialog('close');
 				}
 			},{
 				text:'取消',
@@ -32,27 +33,27 @@
 			<table cellpadding="5">
 				<tr>
 					<td>會員名稱</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" name="name" id="name" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>電影院</td>
-					<td><input class="easyui-textbox" type="text" name="theater_name"  style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" name="theater_name" id="theater_name" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>食物名稱</td>
-					<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" name="food" id="food" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>食物類型</td>
-					<td><input class="easyui-textbox" name="type" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="type" id="type" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>價格</td>
-					<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="price" id="price" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>大小</td>
-					<td><input class="easyui-textbox" name="size" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="size" id="size" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
 		</form>
@@ -69,16 +70,18 @@
 				<th field="type" width="50" editor="text">食物類型</th>
 				<th field="price" width="50" editor="{type:'validatebox',options:{required:true}}">價格</th>
 				<th field="size" width="50" editor="{type:'validatebox',options:{required:true}}">大小</th>
-				<th field="f_id" width="50" data-options="hidden:true" editor="text">f_id</th>
+				<th field="f_id" width="50" data-options="hidden:true"  editor="text">f_id</th>
 			</tr>
 		</thead>
 	</table>
     <div id="toolbar">
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">刪除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">儲存</a>
+        <a href="javascript:void(0)"class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleterow()">刪除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="save()">儲存</a>
+        <!--javascript:$('#dg').edatagrid('saveRow')"-->
     </div>
     <script type="text/javascript">
+    	$('#f_id').hide();
         $(function(){
             $('#dg').edatagrid({
                 url: 'get_users.php',
@@ -87,6 +90,58 @@
                 destroyUrl: 'destroy_user.php'
             });
         });
+        function append(){
+
+	        var name = $("#name").val();                            
+	        var theater_name= $('#theater_name').val();
+	        var food = $('#food').val();
+	        var type = $('#type').val();
+	        var price = $('#price').val();
+	        var size = $('#size').val();
+
+	        if(name==''||food==''||type==''||price==''||size=='')
+	        {
+	        	
+		        $.messager.confirm('Warning','紅色欄位必須填寫!!!',function(r){
+		    		if(r){
+		    			$('#dlg').dialog('open');
+		    		}
+		    	});
+		    	
+		    }
+		    else
+		    {
+		    	$('#dg').datagrid('appendRow', {
+		            name    : name,
+		            theater_name : theater_name,
+		            food : food,
+		            type : type,
+		            price : price,
+		            size : size
+		        });
+		        $('#ff').form('clear');
+		    }
+
+	        
+        }
+
+        function deleterow(){
+        	var row = $('#dg').datagrid('getSelected');
+            if (row){
+                $.messager.confirm('Confirm','確定要刪除此列嗎?',function(r){
+			        if (r){
+						var index = $('#dg').datagrid('getRowIndex',row);//获取某行的行号
+						$('#dg').datagrid('deleteRow',index); //通过行号移除该行
+			        }
+			    });
+            }
+        }
+    
+		/*	$('#dg').datagrid('appendRow',{
+				name: 55	,
+				theater_name: 30,
+			});*/
+        
     </script>
     
 </body>
