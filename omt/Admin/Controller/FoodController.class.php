@@ -9,4 +9,25 @@ class FoodController extends Controller {
             $this->ajaxReturn($result);
         }
     }
+    public function append_c() {
+        $db = M('Food');
+        $data = $db->create();
+        if (!$data) {
+            $this->ajaxReturn($db->getError());
+        } else {
+            $db->add($data);
+            $this->ajaxReturn(true);
+        }
+    }
+    public function destroyRow_c(){
+    	$db = M('Food');
+    	$conit['f_id'] = array('eq',$_REQUEST['delete_f_id']);
+        $result = $db->where($conit)->delete();
+    	if(!$result){
+    		$this->ajaxReturn($db->getError());
+    	} else{
+    		$this->ajaxReturn(true);
+    	}
+    }
+
 }

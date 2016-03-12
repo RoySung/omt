@@ -17,7 +17,8 @@
 				text:'確定',
 				iconCls:'icon-ok',
 				handler:function(){
-					alert('ok');
+					append();
+					$('#dlg').dialog('close');
 				}
 			},{
 				text:'取消',
@@ -32,27 +33,27 @@
 			<table cellpadding="5">
 				<tr>
 					<td>會員名稱</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" id="name" name="name" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>電影院</td>
-					<td><input class="easyui-textbox" type="text" name="theater_name"  style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" id="theater_name" name="theater_name"  style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>食物名稱</td>
-					<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" type="text" id="food" name="food" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>食物類型</td>
-					<td><input class="easyui-textbox" name="type" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" id="type" name="type" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>價格</td>
-					<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" id="price" name="price" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>大小</td>
-					<td><input class="easyui-textbox" name="size" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" id="size" name="size" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
 		</form>
@@ -75,19 +76,106 @@
 	</table>
     <div id="toolbar">
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">刪除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
+
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">儲存</a>
     </div>
     <script type="text/javascript">
-        $(function(){
-            $('#dg').edatagrid({
-                url: 'get_users.php',
-                saveUrl: 'save_user.php',
-                updateUrl: 'update_user.php',
-                destroyUrl: 'destroy_user.php'
-            });
-        });
+        function append(){
+        	$('#ff').form('submit',{
+	            onSubmit: function(){
+	            	if( $('#ff').form('validate')==false){
+	            		$.messager.confirm('Confirm','紅色欄位為必要欄位!!',function(r){
+						    if (r){
+						        $('#dlg').dialog('open');
+						    }
+						});
+	            	}
+	            	else{
+	            		/*append_forDB();*/
+	            		$.ajax({
+			                url: "{:U('Food/append_c')}",
+			                data:$('#ff').serialize(),
+			                type:"POST",
+			                dataType:'text',
+			                
+			                success: function(result){
+
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('info','成功新增資料');
+			                    	setTimeout("location.href='{:U('Index/food')}'",850);
+			                    } 
+			                },
+			                 error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+	            		$('#ff').form('clear'); 
+	            		return $('#ff').form('validate');
+	            	}             
+	            }
+            });	
+        }
+   /*     	var name = $('#name').val()
+        	var theater_name = $('#theater_name').val()
+        	var food = $('#food').val()
+        	var type = $('#type').val()
+        	var price = $('#price').val()
+        	var size = $('#size').val()
+
+        	if(name==''||theater_name==''||food==''||type==''||price==''||size==''){
+        		$.messager.confirm('Confirm','紅色欄位為必要欄位!!',function(r){
+				    if (r){
+				        $('#dlg').dialog('open');
+				    }
+				});
+        	}else {
+	        	$('#dg').datagrid('appendRow',{
+					name: name,
+					theater_name: theater_name,
+					food: food,
+					type: type,
+					price: price,
+					size: size
+				});
+
+				$('#dlg').dialog('close');
+				$('#ff').form('clear');
+        	}*/
+
+        function destroyRow(){
+        	var row=$('#dg').datagrid('getSelected');
+        	if(row){
+        		$.messager.confirm('Confirm','確定要刪除此列',function(r){
+        			if(r){
+        				/*destroyRow_forDB()*/
+        				$.ajax({
+			                url:"{:U('Food/destroyRow_c')}",
+                            data:{
+                                delete_f_id:row.f_id
+                            },
+                            type:"POST",
+                            async:false,
+			                success: function(result){
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('info','成功刪除資料');
+			                    	setTimeout("location.href='{:U('Index/food')}'",850);
+			                    }
+			                },
+			                error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+
+        			}
+
+        		});
+        	}
+        }
     </script>
     
 </body>
 </html>
+
