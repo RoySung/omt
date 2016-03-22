@@ -55,10 +55,6 @@
 					<td>到期時間</td>
 					<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
-				<tr>
-					<td>enable</td>
-					<td><input class="easyui-textbox" name="enable" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
 			</table>
 		</form>
 		</div>
@@ -92,10 +88,6 @@
 						<td>到期時間</td>
 						<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
-					<tr>
-						<td>enable</td>
-						<td><input class="easyui-textbox" name="enable" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
@@ -115,7 +107,7 @@
 				<th field="discount" width="50" editor="{type:'validatebox',options:{required:true}}">折扣金額</th>
 				<th field="start_date" width="50" editor="{type:'validatebox',options:{required:true}}">開始時間</th>
 				<th field="end_date" width="50" editor="{type:'validatebox',options:{required:true}}">到期時間</th>
-				<th field="enable" width="50" editor="{type:'validatebox',options:{required:true}}">enable</th>
+				<th field="enable" width="50" data-options="hidden:true" editor="{type:'validatebox',options:{required:true}}">enable</th>
 				<th field="m_id"  width="50" data-options="hidden:true" editor="text">m_id</th>
 				<th field="d_id"  width="50" data-options="hidden:true" editor="text">d_id</th>
 			</tr>

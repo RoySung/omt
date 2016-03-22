@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class DiscountController extends Controller {
     public function discount_r(){
-        $db = M('Discount');
+        $db = M('Discountview');
         $result = $db->select();
         if($result) {
             $this->ajaxReturn($result);

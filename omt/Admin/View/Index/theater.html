@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
 <body>
-    <div id="dlg" class="easyui-dialog" title="各電影院" closed="true" style="width:450px;height:300px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="各電影院" closed="true" style="width:450px;height:350px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -40,18 +40,14 @@
 					<td><input class="easyui-textbox" type="text" name="address" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>照片</td>
-					<td><input class="easyui-textbox" type="text" name="theater_img" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
 					<td>描述</td>
-					<td><input class="easyui-textbox" name="description" data-options="required:true" style="width:250px;"></input></td>
+					<td><input class="easyui-textbox" name="description" data-options="required:true,multiline:true" style="width:250px;height:100px;"></input></td>
 				</tr>
 			</table>
 		</form>
 		</div>
 	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯餐點" closed="true" style="width:450px;height:400px;padding:10px;"
+	<div id="edit_dialog" class="easyui-dialog" title="編輯電影院資訊" closed="true" style="width:450px;height:450px;padding:10px;"
 		buttons="#adduser_button">
 		<div style="padding:10px 30px 20px 30px">
 			<form id="form_edit" method="post" enctype="multipart/form-data">
@@ -64,42 +60,10 @@
 						<td>地址</td>
 						<td><input class="easyui-textbox" type="text" name="address" style="width:250px;"></input></td>
 					</tr>
-					<tr>
-						<td>照片</td>
-						<td><input class="easyui-textbox" type="text" name="theater_img" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
+
 					<tr>
 						<td>描述</td>
-						<td><input class="easyui-textbox" name="description" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-				</table>
-			</form>
-			<div id="edituser_button" style="float:right;" >
-		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save('#form_edit')" style="width:90px">儲存</a>
-		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#edit_dialog').dialog('close')" style="width:90px">取消</a>
-		    </div>
-		</div>
-	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯電影院資訊" closed="true" style="width:450px;height:400px;padding:10px;"
-		buttons="#adduser_button">
-		<div style="padding:10px 30px 20px 30px">
-			<form id="form_edit" method="post" enctype="multipart/form-data">
-				<table cellpadding="5">
-					<tr>
-						<td>電影院</td>
-						<td><input class="easyui-textbox" type="text" name="theater_name" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>地址</td>
-						<td><input class="easyui-textbox" type="text" name="address" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>照片</td>
-						<td><input class="easyui-textbox" type="text" name="theater_img" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>描述</td>
-						<td><input class="easyui-textbox" name="description" data-options="required:true" style="width:250px;"></input></td>
+						<td><input class="easyui-textbox" name="description" data-options="required:true,multiline:true" style="width:250px;height:150px;"></input></td>
 					</tr>
 				</table>
 			</form>
@@ -114,10 +78,9 @@
 	data-options="url:'{:U('Theater/theater_r')}',method:'get',fit:true">
 			<thead>
 			<tr>
-				<th field="theater_name" width="50" editor="{type:'validatebox',options:{required:true}}">電影院</th>
-				<th field="address" width="50" editor="{type:'validatebox',options:{required:true}}">地址</th>
-				<th field="theater_img" width="50" editor="{type:'validatebox',options:{required:true}}">照片</th>
-				<th field="description" width="50" editor="{type:'validatebox',options:{required:true}}">描述</th>
+				<th field="theater_name" width="20" editor="{type:'validatebox',options:{required:true}}">電影院</th>
+				<th field="address" width="40" editor="{type:'validatebox',options:{required:true}}">地址</th>
+				<th field="description" width="100" editor="{type:'validatebox',options:{required:true}}">描述</th>
 				<th field="t_id"  width="50" data-options="hidden:true" editor="text">t_id</th>
 			</tr>
 		</thead>

@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class TicketpriceController extends Controller {
     public function ticketprice_r(){
-        $db = M('Ticketprice');
+        $db = M('Ticketpriceview');
         $result = $db->select();
         if($result) {
             $this->ajaxReturn($result);
