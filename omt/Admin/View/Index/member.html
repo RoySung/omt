@@ -17,7 +17,8 @@
 					text:'確定',
 					iconCls:'icon-ok',
 					handler:function(){
-						alert('ok');
+						append();
+						$('#dlg').dialog('close');
 					}
 				},{
 					text:'取消',
@@ -97,7 +98,7 @@
 					</tr>
 					<tr>
 						<td>加入日期</td>
-						<td><input class="easyui-datebox" name="build_date" style="width:250px;"></input></td>
+						<td><input class="easyui-datebox" id="build_date" name="build_date" style="width:250px;"></input></td>
 					</tr>
 					<tr>
 						<td>uid</td>
@@ -167,7 +168,7 @@
 		<div>
     <div id="toolbar">
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">刪除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">儲存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_user()">編輯</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchOpen()">搜尋UID</a>
@@ -175,6 +176,19 @@
 	</div>
     <script type="text/javascript">
     	var url;
+    	$("#build_date").datebox({
+	        formatter:function(date){
+	            var y=date.getFullYear();
+	            var m=date.getMonth()+1;
+	            var d=date.getDate();
+	            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+	        },
+	        parser:function(s){
+		        var t=Date.parse(s);
+		        if (!isNaN(t)) {return new Date(t);}
+		        else {return new Date();}
+		    }     
+    	});
 		function searchOpen()
 		{
 			$('#insidelayout').layout('remove', 'east');
@@ -191,10 +205,13 @@
 			$('#searchform').form('clear');
 		}
 		function edit_user(){
-			$('#edit_dialog').dialog('open');
 			var row = $('#dg').datagrid('getSelected');
-			$('#form_edit').form('load',row);
-			url = "{:U('Member/member_u')}?m_id=" + row.m_id;
+			if(row.ot_id!=''){
+				$('#edit_dialog').dialog('open');
+				$('#form_edit').form('load',row);
+				url = "{:U('Member/member_u')}?m_id=" + row.m_id;
+			}
+			
 		}
 		function store(){
 			$('#store').dialog('open');
@@ -211,6 +228,99 @@
                 }
             });
 		}
+		function append(){
+        	$('#memberform').form('submit',{
+	            onSubmit: function(){
+	            	if( $('#memberform').form('validate')==false){
+	            		$.messager.confirm('警告','紅色欄位為必要欄位!!',function(r){
+						    if (r){
+						        $('#dlg').dialog('open');
+						    }
+						});
+	            	}
+	            	else{
+	            		/*append_forDB();*/
+	            		$.ajax({
+			                url: "{:U('Member/append_c')}",
+			                data:$('#memberform').serialize(),
+			                type:"POST",
+			                dataType:'text',
+			                
+			                success: function(result){
+
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('訊息','資料成功儲存');
+			                    	setTimeout("location.href='{:U('Index/member')}'",850);
+			                    } 
+			                },
+			                 error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+	            		$('#memberform').form('clear'); 
+	            		return $('#memberform').form('validate');
+	            	}             
+	            }
+            });	
+        }
+   /*     	var name = $('#name').val()
+        	var theater_name = $('#theater_name').val()
+        	var food = $('#food').val()
+        	var type = $('#type').val()
+        	var price = $('#price').val()
+        	var size = $('#size').val()
+
+        	if(name==''||theater_name==''||food==''||type==''||price==''||size==''){
+        		$.messager.confirm('Confirm','紅色欄位為必要欄位!!',function(r){
+				    if (r){
+				        $('#dlg').dialog('open');
+				    }
+				});
+        	}else {
+	        	$('#dg').datagrid('appendRow',{
+					name: name,
+					theater_name: theater_name,
+					food: food,
+					type: type,
+					price: price,
+					size: size
+				});
+
+				$('#dlg').dialog('close');
+				$('#memberform').form('clear');
+        	}*/
+
+        function destroyRow(){
+        	var row=$('#dg').datagrid('getSelected');
+        	if(row){
+        		$.messager.confirm('警告','確定要刪除此列',function(r){
+        			if(r){
+        				/*destroyRow_forDB()*/
+        				$.ajax({
+			                url:"{:U('Member/destroyRow_c')}",
+                            data:{
+                                delete_m_id:row.m_id
+                            },
+                            type:"POST",
+                            async:false,
+			                success: function(result){
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('訊息','成功刪除資料');
+			                    	setTimeout("location.href='{:U('Index/member')}'",850);
+			                    }
+			                },
+			                error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+
+        			}
+
+        		});
+        	}
+        }
     </script>
     
 </body>
