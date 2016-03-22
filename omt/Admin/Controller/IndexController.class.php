@@ -3,6 +3,44 @@ namespace Admin\Controller;
 use Think\Controller;
 use Common\Controller\AdminController;
 class IndexController extends AdminController {
+    public function index_r(){
+        $db = M('News');
+        $result = $db->select();
+        if($result) {
+            $this->ajaxReturn($result);
+        }
+    }
+    public function append_c() {
+        $db = M('News');
+        $data = $db->create();
+        if (!$data) {
+            $this->ajaxReturn($db->getError());
+        } else {
+            $db->add($data);
+            $this->ajaxReturn(true);
+        }
+    }
+    public function destroyRow_c(){
+        $db = M('News');
+        $conit['n_id'] = array('eq',$_REQUEST['delete_n_id']);
+        $result = $db->where($conit)->delete();
+        if(!$result){
+            $this->ajaxReturn($db->getError());
+        } else{
+            $this->ajaxReturn(true);
+        }
+    }
+    public function edit_c(){
+        $db = M('News');
+        $condit['n_id'] = array('eq',$_REQUEST['n_id']); 
+        $data = $db->create();
+        $result = $db->where($condit)->save($data);
+        if($result) {
+            $this->ajaxReturn(true);
+        } else {
+            echo $db->getError();
+        }
+    }
     public function index(){
         $this->display();
     }

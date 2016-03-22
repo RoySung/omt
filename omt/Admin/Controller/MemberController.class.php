@@ -30,4 +30,24 @@ class MemberController extends Controller {
     		echo $db->getError();
     	}
     }
+    public function append_c() {
+        $db = M('Member');
+        $data = $db->create();
+        if (!$data) {
+            $this->ajaxReturn($db->getError());
+        } else {
+            $db->add($data);
+            $this->ajaxReturn(true);
+        }
+    }
+    public function destroyRow_c(){
+        $db = M('Member');
+        $conit['m_id'] = array('eq',$_REQUEST['delete_m_id']);
+        $result = $db->where($conit)->delete();
+        if(!$result){
+            $this->ajaxReturn($db->getError());
+        } else{
+            $this->ajaxReturn(true);
+        }
+    }
 }
