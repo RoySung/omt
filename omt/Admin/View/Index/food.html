@@ -10,8 +10,13 @@
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
+<style type="text/css">
+	body{
+		margin:0px;
+	}
+</style>
 <body>
-    <div id="dlg" class="easyui-dialog" title="訂餐資料" closed="true" style="width:450px;height:350px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="新增餐點" closed="true" style="width:450px;height:400px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -51,7 +56,7 @@
 		</form>
 		</div>
 	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯餐點" closed="true" style="width:450px;height:400px;padding:10px;"
+	<div id="edit_dialog" class="easyui-dialog" title="編輯餐點" closed="true" style="width:450px;height:400px;padding:10px;left:304px;"
 		buttons="#adduser_button">
 		<div style="padding:10px 30px 20px 30px">
 			<form id="form_edit" method="post" enctype="multipart/form-data">
@@ -80,9 +85,9 @@
 		    </div>
 		</div>
 	</div>
-    <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
-	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'{:U('Food/food_r')}',method:'get',fit:true">
+    <table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
+	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
+	data-options="url:'{:U('Food/food_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 			<thead>
 			<tr>
 				<th field="food" width="50" editor="{type:'validatebox',options:{required:true}}">食物名稱</th>
@@ -94,7 +99,7 @@
 		</thead>
 	</table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
         <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').        edatagrid('saveRow')">儲存</a>-->
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_food()">編輯</a>
@@ -102,11 +107,17 @@
     <script type="text/javascript">
     	function edit_food(){
 			var row = $('#dg').datagrid('getSelected');
-			if(row.f_id!=''){
+			if(row){
+    			//close other dialog
+				$('#dlg').dialog('close');
+				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
 				url = "{:U('Food/edit_c')}?f_id=" + row.f_id;
 			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
 		}
 		function save(form){
 			$(form).form('submit',{
@@ -116,6 +127,12 @@
                     $('#dg').datagrid('reload');
                 }
             });
+		}
+		function appendOpen(){
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			//begin append
+			$('#dlg').dialog('open');
 		}
         function append(){
         	$('#foodform').form('submit',{
@@ -140,7 +157,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功新增資料');
-			                    	setTimeout("location.href='{:U('Index/food')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    } 
 			                },
 			                 error:function(result){ 
@@ -197,7 +214,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功刪除資料');
-			                    	setTimeout("location.href='{:U('Index/food')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    }
 			                },
 			                error:function(result){ 
@@ -208,6 +225,9 @@
         			}
 
         		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
         	}
         }
     </script>

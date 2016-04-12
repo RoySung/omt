@@ -4,9 +4,16 @@ use Think\Controller;
 class SessionController extends Controller {
     public function session_r(){
         $db = M('Sessionview');
-        $result = $db->select();
-        if($result) {
-            $this->ajaxReturn($result);
+
+        $page = $_REQUEST['page'];
+        $pageSize = $_REQUEST['rows'];
+
+        $result = $db->page($page,$pageSize)->select();
+        $data['total'] = $db->count();
+        $data['rows'] = $result;
+       // $result = $db->select();
+        if($data) {
+            $this->ajaxReturn($data);
         }
     }
     public function append_c() {

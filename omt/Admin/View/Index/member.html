@@ -130,7 +130,7 @@
 						<td>儲值金額</td>
 						<td>
 							<select id="money" class="easyui-combobox" name="money" style="width:170px;">
-								<option value="100" selected>100</option>
+								<option value="100">100</option>
 								<option value="200">200</option>
 								<option value="500">500</option>
 								<option value="1000">1000</option>
@@ -146,10 +146,11 @@
 			</div>
 		</div>
 		<div id="insidelayout" class="easyui-layout" data-options="fit:true">
+
 			<div data-options="region:'center',iconCls:'icon-ok'">
-				<table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
-				toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-				data-options="url:'{:U('Member/member_r')}',method:'get',fit:'true'">
+				<table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
+				toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
+				data-options="url:'{:U('Member/Member_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 						<thead>
 						<tr>
 							<th field="name" width="50" editor="{type:'validatebox',options:{required:true}}">會員名稱</th>
@@ -165,15 +166,42 @@
 					</thead>
 				</table>
 			</div>
-		<div>
+			<!--<div id="searchform" style="width:250px;padding:20px;font-size:20px;"method="post" data-options="region:'east',split:true,collapsed:true" title="搜尋表" >
+				<table cellpadding="20">
+					<tr>
+						<td>信箱</td>
+						<td>
+							<input class="easyui-textbox" type="validatebox" id="mail" name="mail" style="width:180px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>手機</td>
+						<td>
+							<input class="easyui-textbox" type="text" id="phone" name="phone" data-options="required:true" style="width:180px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>結果</td>
+						<td>
+							<input class="easyui-textbox" type="text" id="result" name="result" data-options="multiline:true" style="width:180px;height:60px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<a href="#" class="easyui-linkbutton c5" style="width:50px;" onclick="Dosearch()">搜尋</a>
+						<a href="#" class="easyui-linkbutton" style="width:50px;" onclick="formclear()">清除</a>
+					</tr>
+				</table>
+			</div>
+		<div>-->
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">儲存</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_user()">編輯</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchOpen()">搜尋UID</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="store()">儲值</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-money" plain="true" onclick="store()">儲值</a>
 	</div>
+	
+
     <script type="text/javascript">
     	var url;
     	$("#build_date").datebox({
@@ -191,14 +219,65 @@
     	});
 		function searchOpen()
 		{
+			//close other dialog
+			$('#store').dialog('close');
+			$('#dlg').dialog('close');
+			$('#edit_dialog').dialog('close');
 			$('#insidelayout').layout('remove', 'east');
+			//begin search
 			$('#insidelayout').layout('add',{
 				region: 'east',
 				width: 380,
 				title: '搜尋表',
 				split: true,
-				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>信箱</td><td><input class="easyui-textbox" type="validatebox" name="mail" style="width:200px;"></input></td></tr><tr><td>手機</td><td><input class="easyui-textbox" type="text" name="phone" data-options="required:true" style="width:200px;"></input></td></tr><tr><td>結果</td><td><input class="easyui-textbox" type="text" name="result" data-options="multiline:true" style="width:200px;height:60px;"></input></td></tr><tr><a href="#" class="easyui-linkbutton c5" style="width:50px;" onclick=alert("搜尋")>搜尋</a><a href="#" class="easyui-linkbutton" style="width:50px;" onclick="formclear()">清除</a></tr></table></form>'
+				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>信箱</td><td><input class="easyui-textbox" type="validatebox" id="mail" name="mail" style="width:200px;"></input></td></tr><tr><td>手機</td><td><input class="easyui-textbox" type="text" id="phone" name="phone" data-options="required:true" style="width:200px;"></input></td></tr><tr><td></td><td style="float:right;"><div href="#" class="easyui-linkbutton c5"  style=width:60px onclick="Dosearch()">搜尋</div><div href="#" class="easyui-linkbutton"  style=width:60px onclick="formclear()">清除</div></td></tr></table></form>'
 			});
+		}
+		function Dosearch(){
+
+			var phone = $('#phone').textbox('getText')
+			var mail = $('#mail').textbox('getText')
+			var pagerows = $('#dg').datagrid('getRows');
+			if(phone=="")
+			{
+				$.messager.alert('警告','紅色欄位為必要欄位!!');
+			}
+			else{
+				$.ajax({
+	                url:"{:U('Member/search')}",
+	                data:{
+	                    th_phone:phone,
+	                    th_mail:mail
+	                },
+	                type:"POST",
+	               	dataType:'text',
+	                success: function(result){
+	                    result = JSON.parse(result);
+	                    if (result) {
+	                    	var checkrow = 0;
+	                    	var maxrows = pagerows.length;
+	                    	for(var i=0; i<maxrows;i++)
+	                    	{
+	                    		$('#dg').datagrid('selectRow',checkrow);
+								var row = $('#dg').datagrid('getSelected');
+	                    		if(result!=row.m_id){
+	                    			$('#dg').datagrid('deleteRow',checkrow);
+	                    		}
+	                    		else{
+	                    			checkrow++;
+	                    		}
+	                    	}
+	                    	$('#dg').datagrid('selectRow',0);
+	                    	
+	                    }
+	                },
+	                error:function(result){ 
+	                     console.log(result);
+	                }
+	        	});
+			}
+			
+
 		}
 		function formclear()
 		{
@@ -206,27 +285,58 @@
 		}
 		function edit_user(){
 			var row = $('#dg').datagrid('getSelected');
-			if(row.ot_id!=''){
+			if(row){
+				//close other dialog
+				$('#store').dialog('close');
+				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
+				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
 				url = "{:U('Member/member_u')}?m_id=" + row.m_id;
 			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
 			
 		}
 		function store(){
-			$('#store').dialog('open');
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			$('#dlg').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
+			//begin store
+			
 			var row = $('#dg').datagrid('getSelected');
-			$('#form_store').form('load',row);
-			url = "{:U('Member/store')}?m_id=" + row.m_id + "&money=" + $('#money').val();
+			if(row){
+				$('#store').dialog('open');
+				$('#form_store').form('load',row);
+			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
+			
 		}
 		function save(form){
+			
+			var row = $('#dg').datagrid('getSelected');
 			$(form).form('submit',{
-                url: url,
+                url: "{:U('Member/store')}?m_id=" + row.m_id + "&money=" + $('#money').combobox('getValue'),
                 success: function(result){
-                    $('#edit_dialog').dialog('close');
+                    $('#store').dialog('close');
                     $('#dg').datagrid('reload');
+                    
                 }
             });
+            
+		}
+		function appendOpen(){
+			//close other dialog
+			$('#store').dialog('close');
+			$('#edit_dialog').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
+			//begin append
+			$('#dlg').dialog('open');
 		}
 		function append(){
         	$('#memberform').form('submit',{
@@ -264,33 +374,6 @@
 	            }
             });	
         }
-   /*     	var name = $('#name').val()
-        	var theater_name = $('#theater_name').val()
-        	var food = $('#food').val()
-        	var type = $('#type').val()
-        	var price = $('#price').val()
-        	var size = $('#size').val()
-
-        	if(name==''||theater_name==''||food==''||type==''||price==''||size==''){
-        		$.messager.confirm('Confirm','紅色欄位為必要欄位!!',function(r){
-				    if (r){
-				        $('#dlg').dialog('open');
-				    }
-				});
-        	}else {
-	        	$('#dg').datagrid('appendRow',{
-					name: name,
-					theater_name: theater_name,
-					food: food,
-					type: type,
-					price: price,
-					size: size
-				});
-
-				$('#dlg').dialog('close');
-				$('#memberform').form('clear');
-        	}*/
-
         function destroyRow(){
         	var row=$('#dg').datagrid('getSelected');
         	if(row){
@@ -319,6 +402,9 @@
         			}
 
         		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
         	}
         }
     </script>
