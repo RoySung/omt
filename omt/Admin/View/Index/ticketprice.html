@@ -52,6 +52,14 @@
 					<td>價格</td>
 					<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
+				<tr>
+					<td>電影院流水號</td>
+					<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
+				</tr>
+				<tr>
+					<td>電影流水號</td>
+					<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
+				</tr>
 			</table>
 		</form>
 		</div>
@@ -77,6 +85,14 @@
 						<td>價格</td>
 						<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
+					<tr>
+						<td>電影院流水號</td>
+						<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>電影流水號</td>
+						<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
@@ -85,7 +101,7 @@
 		    </div>
 		</div>
 	</div>
-    <table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
+    <table id="dg" class="easyui-datagrid" style="width:100%;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
 	data-options="url:'{:U('Ticketprice/ticketprice_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 			<thead>
@@ -95,7 +111,7 @@
 				<th field="type" width="50" editor="{type:'validatebox',options:{required:true}}">類型</th>
 				<th field="price" width="50" editor="{type:'validatebox',options:{required:true}}">價格</th>
 				<th field="t_id"  width="50" data-options="hidden:true" editor="text">t_id</th>
-				<th field="tp_id"  width="50" data-options="hidden:true" editor="text">t_id</th>
+				<th field="tp_id"  width="50" data-options="hidden:true" editor="text">tp_id</th>
 			</tr>
 		</thead>
 	</table>

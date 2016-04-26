@@ -4,9 +4,21 @@ use Think\Controller;
 class TicketController extends Controller {
     public function ticket_r(){
         $db = M('Orderticketview');
-        $result = $db->select();
-        if($result) {
-            $this->ajaxReturn($result);
+
+        $page = $_REQUEST['page'];
+        $pageSize = $_REQUEST['rows'];
+        //REQUEST = POST or GET
+        if($_REQUEST['name']OR$_REQUEST['movie_name']){
+            $condit['name'] = array('like',$_REQUEST['name']);
+            $condit['movie_name'] = array('like',$_REQUEST['movie_name']);
+        }
+        
+        $result = $db->where($condit)->page($page,$pageSize)->select();
+        $data['total'] = $db->where($condit)->count();
+        $data['rows'] = $result;
+       // $result = $db->select();
+        if($data) {
+            $this->ajaxReturn($data);
         }
     }
     public function append_c() {

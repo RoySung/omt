@@ -7,9 +7,15 @@ class SessionController extends Controller {
 
         $page = $_REQUEST['page'];
         $pageSize = $_REQUEST['rows'];
-
-        $result = $db->page($page,$pageSize)->select();
-        $data['total'] = $db->count();
+        //REQUEST = POST or GET
+        if($_REQUEST['movie_name']OR$_REQUEST['time']OR$_REQUEST['date']){
+            $condit['movie_name'] = array('like',$_REQUEST['movie_name']);
+            $condit['time'] = array('like',$_REQUEST['time']);
+            $condit['date'] = array('like',$_REQUEST['date']);
+        }
+        
+        $result = $db->where($condit)->page($page,$pageSize)->select();
+        $data['total'] = $db->where($condit)->count();
         $data['rows'] = $result;
        // $result = $db->select();
         if($data) {

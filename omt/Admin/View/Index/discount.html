@@ -37,8 +37,8 @@
 		<form id="discountform" method="post">
 			<table cellpadding="5">
 				<tr>
-					<td>會員名稱</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					<td>會員流水號</td>
+					<td><input class="easyui-textbox" type="text" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>類型</td>
@@ -49,13 +49,13 @@
 					<td><input class="easyui-textbox" name="discount" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>開始時間</td>
-					<td><input class="easyui-textbox" name="start_date" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>到期時間</td>
-					<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
+	    			<td>開始時間</td>
+	    			<td><input class="easyui-datebox" type="text" id="date" name="start_date" data-options="required:true" style="width:250px;"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>到期時間</td>
+	    			<td><input class="easyui-datebox" type="text" id="date1" name="end_date" data-options="required:true" style="width:250px;"></input></td>
+	    		</tr>
 			</table>
 		</form>
 		</div>
@@ -66,8 +66,8 @@
 			<form id="form_edit" method="post" enctype="multipart/form-data">
 				<table cellpadding="5">
 					<tr>
-						<td>會員名稱</td>
-						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+						<td>會員流水號</td>
+						<td><input class="easyui-textbox" type="text" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
 						<td>類型</td>
@@ -78,13 +78,13 @@
 						<td><input class="easyui-textbox" name="discount" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>開始時間</td>
-						<td><input class="easyui-textbox" name="start_date" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>到期時間</td>
-						<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
+		    			<td>開始時間</td>
+		    			<td><input class="easyui-datebox" type="text" id="date3" name="start_date" data-options="required:true" style="width:250px;"></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>到期時間</td>
+		    			<td><input class="easyui-datebox" type="text" id="date4" name="end_date" data-options="required:true" style="width:250px;"></input></td>
+		    		</tr>
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
@@ -93,7 +93,7 @@
 		    </div>
 		</div>
 	</div>
-    <table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
+    <table id="dg" class="easyui-datagrid" style="width:100%;"
 	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
 	data-options="url:'{:U('Discount/discount_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 			<thead>
@@ -116,6 +116,60 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_discount()">編輯</a>
     </div>
     <script type="text/javascript">
+    	$(document).ready(function(){
+	      	$("#date").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date1").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date3").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date4").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    });
         function edit_discount(){
 			var row = $('#dg').datagrid('getSelected');
 			if(row){
