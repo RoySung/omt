@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Build CRUD DataGrid with jQuery EasyUI - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/include/easyui.1.4.3/themes/color.css">
+	<script type="text/javascript" src="__PUBLIC__/include/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
+</head>
+<style type="text/css">
+	body{
+		margin:0px;
+	}
+</style>
+<body>
+    <div id="dlg" class="easyui-dialog" title="新增訂餐紀錄" closed="true" style="width:450px;height:400px;padding:10px;"
+		data-options="
+			buttons: [{
+				text:'確定',
+				iconCls:'icon-ok',
+				handler:function(){
+					append();
+					$('#dlg').dialog('close');
+				}
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function(){
+					$('#dlg').dialog('close');
+				}
+			}]
+		">
+		<div style="padding:10px 30px 20px 30px">
+		<form id="foodrecordform" method="post">
+			<table cellpadding="5">
+					<tr>
+						<td>會員名稱</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>手機</td>
+						<td><input class="easyui-textbox" type="text" name="phone"  style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>食物名稱</td>
+						<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>訂購數量</td>
+						<td><input class="easyui-textbox" type="text" name="food_quantity" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>大小</td>
+						<td><input class="easyui-textbox" type="text" name="size" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>花費</td>
+						<td><input class="easyui-textbox" name="food_cost" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>食物代號</td>
+						<td><input class="easyui-textbox" name="f_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>訂票流水號</td>
+						<td><input class="easyui-textbox" name="ot_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+				</table>
+		</form>
+		</div>
+	</div>
+	<div id="edit_dialog" class="easyui-dialog" title="編輯訂餐紀錄" closed="true" style="width:450px;height:400px;padding:10px;left:304px;"
+		buttons="#adduser_button">
+		<div style="padding:10px 30px 20px 30px">
+			<form id="form_edit" method="post" enctype="multipart/form-data">
+				<table cellpadding="5">
+					<tr>
+						<td>會員名稱</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>手機</td>
+						<td><input class="easyui-textbox" type="text" name="phone"  style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>食物名稱</td>
+						<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>訂購數量</td>
+						<td><input class="easyui-textbox" type="text" name="food_quantity" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>大小</td>
+						<td><input class="easyui-textbox" type="text" name="size" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>花費</td>
+						<td><input class="easyui-textbox" name="food_cost" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>食物代號</td>
+						<td><input class="easyui-textbox" name="f_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+						<td>訂票流水號</td>
+						<td><input class="easyui-textbox" name="ot_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+				</table>
+			</form>
+			<div id="edituser_button" style="float:right;" >
+		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save('#form_edit')" style="width:90px">儲存</a>
+		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#edit_dialog').dialog('close')" style="width:90px">取消</a>
+		    </div>
+		</div>
+	</div>
+	<div id="insidelayout" class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center',iconCls:'icon-ok'">
+		    <table id="dg" class="easyui-datagrid" style="width:100%;"
+			toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"pagination="true"
+			data-options="url:'{:U('FoodRecord/foodrecord_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
+				<thead>
+					<tr>
+						<th field="name" width="50" editor="text">會員名稱</th>
+						<th field="phone" width="50" editor="text">手機</th>
+						<th field="food" width="50" editor="text">食物名稱</th>
+						<th field="food_quantity" width="50" editor="text">訂購數量</th>
+						<th field="food_size" width="50" editor="text">大小</th>
+						<th field="type_name" width="50" editor="text">類型</th>
+						<th field="food_cost" width="50" editor="text">花費</th>
+						<th field="of_id" width="50" data-options="hidden:true" editor="text">of_id</th>
+						<th field="f_id" width="50"  data-options="hidden:true" editor="text">f_id</th>
+						<th field="ot_id" width="50" data-options="hidden:true" editor="text">ot_id</th>
+						
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_foodrecord()">編輯</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchOpen()">搜尋紀錄</a>
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').        edatagrid('saveRow')">儲存</a>-->
+        
+    </div>
+    <script type="text/javascript">
+    	function edit_foodrecord(){
+			var row = $('#dg').datagrid('getSelected');
+			if(row){
+    			//close other dialog
+				$('#dlg').dialog('close');
+				//begin edit
+				$('#edit_dialog').dialog('open');
+				$('#form_edit').form('load',row);
+				url = "{:U('FoodRecord/edit_c')}?of_id=" + row.of_id;
+			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
+
+		}
+		function save(form){
+			$(form).form('submit',{
+                url: url,
+                success: function(result){
+                    $('#edit_dialog').dialog('close');
+                    $('#dg').datagrid('reload');
+                }
+            });
+		}
+		function searchOpen()
+		{
+			//close other dialog
+			$('#store').dialog('close');
+			$('#dlg').dialog('close');
+			$('#edit_dialog').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
+			//begin search
+			$('#insidelayout').layout('add',{
+				region: 'east',
+				width: 380,
+				title: '搜尋表',
+				split: true,
+				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>手機</td><td><input class="easyui-textbox" type="validatebox" id="phone" name="phone" style="width:200px;"></input></td></tr><tr><td>食物名稱</td><td><input class="easyui-textbox" type="text" id="food_name" name="food_name" value="米花"  style="width:200px;"></input></td></tr><tr><td></td><td style="float:right;"><div href="#" class="easyui-linkbutton c5"  style=width:60px onclick="Dosearch()">搜尋</div><div href="#" class="easyui-linkbutton"  style=width:60px onclick="formclear()">清除</div></td></tr></table></form>'
+			});
+		}
+		function Dosearch(){
+			var phone = $('#phone').textbox('getText')
+			var food_name = $('#food_name').textbox('getText')
+			$('#dg').datagrid('load', {
+                phone: '%' + phone + '%',
+                food_name: '%' + food_name + '%',
+
+            });
+		}
+		function formclear()
+		{
+			$('#searchform').form('clear');
+			$('#dg').datagrid('load', {
+                phone:'',
+                food_name:'',
+            });
+		}
+		function appendOpen(){
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			//begin append
+			$('#dlg').dialog('open');
+		}
+		function append(){
+        	$('#foodrecordform').form('submit',{
+	            onSubmit: function(){
+	            	if( $('#foodrecordform').form('validate')==false){
+	            		$.messager.confirm('警告','紅色欄位為必要欄位!!',function(r){
+						    if (r){
+						        $('#dlg').dialog('open');
+						    }
+						});
+	            	}
+	            	else{
+	            		/*append_forDB();*/
+	            		$.ajax({
+			                url: "{:U('FoodRecord/append_c')}",
+			                data:$('#foodrecordform').serialize(),
+			                type:"POST",
+			                dataType:'text',
+			                
+			                success: function(result){
+
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('訊息','成功新增資料');
+			                    	$('#dg').datagrid('reload');
+			                    } 
+			                },
+			                 error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+	            		$('#foodrecordform').form('clear'); 
+	            		return $('#foodrecordform').form('validate');
+	            	}             
+	            }
+            });	
+        }
+   /*     	var name = $('#name').val()
+        	var theater_name = $('#theater_name').val()
+        	var food = $('#food').val()
+        	var type = $('#type').val()
+        	var price = $('#price').val()
+        	var size = $('#size').val()
+
+        	if(name==''||theater_name==''||food==''||type==''||price==''||size==''){
+        		$.messager.confirm('Confirm','紅色欄位為必要欄位!!',function(r){
+				    if (r){
+				        $('#dlg').dialog('open');
+				    }
+				});
+        	}else {
+	        	$('#dg').datagrid('appendRow',{
+					name: name,
+					theater_name: theater_name,
+					food: food,
+					type: type,
+					price: price,
+					size: size
+				});
+
+				$('#dlg').dialog('close');
+				$('#foodrecordform').form('clear');
+        	}*/
+
+        function destroyRow(){
+        	var row=$('#dg').datagrid('getSelected');
+        	if(row){
+        		$.messager.confirm('警告','確定要刪除此列',function(r){
+        			if(r){
+        				/*destroyRow_forDB()*/
+        				$.ajax({
+			                url:"{:U('FoodRecord/destroyRow_c')}",
+                            data:{
+                                delete_of_id:row.of_id
+                            },
+                            type:"POST",
+                            async:false,
+			                success: function(result){
+			                    result = JSON.parse(result);
+			                    if (result==true) {
+			                    	$.messager.alert('訊息','成功刪除資料');
+			                    	$('#dg').datagrid('reload');
+			                    }
+			                },
+			                error:function(result){ 
+			                     console.log(result);
+			                }
+			        	});
+
+        			}
+
+        		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
+        }
+    </script>
+    
+</body>
+</html>

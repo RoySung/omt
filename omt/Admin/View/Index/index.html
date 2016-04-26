@@ -21,14 +21,14 @@
 	<div id="dlg" class="easyui-dialog" title="新增公告" closed="true" style="width:450px;height:400px;padding:10px;;"
 			data-options="
 				buttons: [{
-					text:'Ok',
+					text:'確認',
 					iconCls:'icon-ok',
 					handler:function(){
 						append()
 						$('#dlg').dialog('close');
 					}
 				},{
-					text:'Cancel',
+					text:'取消',
 					iconCls:'icon-cancel',
 					handler:function(){
 						$('#dlg').dialog('close');
@@ -91,7 +91,9 @@
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂票資料","{:U("Index/ticket")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">訂票資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂餐資料","{:U("Index/food")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">訂餐資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("餐點資料","{:U("Index/food")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">餐點資料</span></a>
+				<div class="easyui-penal" style="padding:5px;width:100;"></div>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂餐紀錄","{:U("Index/foodrecord")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">訂餐紀錄</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("優惠資料","{:U("Index/discount")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">優惠資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
@@ -102,6 +104,8 @@
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各片票價","{:U("Index/ticketprice")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">各片票價</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影場次","{:U("Index/session")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">電影場次</span></a>
+				<div class="easyui-penal" style="padding:5px;width:100;"></div>
+				
 			</div>
 		</div>
 
@@ -111,7 +115,7 @@
 					<div id="tt" class="easyui-tabs" style="width:100%;height:528px;"
 						data-options="tabWidth:110,fit:true">
 						<div title="系統資訊" style="width:100%;height:100%;">
-							<table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
+							<table id="dg" class="easyui-datagrid" style="width:100%;"
 							toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
 	data-options="url:'{:U('Index/index_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 								<thead>
