@@ -107,7 +107,7 @@
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
-		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save('#form_edit')" style="width:90px">儲存</a>
+		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save_edit_user('#form_edit')" style="width:90px">儲存</a>
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#edit_dialog').dialog('close')" style="width:90px">取消</a>
 		    </div>
 			</div>
@@ -140,16 +140,15 @@
 				</table>
 			</form>
 			<div id="store_button" style="float:right;" >
-		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save('#form_store')" style="width:90px">儲存</a>
+		        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="save_money('#form_store')" style="width:90px">儲存</a>
 		        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#store').dialog('close')" style="width:90px">取消</a>
 		    </div>
 			</div>
 		</div>
 		<div id="insidelayout" class="easyui-layout" data-options="fit:true">
-
 			<div data-options="region:'center',iconCls:'icon-ok'">
-				<table id="dg" class="easyui-datagrid" style="width:100%;height:587px;"
-				toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
+				<table id="dg" class="easyui-datagrid" style="width:100%;"
+				toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true" 
 				data-options="url:'{:U('Member/Member_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 						<thead>
 						<tr>
@@ -230,58 +229,24 @@
 				width: 380,
 				title: '搜尋表',
 				split: true,
-				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>信箱</td><td><input class="easyui-textbox" type="validatebox" id="mail" name="mail" style="width:200px;"></input></td></tr><tr><td>手機</td><td><input class="easyui-textbox" type="text" id="phone" name="phone" data-options="required:true" style="width:200px;"></input></td></tr><tr><td></td><td style="float:right;"><div href="#" class="easyui-linkbutton c5"  style=width:60px onclick="Dosearch()">搜尋</div><div href="#" class="easyui-linkbutton"  style=width:60px onclick="formclear()">清除</div></td></tr></table></form>'
+				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>手機</td><td><input class="easyui-textbox" type="text" id="phone" name="phone"  style="width:200px;"></input></td></tr><tr><td>信箱</td><td><input class="easyui-textbox" type="text" id="email" name="email" style="width:200px;"></input></td></tr><tr><td></td><td style="float:right;"><div href="#" class="easyui-linkbutton c5"  style=width:60px onclick="Dosearch()">搜尋</div><div href="#" class="easyui-linkbutton"  style=width:60px onclick="formclear()">清除</div></td></tr></table></form>'
 			});
 		}
 		function Dosearch(){
-
 			var phone = $('#phone').textbox('getText')
-			var mail = $('#mail').textbox('getText')
-			var pagerows = $('#dg').datagrid('getRows');
-			if(phone=="")
-			{
-				$.messager.alert('警告','紅色欄位為必要欄位!!');
-			}
-			else{
-				$.ajax({
-	                url:"{:U('Member/search')}",
-	                data:{
-	                    th_phone:phone,
-	                    th_mail:mail
-	                },
-	                type:"POST",
-	               	dataType:'text',
-	                success: function(result){
-	                    result = JSON.parse(result);
-	                    if (result) {
-	                    	var checkrow = 0;
-	                    	var maxrows = pagerows.length;
-	                    	for(var i=0; i<maxrows;i++)
-	                    	{
-	                    		$('#dg').datagrid('selectRow',checkrow);
-								var row = $('#dg').datagrid('getSelected');
-	                    		if(result!=row.m_id){
-	                    			$('#dg').datagrid('deleteRow',checkrow);
-	                    		}
-	                    		else{
-	                    			checkrow++;
-	                    		}
-	                    	}
-	                    	$('#dg').datagrid('selectRow',0);
-	                    	
-	                    }
-	                },
-	                error:function(result){ 
-	                     console.log(result);
-	                }
-	        	});
-			}
-			
-
+			var email = $('#email').textbox('getText')
+			$('#dg').datagrid('load', {
+                phone: '%' + phone + '%',
+                email: '%' + email + '%',
+            });
 		}
 		function formclear()
 		{
 			$('#searchform').form('clear');
+			$('#dg').datagrid('load', {
+                phone: '',
+                email:'',
+            });
 		}
 		function edit_user(){
 			var row = $('#dg').datagrid('getSelected');
@@ -300,15 +265,25 @@
         	}
 			
 		}
+		function save_edit_user(form){
+			var row = $('#dg').datagrid('getSelected');
+			$(form).form('submit',{
+                url: url,
+                success: function(result){
+                    $('#edit_dialog').dialog('close');
+                    $('#dg').datagrid('reload');
+                    
+                }
+            });
+		}
 		function store(){
-			//close other dialog
-			$('#edit_dialog').dialog('close');
-			$('#dlg').dialog('close');
-			$('#insidelayout').layout('remove', 'east');
-			//begin store
-			
 			var row = $('#dg').datagrid('getSelected');
 			if(row){
+    			//close other dialog
+				$('#edit_dialog').dialog('close');
+				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
+				//begin store
 				$('#store').dialog('open');
 				$('#form_store').form('load',row);
 			}
@@ -317,19 +292,18 @@
         	}
 			
 		}
-		function save(form){
-			
+		function save_money(form){
 			var row = $('#dg').datagrid('getSelected');
 			$(form).form('submit',{
                 url: "{:U('Member/store')}?m_id=" + row.m_id + "&money=" + $('#money').combobox('getValue'),
                 success: function(result){
                     $('#store').dialog('close');
                     $('#dg').datagrid('reload');
-                    
                 }
             });
             
 		}
+
 		function appendOpen(){
 			//close other dialog
 			$('#store').dialog('close');

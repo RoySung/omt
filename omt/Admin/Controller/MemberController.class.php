@@ -8,8 +8,13 @@ class MemberController extends Controller {
         $page = $_REQUEST['page'];
         $pageSize = $_REQUEST['rows'];
 
-        $result = $db->page($page,$pageSize)->select();
-        $data['total'] = $db->count();
+        if($_REQUEST['email']OR$_REQUEST['phone']){
+            $condit['phone'] = array('like',$_REQUEST['phone']);
+            $condit['email'] = array('like',$_REQUEST['email']);
+        }
+        
+        $result = $db->where($condit)->page($page,$pageSize)->select();
+        $data['total'] = $db->where($condit)->count();
         $data['rows'] = $result;
        // $result = $db->select();
         if($data) {
@@ -55,29 +60,6 @@ class MemberController extends Controller {
             $this->ajaxReturn($db->getError());
         } else{
             $this->ajaxReturn(true);
-        }
-    }
-    public function search(){
-   /*     $db = M('Member');
-        $conit['phone'] = array('eq',$_REQUEST['th_phone']);
-        $conit['mail'] = array('eq',$_REQUEST['th_mail']);
-        $result = $db->where($conit)->select();
-        $data = $db->create($conit);
-        if($result) {
-            $this->ajaxReturn($data['mail']);
-        }*/
-        $db = M('Member');
-        $data = $db->create();
-        
-        $conit['phone'] = array('eq',$_REQUEST['th_phone']);
-        $conit['_logic'] = 'OR';
-        $result = $db->where($conit)->select();
-        if($result){
-            $this->ajaxReturn($result[0]['m_id']);
-        } else{
-            $conit['email'] = array('eq',$_REQUEST['th_mail']);
-            $result = $db->where($conit)->select();
-            $this->ajaxReturn($result[0]['m_id']);
         }
     }
 }
