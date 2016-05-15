@@ -53,11 +53,11 @@
 					<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>電影院流水號</td>
+					<td>電影院編號</td>
 					<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>電影流水號</td>
+					<td>電影編號</td>
 					<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
@@ -86,11 +86,11 @@
 						<td><input class="easyui-textbox" name="price" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>電影院流水號</td>
+						<td>電影院編號</td>
 						<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>電影流水號</td>
+						<td>電影編號</td>
 						<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 				</table>
@@ -122,6 +122,12 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_ticketprice()">編輯</a>
     </div>
     <script type="text/javascript">
+    	$( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	function edit_ticketprice(){
 			var row = $('#dg').datagrid('getSelected');
 			if(row){
@@ -135,15 +141,6 @@
 			else{
         		$.messager.alert('訊息','請選擇一個欄位');
         	}
-		}
-		function save(form){
-			$(form).form('submit',{
-                url: url,
-                success: function(result){
-                    $('#edit_dialog').dialog('close');
-                    $('#dg').datagrid('reload');
-                }
-            });
 		}
 		function appendOpen(){
 			//close other dialog

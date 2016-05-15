@@ -133,6 +133,12 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_movie()">編輯</a>
     </div>
     <script type="text/javascript">
+    	$( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	function edit_movie(){
 			var row = $('#dg').datagrid('getSelected');
 			if(row){

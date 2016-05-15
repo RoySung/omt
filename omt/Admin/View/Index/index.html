@@ -170,6 +170,12 @@
 			    }     
 	    	});
 	    });
+	    $( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	function edit_news(){
     		var row = $('#dg').datagrid('getSelected');
     		if(row){

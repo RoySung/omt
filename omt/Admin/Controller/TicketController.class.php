@@ -22,8 +22,22 @@ class TicketController extends Controller {
         }
     }
     public function append_c() {
-        $db = M('Orderticket');
+        
+        //find single price
+        $db = M('Sessionview');
+        $condit['s_id'] = array('eq',$_REQUEST['s_id']);
+        $single_price = $db->where($condit)->getField('price');
+        //find seat count
+        $db = M('Orderticketview');
         $data = $db->create();
+        $split_seat = explode('-',$data['seat']);
+        $quantity = count($split_seat);
+        //put quantity and cost and date
+         $data['quantity'] = $quantity;
+         $data['cost'] = $quantity * $single_price;
+         $data['order_date'] = date("Y-m-d");
+         $data['enable'] = 1;
+
         if (!$data) {
             $this->ajaxReturn($db->getError());
         } else {

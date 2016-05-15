@@ -16,7 +16,7 @@
 	}
 </style>
 <body>
-    <div id="dlg" class="easyui-dialog" title="新增訂票紀錄" closed="true" style="width:450px;height:500px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="新增訂票紀錄" closed="true" style="width:450px;height:400px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -35,50 +35,18 @@
 		">
 		<div style="padding:10px 30px 20px 30px">
 		<form id="ticketform" method="post">
-			<table cellpadding="5">
+			<table cellpadding="5">					
 				<tr>
-					<td>電影名稱</td>
-					<td><input class="easyui-textbox" type="text" name="movie_name" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>電影種類</td>
-					<td><input class="easyui-textbox" type="text" name="movie_type" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>電影院</td>
-					<td><input class="easyui-textbox" type="text" name="theater_name" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>會員名稱</td>
-					<td><input class="easyui-textbox" name="name" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>場次流水號</td>
+					<td>場次編號</td>
 					<td><input class="easyui-textbox" name="s_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 				<tr>
-					<td>會員流水號</td>
+					<td>會員編號</td>
 					<td><input class="easyui-textbox" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>座位</td>
 					<td><input class="easyui-textbox" name="seat" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>張數</td>
-					<td><input class="easyui-textbox" name="quantity" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>花費</td>
-					<td><input class="easyui-textbox" name="cost" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-	    			<td>日期</td>
-	    			<td><input class="easyui-datebox" type="text" id="date" name="order_date" data-options="required:true" style="width:250px;"></input></td>
-	    		</tr>
-				<tr>
-					<td>是否已經使用</td>
-					<td><input class="easyui-textbox" name="enable" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 			</table>
 		</form>
@@ -106,11 +74,11 @@
 						<td><input class="easyui-textbox" name="name" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>場次流水號</td>
+						<td>場次編號</td>
 						<td><input class="easyui-textbox" name="s_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>會員流水號</td>
+						<td>會員編號</td>
 						<td><input class="easyui-textbox" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
@@ -202,11 +170,19 @@
 			    }     
 	    	});
 	    });
+	    $( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	function edit_ticket(){
 			var row = $('#dg').datagrid('getSelected');
 			if(row){
     			//close other dialog
 				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
 				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
@@ -262,6 +238,7 @@
 		function appendOpen(){
 			//close other dialog
 			$('#edit_dialog').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
 			//begin append
 			$('#dlg').dialog('open');
 		}
@@ -284,7 +261,9 @@
 			                dataType:'text',
 			                
 			                success: function(result){
+			                	alert(result);
 			                    result = JSON.parse(result);
+
 			                    if (result==true) {
 			                    	$('#dg').datagrid('reload');
 			                    	$.messager.alert('訊息','成功新增資料');

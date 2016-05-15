@@ -57,7 +57,7 @@
 						<td><input class="easyui-textbox" name="f_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>訂票流水號</td>
+						<td>訂票編號</td>
 						<td><input class="easyui-textbox" name="ot_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 				</table>
@@ -90,7 +90,7 @@
 						<td><input class="easyui-textbox" name="f_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>訂票流水號</td>
+						<td>訂票編號</td>
 						<td><input class="easyui-textbox" name="ot_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 				</table>
@@ -134,6 +134,13 @@
         
     </div>
     <script type="text/javascript">
+    	$( document).keydown(function(e) {
+    		if (e.keyCode == 27) { 
+		        $('#dlg').dialog('close');
+		        $('#edit_dialog').dialog('close');
+		        $('#insidelayout').layout('remove', 'east');
+		    } 
+		});
     	$('#date').datebox({
 	        formatter:function(date){
 	            var y=date.getFullYear();
@@ -165,6 +172,7 @@
 			if(row){
     			//close other dialog
 				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
 				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
@@ -187,7 +195,6 @@
 		function searchOpen()
 		{
 			//close other dialog
-			$('#store').dialog('close');
 			$('#dlg').dialog('close');
 			$('#edit_dialog').dialog('close');
 			$('#insidelayout').layout('remove', 'east');
@@ -220,6 +227,7 @@
 		function appendOpen(){
 			//close other dialog
 			$('#edit_dialog').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
 			//begin append
 			$('#dlg').dialog('open');
 		}

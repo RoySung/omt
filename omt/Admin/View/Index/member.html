@@ -202,6 +202,14 @@
 	
 
     <script type="text/javascript">
+		$( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+		        $('#store').dialog('close');
+				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	var url;
     	$("#build_date").datebox({
 	        formatter:function(date){

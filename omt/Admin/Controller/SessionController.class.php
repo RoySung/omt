@@ -8,7 +8,8 @@ class SessionController extends Controller {
         $page = $_REQUEST['page'];
         $pageSize = $_REQUEST['rows'];
         //REQUEST = POST or GET
-        if($_REQUEST['movie_name']OR$_REQUEST['time']OR$_REQUEST['date']){
+        if($_REQUEST['movie_name']OR$_REQUEST['time']OR$_REQUEST['date']OR$_REQUEST['s_id']){
+            $condit['s_id'] = array('like',$_REQUEST['s_id']);
             $condit['movie_name'] = array('like',$_REQUEST['movie_name']);
             $condit['time'] = array('like',$_REQUEST['time']);
             $condit['date'] = array('like',$_REQUEST['date']);

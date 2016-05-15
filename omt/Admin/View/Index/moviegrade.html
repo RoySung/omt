@@ -37,11 +37,11 @@
 		<form id="moviegradeform" method="post">
 			<table cellpadding="5">
 				<tr>
-					<td>會員流水號</td>
+					<td>會員編號</td>
 					<td><input class="easyui-textbox" id="m_id" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>電影流水號</td>
+					<td>電影編號</td>
 					<td><input class="easyui-textbox" id="mo_id" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
@@ -58,7 +58,7 @@
 			<form id="form_edit" method="post" enctype="multipart/form-data">
 				<table cellpadding="5">
 					<tr>
-						<td>會員流水號</td>
+						<td>會員編號</td>
 						<td><input class="easyui-textbox" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
@@ -66,7 +66,7 @@
 						<td><input class="easyui-textbox" type="text" name="name" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>電影流水號</td>
+						<td>電影編號</td>
 						<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
@@ -110,6 +110,13 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_movie()">編輯</a>
     </div>
     <script type="text/javascript">
+    	$( document).keydown(function(e) {
+    		if (e.keyCode == 27) { 
+		        $('#dlg').dialog('close');
+		        $('#edit_dialog').dialog('close');
+		    } 
+		});
+		
     	$('#date').datebox({
 	        formatter:function(date){
 	            var y=date.getFullYear();
