@@ -24,12 +24,16 @@ class FoodRecordController extends Controller {
 
     public function append_c() {
         $db = M('Orderfood');
+        
         $data = $db->create();
+        $data['food_orderdate'] = date("Y-m-d");
+
         if (!$data) {
             $this->ajaxReturn($db->getError());
         } else {
             $db->add($data);
-            $this->ajaxReturn(true);
+
+            $this->ajaxReturn($data);
         }
     }
     public function destroyRow_c(){

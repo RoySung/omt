@@ -16,7 +16,7 @@
 	}
 </style>
 <body>
-    <div id="dlg" class="easyui-dialog" title="新增訂餐紀錄" closed="true" style="width:450px;height:400px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="新增訂餐紀錄" closed="true" style="width:450px;height:450px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -45,16 +45,8 @@
 						<td><input class="easyui-textbox" type="text" name="phone"  style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>食物名稱</td>
-						<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
 						<td>訂購數量</td>
 						<td><input class="easyui-textbox" type="text" name="food_quantity" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>大小</td>
-						<td><input class="easyui-textbox" type="text" name="size" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
 						<td>花費</td>
@@ -72,7 +64,7 @@
 		</form>
 		</div>
 	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯訂餐紀錄" closed="true" style="width:450px;height:400px;padding:10px;left:304px;"
+	<div id="edit_dialog" class="easyui-dialog" title="編輯訂餐紀錄" closed="true" style="width:450px;height:450px;padding:10px;left:312px;"
 		buttons="#adduser_button">
 		<div style="padding:10px 30px 20px 30px">
 			<form id="form_edit" method="post" enctype="multipart/form-data">
@@ -86,16 +78,8 @@
 						<td><input class="easyui-textbox" type="text" name="phone"  style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>食物名稱</td>
-						<td><input class="easyui-textbox" type="text" name="food" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
 						<td>訂購數量</td>
 						<td><input class="easyui-textbox" type="text" name="food_quantity" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>大小</td>
-						<td><input class="easyui-textbox" type="text" name="size" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
 						<td>花費</td>
@@ -131,6 +115,7 @@
 						<th field="food_size" width="50" editor="text">大小</th>
 						<th field="type_name" width="50" editor="text">類型</th>
 						<th field="food_cost" width="50" editor="text">花費</th>
+						<th field="food_orderdate" width="50" editor="text">訂購日期</th>
 						<th field="of_id" width="50" data-options="hidden:true" editor="text">of_id</th>
 						<th field="f_id" width="50"  data-options="hidden:true" editor="text">f_id</th>
 						<th field="ot_id" width="50" data-options="hidden:true" editor="text">ot_id</th>
@@ -149,6 +134,32 @@
         
     </div>
     <script type="text/javascript">
+    	$('#date').datebox({
+	        formatter:function(date){
+	            var y=date.getFullYear();
+	            var m=date.getMonth()+1;
+	            var d=date.getDate();
+	            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+	        },
+	        parser:function(s){
+		        var t=Date.parse(s);
+		        if (!isNaN(t)) {return new Date(t);}
+		        else {return new Date();}
+		    }     
+    	});
+    	$('#date1').datebox({
+	        formatter:function(date){
+	            var y=date.getFullYear();
+	            var m=date.getMonth()+1;
+	            var d=date.getDate();
+	            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+	        },
+	        parser:function(s){
+		        var t=Date.parse(s);
+		        if (!isNaN(t)) {return new Date(t);}
+		        else {return new Date();}
+		    }     
+    	});
     	function edit_foodrecord(){
 			var row = $('#dg').datagrid('getSelected');
 			if(row){
@@ -233,6 +244,7 @@
 			                success: function(result){
 
 			                    result = JSON.parse(result);
+			                    alert(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功新增資料');
 			                    	$('#dg').datagrid('reload');
