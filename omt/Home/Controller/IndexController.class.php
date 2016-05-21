@@ -9,15 +9,16 @@ class IndexController extends Controller {
     	$page = 0;
     	if ($_REQUEST['page'])//有沒有職收到 get保留有暫存 post 沒有暫存
     		$page=$_REQUEST['page'];
-    	$news = $db->page("$page,5")->select();
+    	$news = $db->page("$page,5")->order('date desc')->select();
     	$this->assign('news',$news);
     	$news_count = $db->count();
     	$this->assign('news_count',round($news_count/5));
     	//recent_movie
-    	$db = M('Movie');
+    	$db = M('Moviegradeview');
         $date = date("Y-m-d");
         $condit['start_date'] = array('lt',$date);
-    	$movie = $db->where($condit)->select();
+    	$movie = $db->field('*,round(avg(grade),2)')->group('mo_id')->select();
+
     	$this->assign('recent_movie',$movie);
         //soon_movie
         $db = M('Movie');
@@ -31,16 +32,15 @@ class IndexController extends Controller {
             $this->assign('auth',$session_auth);
         }
         //rank
-        $db = M('Movie');
-        $date = date("Y-m-d");
-        $condit['start_date'] = array('lt',$date);
-        $movie = $db->where($condit)->limit(5)->order('grade desc')->select();
-        $this->assign('rank',$movie);
+        $db = M('Moviegradeview');
+        //$i = 4.53212;
+        //var_dump(number_format($i,2));
 
+        //get need field->conbin same->rank->get avg grade >=0 infomation
+        $moviegrade = $db->field('*,round(avg(grade),2)')->group('mo_id')
+        ->order('round(avg(grade),2) DESC')->having('round(avg(grade),2)>=0')->select();
 
-
-
-
+        $this->assign('rank',$moviegrade);
         $this->display();
     }
     public function order(){
@@ -75,6 +75,8 @@ class IndexController extends Controller {
         $session_auth = session('auth');
         $this->assign('auth',$session_auth);
         $condit['m_id'] = $session_auth['m_id'];
+
+        
         $data = $db->where($condit)->select();
 
         $this->result = 1;
@@ -94,7 +96,44 @@ class IndexController extends Controller {
         $this->test=$seat_row;
 
         $this->assign('ticket',$data);
+        //history_theater
+        $condit['m_id'] = $session_auth['m_id'];
+        $history_title = $db->distinct(true)->where($condit)->field('t_id, theater_name')->select();
+        $this->assign('history_title', $history_title);
+        //
+        //ticket show
+        $count = $db->where($condit)->field('count')->select();
+        $sum_count = $db->where($condit)->count();
+        //var_dump($count);
+
+        for($z=0;$z<$sum_count;$z++)
+        {
+            //var_dump($z);
+            $data = $db->where($condit)->limit($count[$i]['count'])->select();
+            $this->assign('ticket_content',$data);
+            
+        }
+        
+        $data = $db->where($condit)->select();
+        $this->assign('ticket_title',$data);
+       
+
+        //orderfoodrecord
+        $db = M('Orderfoodview');
+        $session_auth = session('auth');
+        $this->assign('auth',$session_auth);
+        $condit['m_id'] = $session_auth['m_id'];
+        $data = $db->where($condit)->select();
+        $this->food_result = 1;
+        if(!$data)
+        {
+            $this->food_result = 0;
+        }
+        $tom = $db->distinct(true)->where($condit)->field('ot_id, theater_name')->select();
+        $this->assign('orderfoodrecord',$data);
+        $this->assign('food_number',$tom);
         $this->display();
+
     }
     public function discount(){
         $db = M('Discount');
@@ -145,6 +184,20 @@ class IndexController extends Controller {
         } else {
             session('auth',$result[0]);
             $this->ajaxReturn($result[0]['name']);
+        }
+    }
+    public function grade_save(){
+        $db = M('Moviegradeview');
+        $condit['mo_id'] = $_REQUEST['mo_id'];
+        $condit['m_id'] = $_REQUEST['m_id'];
+        $data['grade'] = $_REQUEST['member_grade'];
+        $data['grade_date'] = date("Y-m-d");
+        $old_result = $db->where($condit)->select();
+        $result = $db->where($condit)->save($data);
+        if($result){
+            $this->ajaxReturn($data['grade']);
+        }else{
+            $this->ajaxReturn($result);
         }
     }
 

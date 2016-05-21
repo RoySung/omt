@@ -3,10 +3,22 @@ namespace Admin\Controller;
 use Think\Controller;
 class MovieController extends Controller {
     public function Movie_r(){
+        // $db = M('Movie');
+        // $result = $db->select();
+        // if($result) {
+        //     $this->ajaxReturn($result);
+        // }
         $db = M('Movie');
-        $result = $db->select();
-        if($result) {
-            $this->ajaxReturn($result);
+
+        $page = $_REQUEST['page'];
+        $pageSize = $_REQUEST['rows'];
+        
+        $result = $db->page($page,$pageSize)->select();
+        $data['total'] = $db->count();
+        $data['rows'] = $result;
+       // $result = $db->select();
+        if($data) {
+            $this->ajaxReturn($data);
         }
     }
     public function append_c() {

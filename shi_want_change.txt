@@ -1,0 +1,14 @@
+1.上方功能列height:0px;
+2.密碼顯示部分123***
+3.orderfood、OrderRecord下方白色一塊
+4.最新上映、即將上映的立即訂票
+5.評分系統、grade=星星顆數*20(新增兩個button加在星星的右手邊、送出&修改)
+6.排行榜更新
+7.我的票券字型大小排版
+8.order.html 有一個shop的icon跟著滾輪滾動
+9.ticket.html 上面的tabs進入畫面顯示我的票券
+9.餘額扣款放第一個，並且預選好，改成easyui之類的，不要radio，只有文字background改變
+10.訂票選位子後購買先不能買票，要跳出框框選擇付款購買才能夠票完成
+11.ticket div 大小有邊框不好看馬的松
+orderfood 
+orderfoodview

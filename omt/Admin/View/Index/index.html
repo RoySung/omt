@@ -10,20 +10,25 @@
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
+<style type="text/css">
+	body{
+		margin:0px;
+	}
+</style>
 <body>
 	<img src="__PUBLIC__/images/title.png">
 
-	<div id="dlg" class="easyui-dialog" title="News" closed="true" style="width:400px;height:350px;padding:10px;;"
+	<div id="dlg" class="easyui-dialog" title="新增公告" closed="true" style="width:450px;height:400px;padding:10px;;"
 			data-options="
 				buttons: [{
-					text:'Ok',
+					text:'確認',
 					iconCls:'icon-ok',
 					handler:function(){
 						append()
 						$('#dlg').dialog('close');
 					}
 				},{
-					text:'Cancel',
+					text:'取消',
 					iconCls:'icon-cancel',
 					handler:function(){
 						$('#dlg').dialog('close');
@@ -82,21 +87,27 @@
 			<div id="item" class="easyui-penal" style="padding:30px;">
 				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick="addTab('系統資訊')"><span style="font-size:12pt;">系統資訊</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("會員資料","{:U("Index/member")}")'><span style="font-size:12pt;">會員資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("會員資料","{:U("Index/member")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">會員資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂票資料","{:U("Index/ticket")}")'><span style="font-size:12pt;">訂票資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂票資料","{:U("Index/ticket")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">訂票資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂餐資料","{:U("Index/food")}")'><span style="font-size:12pt;">訂餐資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("餐點資料","{:U("Index/food")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">餐點資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("優惠資料","{:U("Index/discount")}")'><span style="font-size:12pt;">優惠資料</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("訂餐紀錄","{:U("Index/foodrecord")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">訂餐紀錄</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各電影院","{:U("Index/theater")}")'><span style="font-size:12pt;">各電影院</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("優惠資料","{:U("Index/discount")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">優惠資料</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影資訊","{:U("Index/movie")}")'><span style="font-size:12pt;">電影資訊</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各電影院","{:U("Index/theater")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">各電影院</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各片票價","{:U("Index/ticketprice")}")'><span style="font-size:12pt;">各片票價</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影資訊","{:U("Index/movie")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">電影資訊</span></a>
 				<div class="easyui-penal" style="padding:5px;width:100;"></div>
-				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影場次","{:U("Index/session")}")'><span style="font-size:12pt;">電影場次</span></a>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影評分","{:U("Index/moviegrade")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">電影評分</span></a>
+				<div class="easyui-penal" style="padding:5px;width:100;"></div>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("各片票價","{:U("Index/ticketprice")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">各片票價</span></a>
+				<div class="easyui-penal" style="padding:5px;width:100;"></div>
+				<a href="#" class="easyui-linkbutton c8" style="width:95%;" onclick='addTab("電影場次","{:U("Index/session")}")+$(dlg).dialog(close)+$(edit_dialog).dialog(close)'><span style="font-size:12pt;">電影場次</span></a>
+				<div class="easyui-penal" style="padding:5px;width:100;"></div>
+				
 			</div>
 		</div>
 
@@ -106,9 +117,9 @@
 					<div id="tt" class="easyui-tabs" style="width:100%;height:528px;"
 						data-options="tabWidth:110,fit:true">
 						<div title="系統資訊" style="width:100%;height:100%;">
-							<table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
-							toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-							data-options="url:'{:U('Index/index_r')}',method:'get',fit:true">
+							<table id="dg" class="easyui-datagrid" style="width:100%;"
+							toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
+	data-options="url:'{:U('Index/index_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 								<thead>
 									<tr>
 										<th field="title" width="50" editor="text">標題</th>
@@ -124,7 +135,7 @@
 			</div>
 		</div>
 	<div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_news()">編輯</a>
 		
@@ -159,14 +170,25 @@
 			    }     
 	    	});
 	    });
+	    $( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
     	function edit_news(){
     		var row = $('#dg').datagrid('getSelected');
-    		if(row.ot_id!=''){
+    		if(row){
+    			//close other dialog
+				$('#dlg').dialog('close');
+				//begin edit
     			$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
 				url = "{:U('Index/edit_c')}?n_id=" + row.n_id;
     		}
-			
+    		else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
 		}
 		function save(form){
 			$(form).form('submit',{
@@ -193,6 +215,12 @@
 				});
 			}
 		}
+		function appendOpen(){
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			//begin append
+			$('#dlg').dialog('open');
+		}
 		function append(){
         	$('#newsform').form('submit',{
 	            onSubmit: function(){
@@ -216,7 +244,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','資料成功儲存');
-			                    	setTimeout("location.href='{:U('Index/index')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    } 
 			                },
 			                 error:function(result){ 
@@ -273,7 +301,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功刪除資料');
-			                    	setTimeout("location.href='{:U('Index/index')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    }
 			                },
 			                error:function(result){ 
@@ -284,6 +312,9 @@
         			}
 
         		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
         	}
         }
 		

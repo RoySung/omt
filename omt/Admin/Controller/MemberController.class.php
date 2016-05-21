@@ -4,9 +4,21 @@ use Think\Controller;
 class MemberController extends Controller {
     public function member_r(){
         $db = M('Member');
-        $result = $db->select();
-        if($result) {
-            $this->ajaxReturn($result);
+
+        $page = $_REQUEST['page'];
+        $pageSize = $_REQUEST['rows'];
+
+        if($_REQUEST['email']OR$_REQUEST['phone']){
+            $condit['phone'] = array('like',$_REQUEST['phone']);
+            $condit['email'] = array('like',$_REQUEST['email']);
+        }
+        
+        $result = $db->where($condit)->page($page,$pageSize)->select();
+        $data['total'] = $db->where($condit)->count();
+        $data['rows'] = $result;
+       // $result = $db->select();
+        if($data) {
+            $this->ajaxReturn($data);
         }
     }
     public function member_u(){

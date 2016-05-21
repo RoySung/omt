@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2016 �?04 ??09 ??04:52
+-- 產生時間： 2016 �?04 ??26 ??08:07
 -- 伺服器版本: 5.6.17
 -- PHP 版本： 5.5.12
 
@@ -63,10 +63,10 @@ CREATE TABLE IF NOT EXISTS `omt_discount` (
 --
 
 INSERT INTO `omt_discount` (`d_id`, `type`, `type_name`, `discount`, `m_id`, `start_date`, `end_date`, `enable`) VALUES
-(1, 1, '飲品', 10, 12, '2015-10-20', '2015-10-30', 1),
-(2, 1, '飲品', 10, 12, '2015-10-20', '2015-10-30', 1),
-(3, 1, '飲品', 10, 12, '2015-10-20', '2015-10-30', 1),
-(4, 1, '飲品', 5, 1, '2015-10-31', '2015-12-31', 1);
+(1, 1, '飲料', 10, 12, '2015-10-20', '2015-10-30', 1),
+(2, 1, '飲料', 10, 12, '2015-10-20', '2015-10-30', 1),
+(3, 1, '飲料', 10, 12, '2015-10-20', '2015-10-30', 1),
+(4, 1, '飲料', 5, 1, '2016-04-18', '2016-04-30', 0);
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `omt_discountview` (
 `start_date` date
 ,`end_date` date
 ,`discount` int(11)
-,`type_name` varchar(10)
 ,`email` varchar(20)
 ,`password` varchar(20)
 ,`name` varchar(10)
@@ -87,6 +86,9 @@ CREATE TABLE IF NOT EXISTS `omt_discountview` (
 ,`build_date` date
 ,`uid` varchar(255)
 ,`m_id` int(11)
+,`d_id` int(11)
+,`enable` tinyint(4)
+,`type_name` varchar(10)
 );
 -- --------------------------------------------------------
 
@@ -97,7 +99,8 @@ CREATE TABLE IF NOT EXISTS `omt_discountview` (
 CREATE TABLE IF NOT EXISTS `omt_food` (
   `f_id` int(11) NOT NULL AUTO_INCREMENT,
   `food` varchar(20) NOT NULL,
-  `type` varchar(10) NOT NULL,
+  `type` int(11) NOT NULL,
+  `type_name` varchar(100) NOT NULL,
   `price` int(11) NOT NULL,
   `size` varchar(10) NOT NULL,
   PRIMARY KEY (`f_id`)
@@ -107,19 +110,19 @@ CREATE TABLE IF NOT EXISTS `omt_food` (
 -- 資料表的匯出資料 `omt_food`
 --
 
-INSERT INTO `omt_food` (`f_id`, `food`, `type`, `price`, `size`) VALUES
-(1, '紅茶', '飲料', 30, 'L'),
-(2, '紅茶', '飲料', 20, 'M'),
-(3, '可樂', '飲料', 40, 'L'),
-(4, '可樂', '飲料', 30, 'M'),
-(5, '咖啡', '飲料', 45, 'L'),
-(6, '咖啡', '飲料', 35, 'M'),
-(7, '米花', '食物', 60, 'L'),
-(8, '米花', '食物', 50, 'M'),
-(9, '薯條', '食物', 50, 'L'),
-(10, '薯條', '食物', 40, 'M'),
-(11, '薯條+可樂', '套餐', 70, 'L'),
-(12, '米花+紅茶', '套餐', 70, 'L');
+INSERT INTO `omt_food` (`f_id`, `food`, `type`, `type_name`, `price`, `size`) VALUES
+(1, '紅茶', 1, '飲料', 30, 'L'),
+(2, '紅茶', 1, '飲料', 20, 'M'),
+(3, '可樂', 1, '飲料', 40, 'L'),
+(4, '可樂', 1, '飲料', 30, 'M'),
+(5, '咖啡', 1, '飲料', 45, 'L'),
+(6, '咖啡', 1, '飲料', 35, 'M'),
+(7, '米花', 2, '食物', 60, 'L'),
+(8, '米花', 2, '食物', 50, 'M'),
+(9, '薯條', 2, '食物', 50, 'L'),
+(10, '薯條', 2, '食物', 40, 'M'),
+(11, '薯條+可樂', 3, '套餐', 70, 'L'),
+(12, '米花+紅茶', 3, '套餐', 70, 'L');
 
 -- --------------------------------------------------------
 
@@ -145,9 +148,9 @@ CREATE TABLE IF NOT EXISTS `omt_member` (
 --
 
 INSERT INTO `omt_member` (`email`, `password`, `name`, `birthday`, `phone`, `cash`, `m_id`, `build_date`, `uid`) VALUES
-('admin@aa.bb', '123456', '羅于菌', '1993-10-01', '0984512657', 8719, 1, '2015-10-31', '03315CBD'),
-('admin@a.a', '123456', '張阿俊', '1993-12-28', '0123456', 8020, 2, '2016-03-22', '03315CBD'),
-('user@aa.bb', '1234567', '謝仁堡', '1994-10-20', '091234567', 5300, 12, '2015-10-31', '0CB64345');
+('admin@aa.bb', '123456', '羅于菌', '1993-10-01', '0984512657', 3804, 1, '2015-10-31', '03315CBD'),
+('admin@a.a', '123456', '張阿俊', '1993-12-28', '0123456', 4320, 2, '2016-03-22', '03315CBD'),
+('user@aa.bb', '1234567', '謝仁堡', '1994-10-20', '091234567', 49460, 12, '2015-10-31', '0CB64345');
 
 -- --------------------------------------------------------
 
@@ -174,12 +177,12 @@ CREATE TABLE IF NOT EXISTS `omt_movie` (
 --
 
 INSERT INTO `omt_movie` (`mo_id`, `movie_name`, `movie_type`, `synopsis`, `video`, `film_length`, `start_date`, `end_date`, `grade`, `film_type`) VALUES
-(1, '多拉A夢', '動畫', '故事描述一位住在日本東京郊外，無論讀書、體育、藝術，各方面都比別人差的少年 - 野比大雄。有一天，大雄的子孫 世修 和 哆啦A夢 從二十二世紀一同搭乘時光機到來...', 'https://www.youtube.com/embed/Syzb9-NDBh4', 95, '2015-10-03', '2015-11-01', 50, 1),
-(2, '火影忍者', '動畫', '在即將舉辦冬季慶典的木葉忍者村中，雛田悄悄織了一條滿是自己心意的圍巾，卻苦無機會讓對方知道她的心意，不由自主得開始討厭起這樣的自己...', 'https://www.youtube.com/embed/yIIqFjs3ooE', 112, '2015-10-01', '2015-11-01', 80, 1),
-(3, '復仇者聯盟', '動作', '美國隊長自冰獄中甦醒，而邪惡勢力也悄悄集結，力量龐大到極為驚人的地步，已非單一超級英雄就能解決。為了保護地球的安危...', 'https://www.youtube.com/embed/k1cbhqBcL-E', 142, '2015-10-10', '2015-11-04', 85, 1),
-(4, '侏儸紀公園', '冒險、劇情', '你可以想像恐龍的長相、動作和叫聲，而不想到《侏羅紀公園》嗎？它不只是一部電影，更是我們所有人共同的記憶...', 'https://www.youtube.com/embed/NVoIIT6MC9o', 125, '2015-10-15', '2015-11-10', 88, 1),
-(5, '露西', '動作、劇情', '描述一名住在台灣的年輕女子露西，被迫幫黑幫王老大工作，成為運毒工具。但她某次無意中吸入大量的實驗藥物，反而強化了她的腦部功能，讓她擁有超乎常人的感知力。', 'https://www.youtube.com/embed/IhmMFyuInq4', 90, '2015-11-04', '2015-11-30', 70, 1),
-(6, '忍者龜', '喜劇、冒險', '犯罪、暴力及恐懼，已經失控，新的英雄即將崛起。\r\n在曼哈頓的下水道住著四隻接受嚴格訓練的忍者龜，分別是達文西、拉斐爾、米開朗基羅和多納太羅以及他們的師父史林特，將聯手對抗邪惡勢力...', 'https://www.youtube.com/embed/-qUmWQY5Zk0', 101, '2015-11-10', '2015-10-31', 60, 1);
+(1, '多拉A夢', '動畫', '故事描述一位住在日本東京郊外，無論讀書、體育、藝術，各方面都比別人差的少年 - 野比大雄。有一天，大雄的子孫 世修 和 哆啦A夢 從二十二世紀一同搭乘時光機到來...', 'https://www.youtube.com/embed/Syzb9-NDBh4', 95, '2016-03-30', '2016-04-05', 55, 1),
+(2, '火影忍者', '動畫', '在即將舉辦冬季慶典的木葉忍者村中，雛田悄悄織了一條滿是自己心意的圍巾，卻苦無機會讓對方知道她的心意，不由自主得開始討厭起這樣的自己...', 'https://www.youtube.com/embed/yIIqFjs3ooE', 112, '2016-03-30', '2016-04-09', 97, 1),
+(3, '復仇者聯盟', '動作', '美國隊長自冰獄中甦醒，而邪惡勢力也悄悄集結，力量龐大到極為驚人的地步，已非單一超級英雄就能解決。為了保護地球的安危...', 'https://www.youtube.com/embed/k1cbhqBcL-E', 142, '2016-03-29', '2016-04-22', 0, 1),
+(4, '侏儸紀公園', '冒險、劇情', '你可以想像恐龍的長相、動作和叫聲，而不想到《侏羅紀公園》嗎？它不只是一部電影，更是我們所有人共同的記憶...', 'https://www.youtube.com/embed/NVoIIT6MC9o', 125, '2016-03-28', '2016-04-08', 0, 1),
+(5, '露西', '動作、劇情', '描述一名住在台灣的年輕女子露西，被迫幫黑幫王老大工作，成為運毒工具。但她某次無意中吸入大量的實驗藥物，反而強化了她的腦部功能，讓她擁有超乎常人的感知力。', 'https://www.youtube.com/embed/IhmMFyuInq4', 90, '2016-03-18', '2016-04-07', 0, 1),
+(6, '忍者龜', '喜劇、冒險', '犯罪、暴力及恐懼，已經失控，新的英雄即將崛起。\r\n在曼哈頓的下水道住著四隻接受嚴格訓練的忍者龜，分別是達文西、拉斐爾、米開朗基羅和多納太羅以及他們的師父史林特，將聯手對抗邪惡勢力...', 'https://www.youtube.com/embed/-qUmWQY5Zk0', 101, '2016-04-22', '2016-05-11', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -218,22 +221,33 @@ INSERT INTO `omt_news` (`n_id`, `title`, `content`, `date`) VALUES
 
 CREATE TABLE IF NOT EXISTS `omt_orderfood` (
   `of_id` int(11) NOT NULL AUTO_INCREMENT,
-  `size` varchar(100) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `cost` int(11) NOT NULL,
-  `foodorder_date` date NOT NULL,
   `food_name` varchar(100) NOT NULL,
+  `food_quantity` int(11) NOT NULL,
+  `food_cost` int(11) NOT NULL,
+  `food_orderdate` date NOT NULL,
+  `food_size` varchar(11) NOT NULL,
   `ot_id` int(11) NOT NULL,
+  `f_id` int(11) NOT NULL,
+  `discount_money` int(5) NOT NULL,
   PRIMARY KEY (`of_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- 資料表的匯出資料 `omt_orderfood`
 --
 
-INSERT INTO `omt_orderfood` (`of_id`, `size`, `quantity`, `cost`, `foodorder_date`, `food_name`, `ot_id`) VALUES
-(1, 'L', 2, 100, '2016-04-08', '可樂', 2),
-(2, 'S', 1, 50, '2016-04-08', '米花', 1);
+INSERT INTO `omt_orderfood` (`of_id`, `food_name`, `food_quantity`, `food_cost`, `food_orderdate`, `food_size`, `ot_id`, `f_id`, `discount_money`) VALUES
+(2, '米花', 2, 100, '2016-03-31', 'L', 9, 7, 0),
+(8, '米花', 1, 60, '2016-04-13', 'L', 8, 7, 0),
+(9, '米花', 1, 60, '2016-04-13', 'L', 8, 7, 0),
+(10, '米花', 1, 60, '2016-04-13', 'L', 8, 7, 0),
+(12, '紅茶', 1, 20, '2016-04-19', 'M', 8, 2, 0),
+(13, '紅茶', 2, 40, '2016-04-19', 'M', 10, 2, 0),
+(14, '薯條+可樂', 2, 140, '2016-04-19', 'L', 10, 11, 0),
+(15, '薯條+可樂', 2, 140, '2016-04-26', 'L', 8, 11, 0),
+(16, '紅茶', 2, 60, '2016-04-26', 'L', 25, 1, 0),
+(17, '米花', 2, 120, '2016-04-26', 'L', 24, 7, 0),
+(18, '紅茶', 2, 40, '2016-04-26', 'M', 24, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -241,33 +255,51 @@ INSERT INTO `omt_orderfood` (`of_id`, `size`, `quantity`, `cost`, `foodorder_dat
 -- 替換檢視表以便查看 `omt_orderfoodview`
 --
 CREATE TABLE IF NOT EXISTS `omt_orderfoodview` (
-`size` varchar(100)
-,`quantity` int(11)
-,`cost` int(11)
-,`foodorder_date` date
+`of_id` int(11)
 ,`food_name` varchar(100)
+,`food_quantity` int(11)
+,`food_cost` int(11)
+,`food_orderdate` date
+,`food_size` varchar(11)
 ,`ot_id` int(11)
 ,`s_id` int(11)
 ,`seat` varchar(100)
+,`quantity` int(11)
 ,`enable` tinyint(4)
 ,`m_id` int(11)
+,`cost` int(11)
 ,`order_date` date
-,`of_id` int(11)
 ,`email` varchar(20)
-,`phone` varchar(20)
+,`password` varchar(20)
 ,`name` varchar(10)
+,`birthday` date
+,`phone` varchar(20)
+,`cash` int(5)
+,`build_date` date
+,`uid` varchar(255)
 ,`t_id` int(11)
+,`time` time
 ,`mo_id` int(11)
 ,`date` date
-,`time` time
+,`hall` varchar(20)
 ,`theater_name` varchar(20)
 ,`address` varchar(255)
 ,`description` varchar(255)
 ,`movie_name` varchar(20)
+,`movie_type` varchar(20)
 ,`synopsis` varchar(255)
+,`video` varchar(255)
+,`film_length` int(11)
 ,`start_date` date
 ,`end_date` date
-,`video` varchar(255)
+,`grade` int(11)
+,`film_type` int(11)
+,`f_id` int(11)
+,`food` varchar(20)
+,`type` int(11)
+,`price` int(11)
+,`size` varchar(10)
+,`type_name` varchar(100)
 );
 -- --------------------------------------------------------
 
@@ -285,14 +317,19 @@ CREATE TABLE IF NOT EXISTS `omt_orderticket` (
   `cost` int(11) NOT NULL,
   `order_date` date NOT NULL,
   PRIMARY KEY (`ot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- 資料表的匯出資料 `omt_orderticket`
 --
 
 INSERT INTO `omt_orderticket` (`ot_id`, `s_id`, `seat`, `quantity`, `enable`, `m_id`, `cost`, `order_date`) VALUES
-(1, 2, 'A1', 1, 1, 12, 180, '2016-01-28');
+(8, 32, 'F4-F5', 2, 1, 1, 360, '2016-03-30'),
+(9, 3, 'I5-I6-I7', 3, 1, 2, 540, '2016-03-30'),
+(10, 6, 'F5-F6', 2, 1, 1, 360, '2016-03-30'),
+(23, 0, '2', 2, 2, 0, 2, '0000-00-00'),
+(24, 2, 'H3-H4', 2, 1, 1, 360, '2016-04-26'),
+(25, 11, 'D4-D5-D6-D3', 4, 1, 1, 800, '2016-04-26');
 
 -- --------------------------------------------------------
 
@@ -331,49 +368,61 @@ CREATE TABLE IF NOT EXISTS `omt_orderticketview` (
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `omt_rank`
+--
+
+CREATE TABLE IF NOT EXISTS `omt_rank` (
+  `r_id` int(1) NOT NULL,
+  `movie_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `end_time` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `omt_session`
 --
 
 CREATE TABLE IF NOT EXISTS `omt_session` (
-  `s_id` int(11) NOT NULL,
+  `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `t_id` int(11) NOT NULL,
   `time` time NOT NULL,
   `mo_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `hall` varchar(20) NOT NULL,
   PRIMARY KEY (`s_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
 
 --
 -- 資料表的匯出資料 `omt_session`
 --
 
 INSERT INTO `omt_session` (`s_id`, `t_id`, `time`, `mo_id`, `date`, `hall`) VALUES
-(1, 1, '10:20:00', 1, '2016-01-28', 'A'),
-(2, 1, '15:10:00', 1, '2016-01-28', 'A'),
-(3, 1, '19:00:00', 1, '2016-01-28', 'A'),
-(4, 1, '10:30:00', 2, '2016-01-28', 'A'),
-(5, 1, '15:00:00', 2, '2016-01-28', 'A'),
-(6, 1, '18:50:00', 2, '2016-01-28', 'A'),
-(7, 1, '11:00:00', 3, '2016-01-28', 'A'),
-(8, 1, '15:30:00', 3, '2016-01-28', 'A'),
-(9, 1, '19:20:00', 3, '2016-01-28', 'A'),
-(10, 2, '10:00:00', 1, '2016-01-28', 'A'),
-(11, 2, '15:30:00', 1, '2016-01-28', 'A'),
-(12, 2, '19:00:00', 1, '2016-01-28', 'A'),
-(13, 2, '10:30:00', 2, '2016-01-28', 'A'),
-(14, 2, '15:00:00', 2, '2016-01-28', 'A'),
-(15, 2, '18:30:00', 2, '2016-01-28', 'A'),
-(16, 2, '11:00:00', 4, '2016-01-28', 'A'),
-(17, 2, '15:30:00', 4, '2016-01-28', 'A'),
-(18, 2, '19:00:00', 4, '2016-01-28', 'A'),
-(19, 3, '11:00:00', 2, '2016-01-28', 'A'),
-(20, 3, '15:20:00', 2, '2016-01-28', 'A'),
-(21, 3, '10:30:00', 3, '2016-01-28', 'A'),
-(22, 3, '15:00:00', 3, '2016-01-28', 'A'),
-(23, 3, '18:30:00', 3, '2016-01-28', 'A'),
-(24, 3, '11:00:00', 4, '2016-01-28', 'A'),
-(25, 3, '15:30:00', 4, '2016-01-28', 'A'),
+(1, 1, '10:20:00', 1, '2016-03-30', 'A'),
+(2, 1, '15:10:00', 1, '2016-03-30', 'A'),
+(3, 1, '19:00:00', 1, '2016-03-30', 'A'),
+(4, 1, '10:30:00', 2, '2016-03-30', 'A'),
+(5, 1, '15:00:00', 2, '2016-03-30', 'A'),
+(6, 1, '18:50:00', 2, '2016-03-30', 'A'),
+(7, 1, '11:00:00', 3, '2016-03-30', 'A'),
+(8, 1, '15:30:00', 3, '2016-03-30', 'A'),
+(9, 1, '19:20:00', 3, '2016-03-30', 'A'),
+(10, 2, '10:00:00', 1, '2016-03-30', 'A'),
+(11, 2, '15:30:00', 1, '2016-03-30', 'A'),
+(12, 2, '19:00:00', 1, '2016-03-30', 'A'),
+(13, 2, '10:30:00', 2, '2016-03-30', 'A'),
+(14, 2, '15:00:00', 2, '2016-03-30', 'A'),
+(15, 2, '18:30:00', 2, '2016-03-30', 'A'),
+(16, 2, '11:00:00', 4, '2016-03-30', 'A'),
+(17, 2, '15:30:00', 4, '2016-03-30', 'A'),
+(18, 2, '19:00:00', 4, '2016-03-30', 'A'),
+(19, 3, '11:00:00', 2, '2016-03-30', 'A'),
+(20, 3, '15:20:00', 2, '2016-03-30', 'A'),
+(21, 3, '10:30:00', 3, '2016-03-30', 'A'),
+(22, 3, '15:00:00', 3, '2016-03-30', 'A'),
+(23, 3, '18:30:00', 3, '2016-03-30', 'A'),
+(24, 3, '11:00:00', 4, '2016-03-30', 'A'),
+(25, 3, '15:30:00', 4, '2016-03-30', 'A'),
 (26, 3, '19:30:00', 4, '2015-11-01', 'A'),
 (27, 1, '10:20:00', 1, '2015-11-01', 'A'),
 (28, 1, '15:10:00', 1, '2015-11-01', 'A'),
@@ -398,7 +447,8 @@ INSERT INTO `omt_session` (`s_id`, `t_id`, `time`, `mo_id`, `date`, `hall`) VALU
 (47, 3, '15:00:00', 3, '2015-11-01', 'A'),
 (48, 3, '18:50:00', 3, '2015-11-01', 'A'),
 (49, 3, '11:00:00', 4, '2015-11-01', 'A'),
-(50, 3, '15:30:00', 4, '2015-11-01', 'A');
+(50, 3, '15:30:00', 4, '2015-11-01', 'A'),
+(51, 0, '00:00:00', 0, '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -500,6 +550,7 @@ CREATE TABLE IF NOT EXISTS `omt_ticketpriceview` (
 ,`end_date` date
 ,`grade` int(11)
 ,`film_type` int(11)
+,`tp_id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -508,7 +559,7 @@ CREATE TABLE IF NOT EXISTS `omt_ticketpriceview` (
 --
 DROP TABLE IF EXISTS `omt_discountview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_discountview` AS select `omt_discount`.`start_date` AS `start_date`,`omt_discount`.`end_date` AS `end_date`,`omt_discount`.`discount` AS `discount`,`omt_discount`.`type_name` AS `type_name`,`omt_member`.`email` AS `email`,`omt_member`.`password` AS `password`,`omt_member`.`name` AS `name`,`omt_member`.`birthday` AS `birthday`,`omt_member`.`phone` AS `phone`,`omt_member`.`cash` AS `cash`,`omt_member`.`build_date` AS `build_date`,`omt_member`.`uid` AS `uid`,`omt_discount`.`m_id` AS `m_id` from (`omt_discount` join `omt_member` on((`omt_discount`.`m_id` = `omt_member`.`m_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_discountview` AS select `omt_discount`.`start_date` AS `start_date`,`omt_discount`.`end_date` AS `end_date`,`omt_discount`.`discount` AS `discount`,`omt_member`.`email` AS `email`,`omt_member`.`password` AS `password`,`omt_member`.`name` AS `name`,`omt_member`.`birthday` AS `birthday`,`omt_member`.`phone` AS `phone`,`omt_member`.`cash` AS `cash`,`omt_member`.`build_date` AS `build_date`,`omt_member`.`uid` AS `uid`,`omt_discount`.`m_id` AS `m_id`,`omt_discount`.`d_id` AS `d_id`,`omt_discount`.`enable` AS `enable`,`omt_discount`.`type_name` AS `type_name` from (`omt_discount` join `omt_member` on((`omt_discount`.`m_id` = `omt_member`.`m_id`)));
 
 -- --------------------------------------------------------
 
@@ -517,7 +568,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `omt_orderfoodview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_orderfoodview` AS select `omt_orderfood`.`size` AS `size`,`omt_orderfood`.`quantity` AS `quantity`,`omt_orderfood`.`cost` AS `cost`,`omt_orderfood`.`foodorder_date` AS `foodorder_date`,`omt_orderfood`.`food_name` AS `food_name`,`omt_orderfood`.`ot_id` AS `ot_id`,`omt_orderticket`.`s_id` AS `s_id`,`omt_orderticket`.`seat` AS `seat`,`omt_orderticket`.`enable` AS `enable`,`omt_orderticket`.`m_id` AS `m_id`,`omt_orderticket`.`order_date` AS `order_date`,`omt_orderfood`.`of_id` AS `of_id`,`omt_member`.`email` AS `email`,`omt_member`.`phone` AS `phone`,`omt_member`.`name` AS `name`,`omt_session`.`t_id` AS `t_id`,`omt_session`.`mo_id` AS `mo_id`,`omt_session`.`date` AS `date`,`omt_session`.`time` AS `time`,`omt_theater`.`theater_name` AS `theater_name`,`omt_theater`.`address` AS `address`,`omt_theater`.`description` AS `description`,`omt_movie`.`movie_name` AS `movie_name`,`omt_movie`.`synopsis` AS `synopsis`,`omt_movie`.`start_date` AS `start_date`,`omt_movie`.`end_date` AS `end_date`,`omt_movie`.`video` AS `video` from (((((`omt_orderfood` join `omt_orderticket` on((`omt_orderfood`.`ot_id` = `omt_orderticket`.`ot_id`))) join `omt_member` on((`omt_orderticket`.`m_id` = `omt_member`.`m_id`))) join `omt_session` on((`omt_orderticket`.`s_id` = `omt_session`.`s_id`))) join `omt_theater` on((`omt_session`.`t_id` = `omt_theater`.`t_id`))) join `omt_movie` on((`omt_session`.`mo_id` = `omt_movie`.`mo_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_orderfoodview` AS select `omt_orderfood`.`of_id` AS `of_id`,`omt_orderfood`.`food_name` AS `food_name`,`omt_orderfood`.`food_quantity` AS `food_quantity`,`omt_orderfood`.`food_cost` AS `food_cost`,`omt_orderfood`.`food_orderdate` AS `food_orderdate`,`omt_orderfood`.`food_size` AS `food_size`,`omt_orderfood`.`ot_id` AS `ot_id`,`omt_orderticket`.`s_id` AS `s_id`,`omt_orderticket`.`seat` AS `seat`,`omt_orderticket`.`quantity` AS `quantity`,`omt_orderticket`.`enable` AS `enable`,`omt_orderticket`.`m_id` AS `m_id`,`omt_orderticket`.`cost` AS `cost`,`omt_orderticket`.`order_date` AS `order_date`,`omt_member`.`email` AS `email`,`omt_member`.`password` AS `password`,`omt_member`.`name` AS `name`,`omt_member`.`birthday` AS `birthday`,`omt_member`.`phone` AS `phone`,`omt_member`.`cash` AS `cash`,`omt_member`.`build_date` AS `build_date`,`omt_member`.`uid` AS `uid`,`omt_session`.`t_id` AS `t_id`,`omt_session`.`time` AS `time`,`omt_session`.`mo_id` AS `mo_id`,`omt_session`.`date` AS `date`,`omt_session`.`hall` AS `hall`,`omt_theater`.`theater_name` AS `theater_name`,`omt_theater`.`address` AS `address`,`omt_theater`.`description` AS `description`,`omt_movie`.`movie_name` AS `movie_name`,`omt_movie`.`movie_type` AS `movie_type`,`omt_movie`.`synopsis` AS `synopsis`,`omt_movie`.`video` AS `video`,`omt_movie`.`film_length` AS `film_length`,`omt_movie`.`start_date` AS `start_date`,`omt_movie`.`end_date` AS `end_date`,`omt_movie`.`grade` AS `grade`,`omt_movie`.`film_type` AS `film_type`,`omt_orderfood`.`f_id` AS `f_id`,`omt_food`.`food` AS `food`,`omt_food`.`type` AS `type`,`omt_food`.`price` AS `price`,`omt_food`.`size` AS `size`,`omt_food`.`type_name` AS `type_name` from ((((((`omt_orderfood` join `omt_orderticket` on((`omt_orderfood`.`ot_id` = `omt_orderticket`.`ot_id`))) join `omt_member` on((`omt_orderticket`.`m_id` = `omt_member`.`m_id`))) join `omt_session` on((`omt_orderticket`.`s_id` = `omt_session`.`s_id`))) join `omt_theater` on((`omt_session`.`t_id` = `omt_theater`.`t_id`))) join `omt_movie` on((`omt_session`.`mo_id` = `omt_movie`.`mo_id`))) join `omt_food` on((`omt_orderfood`.`f_id` = `omt_food`.`f_id`)));
 
 -- --------------------------------------------------------
 
@@ -544,7 +595,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `omt_ticketpriceview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_ticketpriceview` AS select `omt_ticketprice`.`t_id` AS `t_id`,`omt_ticketprice`.`type` AS `type`,`omt_ticketprice`.`price` AS `price`,`omt_ticketprice`.`mo_id` AS `mo_id`,`omt_theater`.`theater_name` AS `theater_name`,`omt_theater`.`address` AS `address`,`omt_theater`.`description` AS `description`,`omt_movie`.`movie_name` AS `movie_name`,`omt_movie`.`movie_type` AS `movie_type`,`omt_movie`.`synopsis` AS `synopsis`,`omt_movie`.`video` AS `video`,`omt_movie`.`film_length` AS `film_length`,`omt_movie`.`start_date` AS `start_date`,`omt_movie`.`end_date` AS `end_date`,`omt_movie`.`grade` AS `grade`,`omt_movie`.`film_type` AS `film_type` from ((`omt_ticketprice` join `omt_theater` on((`omt_ticketprice`.`t_id` = `omt_theater`.`t_id`))) join `omt_movie` on((`omt_ticketprice`.`mo_id` = `omt_movie`.`mo_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `omt_ticketpriceview` AS select `omt_ticketprice`.`t_id` AS `t_id`,`omt_ticketprice`.`type` AS `type`,`omt_ticketprice`.`price` AS `price`,`omt_ticketprice`.`mo_id` AS `mo_id`,`omt_theater`.`theater_name` AS `theater_name`,`omt_theater`.`address` AS `address`,`omt_theater`.`description` AS `description`,`omt_movie`.`movie_name` AS `movie_name`,`omt_movie`.`movie_type` AS `movie_type`,`omt_movie`.`synopsis` AS `synopsis`,`omt_movie`.`video` AS `video`,`omt_movie`.`film_length` AS `film_length`,`omt_movie`.`start_date` AS `start_date`,`omt_movie`.`end_date` AS `end_date`,`omt_movie`.`grade` AS `grade`,`omt_movie`.`film_type` AS `film_type`,`omt_ticketprice`.`tp_id` AS `tp_id` from ((`omt_ticketprice` join `omt_theater` on((`omt_ticketprice`.`t_id` = `omt_theater`.`t_id`))) join `omt_movie` on((`omt_ticketprice`.`mo_id` = `omt_movie`.`mo_id`)));
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

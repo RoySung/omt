@@ -10,8 +10,13 @@
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
+<style type="text/css">
+	body{
+		margin:0px;
+	}
+</style>
 <body>
-    <div id="dlg" class="easyui-dialog" title="電影場次" closed="true" style="width:450px;height:300px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="新增場次" closed="true" style="width:450px;height:400px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -44,14 +49,22 @@
 					<td><input class="easyui-textbox" type="text" name="time" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>日期</td>
-					<td><input class="easyui-textbox" name="date" data-options="required:true" style="width:250px;"></input></td>
+					<td>電影院編號</td>
+					<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
+				<tr>
+					<td>電影編號</td>
+					<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
+				</tr>
+				<tr>
+	    			<td>日期</td>
+	    			<td><input class="easyui-datebox" type="text" id="date" name="date" data-options="required:true" style="width:250px;"></input></td>
+	    		</tr>
 			</table>
 		</form>
 		</div>
 	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯場次" closed="true" style="width:450px;height:400px;padding:10px;"
+	<div id="edit_dialog" class="easyui-dialog" title="編輯場次" closed="true" style="width:450px;height:400px;padding:10px;left:304px;"
 		buttons="#adduser_button">
 		<div style="padding:10px 30px 20px 30px">
 			<form id="form_edit" method="post" enctype="multipart/form-data">
@@ -69,9 +82,19 @@
 						<td><input class="easyui-textbox" type="text" name="time" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>日期</td>
-						<td><input class="easyui-textbox" name="date" data-options="required:true" style="width:250px;"></input></td>
+						<td>電影院編號</td>
+						<td><input class="easyui-textbox" name="t_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
+					<tr>
+						<td>電影編號</td>
+						<td><input class="easyui-textbox" name="mo_id" data-options="required:true" style="width:250px;"></input></td>
+					</tr>
+					<tr>
+		    			<td>日期</td>
+		    			<td><input class="easyui-datebox" type="text" id="date1" name="date" data-options="required:true" style="width:250px;"></input></td>
+		    		</tr>
+					
+
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
@@ -80,36 +103,121 @@
 		    </div>
 		</div>
 	</div>
-    <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
-	toolbar="#toolbar"  idField="id"  rownumbers="true"  fitColumns="true" singleSelect="true"
-	data-options="url:'{:U('Session/session_r')}',method:'get',fit:true" >
-			<thead>
-			<tr>
-				<th field="theater_name" width="50" editor="text">電影院</th>
-				<th field="movie_name" width="50" editor="text">電影名稱</th>
-				<th field="time" width="50" editor="{type:'validatebox',options:{required:true}}">場次時間</th>
-				<th field="date" width="50" editor="{type:'validatebox',options:{required:true}}">日期</th>
-				<th field="t_id" width="50" data-options="hidden:true" editor="text">t_id</th>
-				<th field="s_id" width="50" data-options="hidden:true" editor="text">s_id</th>
-				<th field="mo_id" width="50" data-options="hidden:true" editor="text">mo_id</th>
-				
-			</tr>
-		</thead>
-	</table>
-    <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
-        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').        edatagrid('saveRow')">儲存</a>-->
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_session()">編輯</a>
+	<div id="insidelayout" class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center',iconCls:'icon-ok'">
+		    <table id="dg" class="easyui-datagrid" style="width:100%;"
+			toolbar="#toolbar"  idField="id"  rownumbers="true"  fitColumns="true" singleSelect="true" pagination="true"
+			data-options="url:'{:U('Session/session_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
+					<thead>
+					<tr>
+						<th field="s_id"  editor="text">場次編號</th>
+						<th field="theater_name" width="50" editor="text">電影院</th>
+						<th field="movie_name" width="50" editor="text">電影名稱</th>
+						<th field="time" width="50" editor="{type:'validatebox',options:{required:true}}">場次時間</th>
+						<th field="date" width="50" editor="{type:'validatebox',options:{required:true}}">日期</th>
+						<th field="t_id" width="50" data-options="hidden:true" editor="text">t_id</th>
+						<th field="mo_id" width="50" data-options="hidden:true" editor="text">mo_id</th>
+						
+					</tr>
+				</thead>
+			</table>
+		</div>
+	    <div id="toolbar">
+	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
+	        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').        edatagrid('saveRow')">儲存</a>-->
+	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_session()">編輯</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchOpen()">搜尋場次</a>
+	    </div>
     </div>
     <script type="text/javascript">
+    	$(document).ready(function(){
+	      	$("#date").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date1").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    });
+	    $( document).keydown(function(e) {
+			if (e.keyCode == 27) { 
+				$('#dlg').dialog('close');
+				$('#insidelayout').layout('remove', 'east');
+				$('#edit_dialog').dialog('close');
+		    } 
+		});
+	    function searchOpen()
+		{
+			//close other dialog
+			$('#store').dialog('close');
+			$('#dlg').dialog('close');
+			$('#edit_dialog').dialog('close');
+			$('#insidelayout').layout('remove', 'east');
+			//begin search
+			$('#insidelayout').layout('add',{
+				region: 'east',
+				width: 380,
+				title: '搜尋表',
+				split: true,
+				content:'<form id="searchform" style="padding:20px;font-size:20px;"method="post"><table cellpadding="20"><tr><td>電影名稱</td><td><input class="easyui-textbox" type="text" id="movie_name" name="movie_name" value="多拉A夢"  style="width:200px;"></input></td></tr><tr><td>場次編號</td><td><input class="easyui-textbox" type="text" id="s_id" name="s_id" style="width:200px;"></input></td></tr><tr><td>場次時間</td><td><input class="easyui-textbox" type="validatebox" id="time" name="time" style="width:200px;"></input></td></tr><tr><td>日期</td><td><input class="easyui-textbox" type="text" id="searchdate" name="searchdate" value="2016-03-30"  style="width:200px;"></input></td></tr><tr><td></td><td style="float:right;"><div href="#" class="easyui-linkbutton c5"  style=width:60px onclick="Dosearch()">搜尋</div><div href="#" class="easyui-linkbutton"  style=width:60px onclick="formclear()">清除</div></td></tr></table></form>'
+			});
+		}
+		function Dosearch(){
+			var movie_name = $('#movie_name').textbox('getText');
+			var time = $('#time').textbox('getText');
+			var date = $('#searchdate').textbox('getText');
+			var s_id = $('#s_id').textbox('getText');
+			
+			$('#dg').datagrid('load', {
+                movie_name: '%' + movie_name + '%',
+                time: '%' + time + '%',
+                date: '%' + date + '%',
+                s_id: '%' + s_id + '%',
+
+            });
+		}
+		function formclear()
+		{
+			$('#searchform').form('clear');
+			$('#dg').datagrid('load', {
+                movie_name: '',
+                time:'',
+                date:'',
+            });
+		}
     	function edit_session(){
 			var row = $('#dg').datagrid('getSelected');
-			if(row.s_id!=''){
+			if(row){
+    			//close other dialog
+				$('#dlg').dialog('close');
+				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
 				url = "{:U('session/edit_c')}?s_id=" + row.s_id;
 			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
 		}
 		function save(form){
 			$(form).form('submit',{
@@ -119,6 +227,12 @@
                     $('#dg').datagrid('reload');
                 }
             });
+		}
+		function appendOpen(){
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			//begin append
+			$('#dlg').dialog('open');
 		}
         function append(){
         	$('#sessionform').form('submit',{
@@ -143,7 +257,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功新增資料');
-			                    	setTimeout("location.href='{:U('Index/session')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    } 
 			                },
 			                 error:function(result){ 
@@ -200,7 +314,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功刪除資料');
-			                    	setTimeout("location.href='{:U('Index/session')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    }
 			                },
 			                error:function(result){ 
@@ -211,6 +325,9 @@
         			}
 
         		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
         	}
         }
     </script>

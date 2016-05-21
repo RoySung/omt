@@ -20,7 +20,7 @@
             }
             .ui-page-theme-a,body,
             .ui-page-theme-a .ui-panel-wrapper {
-              	background-color: 	rgba(30, 221, 133, 0.77) ;
+              	background-color: 	#CCEEFF ;
               	border-color:	#bbb;
               	color: 	#333;
               	text-shadow: 0  0px  0  ;
@@ -65,16 +65,41 @@
         </style>
         <script>
     		$(document).ready(function(){
+            if(!$("#nav_user").attr('user')){
+                $('#message_btn').attr("onclick","location.href='{:U('index/index')}'");
+                $('#message').html("請登入");
+                $('#member_info').modal('show');
+                setTimeout("location.href='{:U('index/index')}'",1000);
+                
+            } else {
+                $('#member_info').css('display','none');
+                var password=$('#password').attr('pwd');
+
+                password=password.toString();
+                
+                var secret=password.substring(3);
+            
+                document.getElementById("password").innerHTML="***"+secret;
+            }
             window.requestAnimationFrame(updateSelectedNav);
       			$('body').toggleClass("visible");
       			$(".nav_list").click(function(){
         				event.preventDefault();
         				// Sets the new destination to the href of the link
         				color = $(this).data("color");
-        				$('body').css('background-color', color );
+        				$('body').css('background-color', "rgba(119,221,255,0.6)" );
         				$('body').css('opacity','0' );
         				setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
+
       			});
+
+                // var password={$auth.password};
+                // password=password.toString();
+                
+                // var secret=password.substring(3);
+                
+                // document.getElementById("password").innerHTML="***"+secret;
+
       		//js取select值 傳給php
     		});
     		function StoredValue(){
@@ -142,16 +167,16 @@
                             <a class="nav_list" id="order" data-color="#4FE29E">訂餐去</a>
                   			</li>
 
-                  			<li class="cd-selected" id="nav_user" user="user">
+                  			<li class="cd-selected" id="nav_user" user="{$auth.email}">
                             <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
                   			</li>
 
                   			<li >
-                            <a class="nav_list" id="ticket" data-color="#4FE29E" >我的票卷</a>
+                            <a class="nav_list" id="ticket" data-color="#4FE29E" >My票卷</a>
                   			</li>
 
                   			<li>
-                            <a class="nav_list" id="order_t" data-color="#4FE29E">優惠收藏</a>
+                            <a class="nav_list" id="order_t" data-color="#4FE29E">優惠券</a>
                   			</li>
                 		</ul> <!-- .cd-3d-nav -->
                     <span class="cd-marker color-4"></span> 
@@ -174,7 +199,7 @@
 
                                     <tr >
                                         <td style="color:#006; text-align:center;">密碼</td>
-                                        <td> {$auth.password} </td>
+                                        <td id="password" pwd="{$auth.password}">  </td>
                                     </tr>
 
                                     <tr >
@@ -197,7 +222,7 @@
                                         <td> {$auth.cash} </td>
                                     </tr>
 
-                                    <tr>
+                                   <!--  <tr>
                                         <td style="color:#006; text-align:center;">儲值</td>
                                         <td >
                                             <form name="select_cash" method="post" style="font-size:18px;"> 
@@ -214,7 +239,7 @@
                                             <button type="submit" style="font-size:24px; padding:5px;" onclick="StoredValue()">儲值</button>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                             <div style="height:15px;"></div> <!-- 與上表格空格 --> 
@@ -227,7 +252,7 @@
                 </main>
                 <!-- Member_info Message -->
                 <div class="modal fade" id="member_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" style="width:300px;">
+                    <div class="modal-dialog" style="width:300px;margin: auto;padding-top: 10%">
                         <div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
                             <div class="modal-header" style="background-color: #FFB01C">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>

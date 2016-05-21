@@ -20,7 +20,7 @@
             }
             .ui-page-theme-a,body,
             .ui-page-theme-a .ui-panel-wrapper {
-              	background-color: 	rgba(30, 221, 133, 0.77) ;
+              	background-color: 	#CCEEFF ;
               	border-color:	#bbb;
               	color: 	#333;
               	text-shadow: 0  0px  0  ;
@@ -65,13 +65,23 @@
         </style>
         <script>
     		$(document).ready(function(){
+                if(!$("#nav_user").attr('user')){
+                    $('#message_btn').attr("onclick","location.href='{:U('index/index')}'");
+                    $('#message').html("請登入");
+                    $('#member_info').modal('show');
+                    setTimeout("location.href='{:U('index/index')}'",1000);
+                    
+                }
+                else {
+                    $('#member_info').css('display','none');
+                }
                 window.requestAnimationFrame(updateSelectedNav);
       			$('body').toggleClass("visible");
       			$(".nav_list").click(function(){
         				event.preventDefault();
         				// Sets the new destination to the href of the link
         				color = $(this).data("color");
-        				$('body').css('background-color', color );
+        				$('body').css('background-color', "rgba(119,221,255,0.6)" );
         				$('body').css('opacity','0' );
         				setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
       			});
@@ -114,16 +124,16 @@
                             <a class="nav_list" id="order" data-color="#4FE29E">訂餐去</a>
                   			</li>
 
-                  			<li  id="nav_user" user="user">
+                  			<li  id="nav_user" user="{$auth.email}">
                             <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
                   			</li>
 
                   			<li >
-                            <a class="nav_list" id="ticket" data-color="#4FE29E" >我的票卷</a>
+                            <a class="nav_list" id="ticket" data-color="#4FE29E" >My票卷</a>
                   			</li>
 
                   			<li class="cd-selected">
-                            <a class="nav_list" id="discount" data-color="#4FE29E">優惠收藏</a>
+                            <a class="nav_list" id="discount" data-color="#4FE29E">優惠券</a>
                   			</li>
                 		</ul> <!-- .cd-3d-nav -->
                     <span class="cd-marker color-4"></span> 
@@ -160,6 +170,23 @@
                         </div>
                     </div>
                 </main>
+            </div>
+            <div class="modal-dialog" id="member_info"style="width:300px;margin: auto;padding-top: 10%">
+                <div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
+                    <div class="modal-header" style="background-color: #FFB01C">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">訊　息</h4>
+                    </div>
+                    <div class="modal-body">
+                        </br>
+                        <div id="message" style="font-size:20px;"></div>
+                        </br>       
+                    </div>
+                    <div class="modal-footer" style="text-align:center;">
+                        
+                        <button id="message_btn" type="button" class="btn btn-default" data-dismiss="modal" style="width:47%;" onclick="">確認</button>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

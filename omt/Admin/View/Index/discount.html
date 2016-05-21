@@ -10,8 +10,13 @@
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/include/easyui.1.4.3/jquery.edatagrid.js"></script>
 </head>
+<style type="text/css">
+	body{
+		margin:0px;
+	}
+</style>
 <body>
-    <div id="dlg" class="easyui-dialog" title="優惠資料" closed="true" style="width:450px;height:400px;padding:10px;"
+    <div id="dlg" class="easyui-dialog" title="新增優惠紀錄" closed="true" style="width:450px;height:400px;padding:10px;"
 		data-options="
 			buttons: [{
 				text:'確定',
@@ -32,12 +37,8 @@
 		<form id="discountform" method="post">
 			<table cellpadding="5">
 				<tr>
-					<td>會員名稱</td>
-					<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>電影院</td>
-					<td><input class="easyui-textbox" type="text" name="theater_name" style="width:250px;"></input></td>
+					<td>會員編號</td>
+					<td><input class="easyui-textbox" type="text" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
 					<td>類型</td>
@@ -48,29 +49,25 @@
 					<td><input class="easyui-textbox" name="discount" data-options="required:true" style="width:250px;"></input></td>
 				</tr>
 				<tr>
-					<td>開始時間</td>
-					<td><input class="easyui-textbox" name="start_date" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
-				<tr>
-					<td>到期時間</td>
-					<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
-				</tr>
+	    			<td>開始時間</td>
+	    			<td><input class="easyui-datebox" type="text" id="date" name="start_date" data-options="required:true" style="width:250px;"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>到期時間</td>
+	    			<td><input class="easyui-datebox" type="text" id="date1" name="end_date" data-options="required:true" style="width:250px;"></input></td>
+	    		</tr>
 			</table>
 		</form>
 		</div>
 	</div>
-	<div id="edit_dialog" class="easyui-dialog" title="編輯優惠紀錄" closed="true" style="width:450px;height:400px;padding:10px;"
+	<div id="edit_dialog" class="easyui-dialog" title="編輯優惠紀錄" closed="true" style="width:450px;height:400px;padding:10px;left:304px;"
 		buttons="#adduser_button">
 		<div style="padding:10px 30px 20px 30px">
 			<form id="form_edit" method="post" enctype="multipart/form-data">
 				<table cellpadding="5">
 					<tr>
-						<td>會員名稱</td>
-						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>電影院</td>
-						<td><input class="easyui-textbox" type="text" name="theater_name" style="width:250px;"></input></td>
+						<td>會員編號</td>
+						<td><input class="easyui-textbox" type="text" name="m_id" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
 						<td>類型</td>
@@ -81,13 +78,13 @@
 						<td><input class="easyui-textbox" name="discount" data-options="required:true" style="width:250px;"></input></td>
 					</tr>
 					<tr>
-						<td>開始時間</td>
-						<td><input class="easyui-textbox" name="start_date" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
-					<tr>
-						<td>到期時間</td>
-						<td><input class="easyui-textbox" name="end_date" data-options="required:true" style="width:250px;"></input></td>
-					</tr>
+		    			<td>開始時間</td>
+		    			<td><input class="easyui-datebox" type="text" id="date3" name="start_date" data-options="required:true" style="width:250px;"></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>到期時間</td>
+		    			<td><input class="easyui-datebox" type="text" id="date4" name="end_date" data-options="required:true" style="width:250px;"></input></td>
+		    		</tr>
 				</table>
 			</form>
 			<div id="edituser_button" style="float:right;" >
@@ -96,13 +93,12 @@
 		    </div>
 		</div>
 	</div>
-    <table id="dg" class="easyui-datagrid" style="width:100%;height:530px;"
-	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true"
-	data-options="url:'{:U('Discount/discount_r')}',method:'get',fit:true">
+    <table id="dg" class="easyui-datagrid" style="width:100%;"
+	toolbar="#toolbar"  idField="id"  rownumbers="true" fitColumns="true" singleSelect="true" pagination="true"
+	data-options="url:'{:U('Discount/discount_r')}',method:'get',pageNumber:'1',pageSize:'20' ,pageList:[20,40,60],total:60">
 			<thead>
 			<tr>
 				<th field="name" width="50" editor="text">會員名稱</th>
-				<th field="theater_name" width="50" editor="text">電影院</th>
 				<th field="type_name" width="50" editor="text">類型</th>
 				<th field="discount" width="50" editor="{type:'validatebox',options:{required:true}}">折扣金額</th>
 				<th field="start_date" width="50" editor="{type:'validatebox',options:{required:true}}">開始時間</th>
@@ -114,19 +110,86 @@
 		</thead>
 	</table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dlg').dialog('open')">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="appendOpen()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRow()">刪除</a>
         <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').        edatagrid('saveRow')">儲存</a>-->
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit_discount()">編輯</a>
     </div>
     <script type="text/javascript">
+    	$(document).ready(function(){
+
+	      	$("#date").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date1").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date3").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    	$("#date4").datebox({
+		        formatter:function(date){
+		            var y=date.getFullYear();
+		            var m=date.getMonth()+1;
+		            var d=date.getDate();
+		            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);       
+		        },
+		        parser:function(s){
+			        var t=Date.parse(s);
+			        if (!isNaN(t)) {return new Date(t);}
+			        else {return new Date();}
+			    }     
+	    	});
+	    });
+	    $( document).keydown(function(e) {
+    		if (e.keyCode == 27) { 
+		        $('#dlg').dialog('close');
+		        $('#edit_dialog').dialog('close');
+		    } 
+		});
         function edit_discount(){
 			var row = $('#dg').datagrid('getSelected');
-			if(row.d_id!=''){
+			if(row){
+    			//close other dialog
+				$('#dlg').dialog('close');
+				//begin edit
 				$('#edit_dialog').dialog('open');
 				$('#form_edit').form('load',row);
 				url = "{:U('Discount/edit_c')}?d_id=" + row.d_id;
 			}
+			else{
+        		$.messager.alert('訊息','請選擇一個欄位');
+        	}
 		}
 		function save(form){
 			$(form).form('submit',{
@@ -136,6 +199,12 @@
                     $('#dg').datagrid('reload');
                 }
             });
+		}
+		function appendOpen(){
+			//close other dialog
+			$('#edit_dialog').dialog('close');
+			//begin append
+			$('#dlg').dialog('open');
 		}
         function append(){
         	$('#discountform').form('submit',{
@@ -160,7 +229,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功新增資料');
-			                    	setTimeout("location.href='{:U('Index/discount')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    } 
 			                },
 			                 error:function(result){ 
@@ -217,7 +286,7 @@
 			                    result = JSON.parse(result);
 			                    if (result==true) {
 			                    	$.messager.alert('訊息','成功刪除資料');
-			                    	setTimeout("location.href='{:U('Index/discount')}'",850);
+			                    	$('#dg').datagrid('reload');
 			                    }
 			                },
 			                error:function(result){ 
@@ -228,6 +297,9 @@
         			}
 
         		});
+        	}
+        	else{
+        		$.messager.alert('訊息','請選擇一個欄位');
         	}
         }
     </script>

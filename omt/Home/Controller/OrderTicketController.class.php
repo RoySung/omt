@@ -86,7 +86,7 @@ class OrderTicketController extends Controller {
         $data['seat'] = $_REQUEST['seat'];
         $data['quantity'] = $_REQUEST['quantity'];
         $data['enable'] = 1;
-        $data['m_id'] = $_REQUEST['m_id'];;
+        $data['m_id'] = $_REQUEST['m_id'];
         $data['cost'] = $_REQUEST['cost'];
         $data['order_date'] = date("Y-m-d");
         //cost

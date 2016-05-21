@@ -11,9 +11,11 @@
 		<link rel="stylesheet" href="__PUBLIC__/css/style.css"> <!-- Resource style -->
 		<script src="__PUBLIC__/js/modernizr.js"></script> <!-- Modernizr -->
 		<script src="__PUBLIC__/js/main.js"></script> <!-- Resource jQuery -->
+
 		<!--Bootstrap-->
 		<script src="__PUBLIC__/include/bootstrap/js/bootstrap.js"></script>
 		<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/tab.css">
+
 		<!--star-->
 		<link rel="stylesheet" href="__PUBLIC__/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
 		<script src="__PUBLIC__/js/star-rating.js" type="text/javascript"></script>
@@ -103,13 +105,14 @@
 		</style>
 		<script>
 			$(document).ready(function(){
+				var member_grade=0;
 				$('body').toggleClass("visible");
-
+				
 				$(".nav_list").click(function(){
-//					event.preventDefault();
+					event.preventDefault();
 					// Sets the new destination to the href of the link
 					color = $(this).data("color");
-					$('body').css('background-color', color );
+					$('body').css('background-color', "rgba(119,221,255,0.6)" );
 					$('body').css('opacity','0' );
 					setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
 				});
@@ -117,20 +120,29 @@
 				$("#b1").click(function(){
 	 				$('.nav-tabs > .active').prev('li').find('a').trigger('click');
 				});
+
 				window.requestAnimationFrame(updateSelectedNav);
-//				$('.cd-3d-nav-trigger').click(function(){
-//					if($("#nav_user").attr('user')!=""){
-//						$(this).toggleClass('cd-3d-nav-trigger');
-//						$(this).toggleClass('cd-3d-nav-trigger-user');
-//					}
-//				});
+				$('.cd-3d-nav-trigger').click(function(){
+					if($("#nav_user").attr('user')!=""){
+						$(this).toggleClass('cd-3d-nav-trigger');
+						$(this).toggleClass('cd-3d-nav-trigger-user');
+					}
+				});
 
 				$(".link").click(function(){
+					
 					$('.cd-3d-nav-trigger-user').trigger('click');
 					$('#myModalLabel').empty();
 					$('#myModalLabel').append($(this).find('.m_title').html());
 					$('#video').attr('src',$(this).attr('url'));
 					$('#movie_info').modal('show');
+					//show now grade & member self grade
+					member_grade=parseInt($('#myModalLabel').find('span').text());
+					if(!member_grade){
+						member_grade=0;
+					}
+					$('#now_grade').rating('update',$('#myModalLabel').find('.m_title').text());
+					$('#member_grade').rating('update',member_grade);
 				});
 
 				$('#sign_send').click(function(){
@@ -156,7 +168,52 @@
 		                }
 	            	});      	
 				});
-
+				$('#gobuy').click(function(){
+					$(this).attr('data-dismiss',"modal");
+					if($("#nav_user").attr('user')!=""){
+						window.location.href="order_t.html"
+					} else {
+						$('#sign').modal('show');
+					}
+				});
+				$('#member_grade').change(function(){
+					document.getElementById("member_grade_text").textContent = "給予評分";
+					if(!$("#nav_user").attr('user')){
+                    	/*$('#message_btn').attr("onclick","location.href='{:U('index/index')}'");
+                    	$('#message').html("請登入");
+                    	$('#sign_info').modal('show');
+                    	setTimeout("location.href='{:U('index/index')}'",1000);*/
+                    	$('#movie_info').modal('hide');
+                    	$('#sign').modal('show');
+                	}else{
+                		$.ajax({
+			                url: "{:U('index/grade_save')}",
+			                data:{
+								mo_id:$('#myModalLabel').find('ul').text(),
+								member_grade:$('#member_grade').val(),
+								m_id:"{$auth.m_id}"
+			                },
+			                type:"POST",
+			                dataType:'text',
+			                success: function(result){
+			                	result = JSON.parse(result);
+			                    if(result){
+			                    	$('#message_btn').attr("onclick","location.href='{:U('index/index')}'");
+			                    	$('#message').html("評分成功，您的分數為 "+result+"分");
+			                    	$('#sign_info').modal('show');
+			                    	setTimeout("location.href='{:U('index/index')}'",1000);
+			                    }else{
+			                    	$('#message').html("您已給過相同分數，分數為 "+$('#member_grade').val()+"分");
+			                    	$('#sign_info').modal('show');
+			                    }
+			                },
+			                 error:function(result){ 
+			                     console.log(result);
+			                 }
+		            	});
+                	}			
+                	
+				});
 				$('#regist_send').click(function(){
 					$.ajax({
 		                url: "{:U('index/signUp')}",
@@ -210,6 +267,7 @@
 		</script>
 	</head>
 	<body>
+	
 		<div id="index" data-role="page">
 			<header class="cd-header navbar-fixed-top" > 
 				<a href="#0" class="cd-3d-nav-trigger " >
@@ -219,8 +277,7 @@
 				<a href="{:U('index/index')}" class="cd-3d-nav-trigger-home " data-ajax="false" >
 					<img src="__PUBLIC__/images/icon-home.svg" style="width:100%;height:100%;">
 				</a>
-			</header><!-- .cd-header -->
-
+			</header> <!-- .cd-header -->
 			<nav class="cd-3d-nav-container navbar-fixed-top">
 				<ul class="cd-3d-nav">
 					<li >
@@ -236,11 +293,11 @@
 					</li>
 
 					<li>
-						<a class="nav_list" id="ticket" data-color="#4FE29E">我的票卷</a>
+						<a class="nav_list" id="ticket" data-color="#4FE29E">My票卷</a>
 					</li>
 
 					<li>
-						<a class="nav_list" id="discount" data-color="#4FE29E">優惠收藏</a>
+						<a class="nav_list" id="discount" data-color="#4FE29E">優惠券</a>
 					</li>
 				</ul>
 				<span class="cd-marker color-3" ></span>	
@@ -253,11 +310,17 @@
 			            	<volist name="recent_movie" id="data">
 			            		<li data-icon="false" style="font-family:微軟正黑體;">
 					        		<a href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
-<!--$data.video-->
 						          		<div class=" col-xs-4 m_img" >　<img class=" img-responsive" src="__PUBLIC__/images/{$data.mo_id}.jpg"></div>
 				                        <div class=" col-xs-8">
 					                        <div style="padding:2px;"></div>
-							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}</div> <!-- 片名 -->
+							          		<div class="m_title" style="text-align:center; font-size:20px;">{$data.movie_name}
+							          			<div class="m_title" style="display:none;">{$data.round(avg(grade),2)}</div>
+							          			<span style="display:none;">{$data.grade}</span>
+							          			<ul style="display:none;">{$data.mo_id}</ul>
+
+							          		</div>
+							          		
+							          		 <!-- 片名 -->
 							          		<div class="m_content" style="font-size:14px; color:#000;">上映日期：{$data.start_date}</div>
 					                        <div style="padding:2px;"></div>
 					                        <div class="m_content" style="font-size:14px; color:#000;">下映日期：{$data.end_date}</div>
@@ -272,7 +335,6 @@
 			            	</volist>
 			  			</ul>
 					</div>
-
 					<div id="p2" index='2' class="content pre">
 						<h1>即將上映</h1>
 						<ul data-role="listview" data-inset="true" >
@@ -306,10 +368,8 @@
 				                    <span class="label label-info">news</span>
 				                    <span class="news_left_padding_10" style="padding-left: 10px"></span>
 				                    <span class="news_href">
-										<a style='line-height:30px' href="{$data.content}">{$data.title}</a>
-				                        <span class="new_date" style="font-size:9px;position:relative;float:right;">
-				                        	{$data.date}
-				                        </span>
+										<a style='line-height:30px' href="">{$data.title}</a>
+				                        <span class="new_date" style="font-size:9px;position:relative;float:right;">{$data.date}</span>
 				                    </span>	
 				                </ul>
 				            </volist>
@@ -332,34 +392,34 @@
                                 <thead>
                                 	<tr>
 	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">本周排名</div>
+	                                        <div style="text-align:center;font-size:14px; padding:5px;">本周排名</div>
 	                                    </td>
 	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">片名</div>
+	                                        <div style="text-align:center;font-size:14px; padding:5px;">片名</div>
 	                                    </td>
 	                                    <td>
-	                                        <div style="font-size:14px; padding:5px;">下檔日期</div>
+	                                        <div style="text-align:center;font-size:14px; padding:5px;">下檔日期</div>
 	                                    </td>
 	                                    <td>
-				                        	<div style="font-size:14px; padding:5px;">分數</div>
+				                        	<div style="text-align:center;font-size:14px; padding:5px;">分數</div>
 				                        </td>
                                 	</tr>
                                 </thead>
                                 <tbody>
 									<volist name="rank" id="data">
-										<tr href="#" class="link" style="padding:0px 0px 1px;" url="{$data.video}">
+										<tr  style="padding:0px 0px 1px;" url="{$data.video}">
 											<td class="col-xs-2">
 												<div><img class="img-responsive" style="display:block;line-height:30px; margin:auto; max-height:45px;" src="__PUBLIC__/images/rank{$i}.png" ></div>
 											</td>
 											<td class="col-xs-4" > 
-												<div style="text-align:center; font-size:16px;line-height:30px;">{$data.movie_name}</div> 
+												<div class="m_title" style="text-align:center; font-size:16px;line-height:30px;">{$data.movie_name}</div> 
 												<!-- 片名 -->
 											</td>
 											<td class="col-xs-4" >
-						                        <div style="font-size:12px;color:#000;line-height:30px;">{$data.end_date}</div>
+						                        <div style="text-align:center;font-size:12px;color:#000;line-height:30px;">{$data.end_date}</div>
 				                        	</td>
-				                        	<td class="col-xs-2" >
-				                        		<div style="font-size:12px;color:#000;line-height:30px;">{$data.grade}</div>
+				                        	<td class="col-xs-2">
+				                        		<div style=" text-align:center;font-size:12px;color:#000;line-height:30px;">{$data.round(avg(grade),2)}</div>
 				                        	</td>
 				                        </tr>
 					            	</volist>
@@ -379,9 +439,8 @@
 				</ul>
 			</div>
 			<!-- sign Modal -->
-			<div class="modal fade" id="sign" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" >
-			<!--data-role="dialog"-->
-				<div class="modal-dialog">
+			<div class="modal fade" id="sign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+				<div class="modal-dialog" >
 					<div class="modal-content">
 						<div class="modal-header" style="background-color:#2f889a;">
 				        	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
@@ -407,13 +466,13 @@
 						            	<br />
 						            	<div class="control-group"> 
 										    <div class="form-group has-feedback">
-											    <input type="text" name="email" style="padding-left: 35px; font-size:18px;" placeholder="信箱" />
+											    <input type="text" name="email" style="padding-left: 35px; font-size:18px;" placeholder="信箱" value="admin@aa.bb" />
 											    <i class="form-control-feedback glyphicon glyphicon-user" style="left: 0px;"></i>
 										    </div>
 										</div>
 										<div class="control-group">
 										    <div class="form-group has-feedback">
-											    <input type="password" name="password" style="padding-left: 35px; font-size:18px;" placeholder="密碼" id="speedsubmit" />
+											    <input type="password" name="password" style="padding-left: 35px; font-size:18px;" placeholder="密碼" value="123456"/>
 											    <i class="form-control-feedback glyphicon glyphicon-lock" style="left: 0px;"></i>
 										    </div>
 										</div>
@@ -472,8 +531,7 @@
 				</div>  
 			</div>
 			<!-- movie_info Modal -->
-			<div class="modal fade" id="movie_info" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-			<!--data-role="dialog"-->
+			<div class="modal fade" id="movie_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header" style="background-color: #DA4453">
@@ -482,20 +540,26 @@
 						</div>
 						<div class="modal-body">
 							<iframe id="video" width="100%" height="315" ></iframe>
-							<input id="input-1" class="rating" data-min="0" data-max="5" data-step="0.1" data-size="xs">		
+							<div>
+								<div style="font-size: 18px;" >總評分</div>
+								<input id="now_grade"  class="rating" data-min="0" data-max="5" data-step="1" readonly="true" data-size="xs" value="3.5" >
+								<div id="member_grade_text" style="font-size: 18px;">上次給分</div>
+								<input id="member_grade" class="rating" data-min="0" data-max="5" data-step="1"  data-size="xs"  >
+							<!-- <button class="btn btn-default" data-dismiss="modal" style="width:47%;background-color: #FFDD55">提交評分</button> -->
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal" style="width:47%;">Close</button>
-							<button type="button" class="btn btn-primary" style="width:47%;background-color: #9ADAE6;">立即訂票</button>
+							<button id="gobuy" type="button" class="btn btn-primary" style="width:47%;background-color: #9ADAE6;">立即訂票</button>
 						</div>
 					</div>
 				</div>
 			</div><!-- /.modal -->
+			
 			<!-- sign_info Message -->
-			<div class="modal fade" id="sign_info" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-			<!--data-role="dialog"-->
-				<div class="modal-dialog" style="width:300px;">
-					<div id="sign_content" class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
+			<div class="modal fade" id="sign_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width:300px;margin: auto;padding-top: 10%">
+					<div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
 						<div class="modal-header" style="background-color: #DA4453">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
 							<h4 class="modal-title" id="myModalLabel">訊　息</h4>

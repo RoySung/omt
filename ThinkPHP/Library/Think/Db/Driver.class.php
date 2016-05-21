@@ -38,10 +38,10 @@ abstract class Driver {
     // 数据库连接参数配置
     protected $config     = array(
         'type'              =>  '',     // 数据库类型
-        'hostname'          =>  '127.0.0.1', // 服务器地址
+        'hostname'          =>  '', // 服务器地址
         'database'          =>  '',          // 数据库名
-        'username'          =>  '',      // 用户名
-        'password'          =>  '',          // 密码
+        'username'          =>  'root',      // 用户名
+        'password'          =>  'test',          // 密码
         'hostport'          =>  '',        // 端口     
         'dsn'               =>  '', //          
         'params'            =>  array(), // 数据库连接参数        

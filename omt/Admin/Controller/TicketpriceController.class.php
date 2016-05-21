@@ -10,7 +10,28 @@ class TicketpriceController extends Controller {
         }
     }
     public function append_c() {
+        //check t_id exist
+        $db = M('Theater');
+        $condit['t_id'] = $_REQUEST['t_id'];
+        $result = $db->where($condit)->select();
+        if(!$result){
+            $this->ajaxReturn("theater index no exist");
+        }
+        //check mo_id exist
+        $db = M('Movie');
+        $condit['mo_id'] = $_REQUEST['mo_id'];
+        $result = $db->where($condit)->select();
+        if(!$result){
+            $this->ajaxReturn("movie index no exist");
+        }
+        //check mo_id and t_id exist price
         $db = M('Ticketprice');
+        $result = $db->where($condit)->getField('tp_id');
+        if($result){
+            //return tp_id
+            $this->ajaxReturn(false);
+        }
+        //put add data
         $data = $db->create();
         if (!$data) {
             $this->ajaxReturn($db->getError());

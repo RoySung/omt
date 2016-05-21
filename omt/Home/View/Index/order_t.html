@@ -22,7 +22,7 @@
             }
             .ui-page-theme-a,body,
             .ui-page-theme-a .ui-panel-wrapper {
-                background-color: 	rgba(30, 221, 133, 0.77) ;
+                background-color: 	#CCEEFF;
                 border-color:	#bbb;
                 color: 	#333;
                 text-shadow: 0  0px  0  ;
@@ -57,10 +57,21 @@
             }
         </style>
         <script>
+        $('#credit_number').hide();
             var code="";
             var price;
             var all_seat = new Array();
             $(document).ready(function(){
+                if(!$("#nav_user").attr('user')){
+                    $('#message_btn').attr("onclick","location.href='{:U('index/index')}'");
+                    $('#message').html("請登入");
+                    $('#message_info').modal('show');
+                    setTimeout("location.href='{:U('index/index')}'",1000);
+                    
+                }
+                else{
+                    $('#message_info').css('display','none');
+                }
                 //all seat
                 for (var i=1;i<=10;i++)
                     for(var j=1;j<=10;j++)
@@ -85,6 +96,11 @@
                 //when movie change
                 $('#movie').change(function(){
                     $('#movie_img').attr('src',"__PUBLIC__/images/"+$('#movie').val()+".jpg");
+                   
+                    if($("#movie")[0].selectedIndex ==0)
+                    {
+                         $('#movie_img').attr('src',"__PUBLIC__/images/0.jpg");
+                    }
 
                     $('#session').html('');
                     $("#session").append($("<option></option>").attr("value",'').text("請選擇"));
@@ -108,6 +124,7 @@
                     }
                 });
                 //when theater change
+              
                 $('#theater').change(function(){
                     $('#movie').html('');
                     $("#movie").append($("<option></option>").attr("value",'').text("請選擇"));
@@ -134,7 +151,7 @@
                     event.preventDefault();
                     // Sets the new destination to the href of the link
                     color = $(this).data("color");
-                    $('body').css('background-color', color );
+                    $('body').css('background-color', "rgba(119,221,255,0.6)" );
                     $('body').css('opacity','0' );
                     setTimeout("location.href='{:U('index/"+this.id+"')}'",850);
                 });
@@ -175,9 +192,10 @@
                         $("#movie_session").append($('#date').val()+"  "+$('#session-button span').html().substr(0,5));
                     }
                 });
-                $('#buy').click(function(){
-                    //alert(code);
-                    if($("#selected-seats li").length>0){
+                $('#payfunction_btn').click(function(){
+
+
+                             if($("#selected-seats li").length>0){
                         //seat
                         var seat = "";
                         $("#selected-seats").find('li').each(function(i){
@@ -198,19 +216,65 @@
                             async:false,
                             success: function(result){
                                 console.log(result);
-
-                                if(result){
-                                    $('#message').html("購買成功");
-                                    $('#message_btn').attr("onclick","location.href='{:U('index/ticket')}'");
-                                } else {
-                                    $('#message').html("購買失敗，餘額不足");
-                                }
-                                $('#dialog').modal('show');
+                                  $('#payfunction_message').dialog();
+                            
+                                
                             },
                         });
-                    }  else {
-                        alert("請選擇位子");
-                    }
+                    }          
+                                  
+
+
+                })
+             
+                $('#buy').click(function(){
+                    $('#b1').click(function(){
+                        $('#payfunction_btn').removeAttr('disabled');
+                        $('#b1').css('background-color','#003C9D')
+                        $('#b2').css('background-color','#0066FF')
+                        $('#b3').css('background-color','#0066FF')
+                        $('#credit_number').attr('disabled','disabled')
+                        $('#credit_number').val("");
+                        $('#credit_number').hide();
+                    });
+                    $('#b3').click(function(){
+                        $('#payfunction_btn').removeAttr('disabled');
+                        $('#b3').css('background-color','#003C9D')
+                        $('#b1').css('background-color','#0066FF')
+                        $('#b2').css('background-color','#0066FF')
+                        $('#credit_number').attr('disabled','disabled')
+                        $('#credit_number').val("");
+                        $('#credit_number').hide();
+                    });
+
+                    $('#b2').click(function(){
+                        $('#credit_number').show();
+                        $('#payfunction_btn').attr('disabled','disabled');
+                        $('#b2').css('background-color','#003C9D')
+                        $('#b1').css('background-color','#0066FF')
+                        $('#credit_number').css('visibility','visible')
+                        $('#b3').css('background-color','#0066FF')
+                         $('#credit_number').removeAttr('disabled');
+                         $('#credit_number').keyup(function(){
+
+                                if($('#credit_number').val().length ==10)
+                                {
+                                     $('#payfunction_btn').removeAttr('disabled');
+                                }
+                                if($('#credit_number').val().length <10)
+                                {
+                                     $('#payfunction_btn').attr('disabled','disabled');
+                                }
+
+                            });
+                      
+                    });
+
+                                    $('#payfunction_btn').attr("onclick","location.href='{:U('index/ticket')}'");
+                                    $('#dialog').modal('show');
+                                
+                    //alert(code);
+                 
                 });
             });
             function load_movie(){
@@ -258,6 +322,7 @@
         </style>
     </head>
     <body>
+
         <div id="order_t" data-role="page">
             <header class="cd-header navbar-fixed-top" > 
                 <a href="#0" class="cd-3d-nav-trigger " >
@@ -278,16 +343,16 @@
                         <a class="nav_list" id="order" data-color="#4FE29E">訂餐去</a>
                     </li>
 
-                    <li id="nav_user" user="user">
+                    <li id="nav_user" user="{$auth.email}">
                         <a class="nav_list" id="member" data-color="#485274" >{$auth.name}</a>
                     </li>
 
                     <li>
-                        <a class="nav_list" id="ticket" data-color="#4FE29E" >我的票卷</a>
+                        <a class="nav_list" id="ticket" data-color="#4FE29E" >My票卷</a>
                     </li>
 
                     <li>
-                        <a class="nav_list" id="discount" data-color="#4FE29E">優惠收藏</a>
+                        <a class="nav_list" id="discount" data-color="#4FE29E">優惠券</a>
                     </li>
                 </ul> <!-- .cd-3d-nav -->
                 <span class="cd-marker color-1"></span> 
@@ -295,8 +360,8 @@
             <!--Main-->
             <main>
                 <div class="ui-content" style="position: relative;">
-                    <div>
-                        <img id="movie_img" class="img" src="__PUBLIC__/images/0.jpg">
+                    <div style="text-align: center">
+                        <img  style="width: 350px;height: 350px"  id="movie_img" class="img" src="__PUBLIC__/images/0.jpg">
                     </div>
                     <div>
                         <label>戲院</label>
@@ -306,7 +371,7 @@
                         <div>
                         <label>電影</label>
                         <select id="movie" class=" form-control">
-                            <option value="0">請選擇</option>
+                            <option value="-1">請選擇</option>
                         </select>
                     </div>
                     <div>
@@ -316,7 +381,7 @@
                     <div>
                         <label>場次</label>
                         <select id="session" class=" form-control">
-                            <option value="">請選擇</option>
+                            <option value="-1">請選擇</option>
                         </select>
                     </div>
                     <div>
@@ -375,7 +440,7 @@
                                     <ul id="selected-seats"></ul>
                                     <p>票數 : <span id="counter">0</span></p>
                                     <p>金額總計 : <b>$<span id="total">0</span></b></p>
-                                    <button id="buy">確定購買</button>
+                                    <button id="buy" disabled="disabled">確定購買</button>
                                     <div id="legend"></div>
                                 </div>
                                 <div style="clear:both"></div>
@@ -385,22 +450,89 @@
                     </div>
                 </main>
             </div>
+            <div class="modal-dialog" id="message_info" style="width:300px;margin: auto;padding-top: 10%">
+                <div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
+                    <div class="modal-header" style="background-color: #FFB01C">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">訊　息</h4>
+                    </div>
+                    <div class="modal-body">
+                        </br>
+                        <div id="message" style="font-size:20px;"></div>
+                        </br>       
+                    </div>
+                    <div class="modal-footer" style="text-align:center;">
+                        
+                        <button id="message_btn" type="button" class="btn btn-default" data-dismiss="modal" style="width:47%;" onclick="">確認</button>
+                    </div>
+                </div>
+            </div>
             <!-- /.modal -->
             <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" style="width:300px;">
+                <div class="modal-dialog" style="margin: auto;">
                     <div class="modal-content" style="text-align:center; font-family:微軟正黑體; font-size:16px;  font-weight:bold;">
                         <div class="modal-header" style="background-color: #DA4453">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: auto;"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">訊　息</h4>
+                            <h4 class="modal-title" id="myModalLabel">請選擇付款方式</h4>
                         </div>
                         <div class="modal-body">
                             </br>
-                            <div id="message" style="font-size:20px;"></div>
+                            <div id="payfunction_message" style="font-size:20px;" >
+                           <!--  <form>
+                                  <div id="b2" style="padding-top:8px;border-width: 1.5px;border-style: dotted;">
+                                     <input type="radio" name="credit"  checked="true" >餘額扣款</input>
+                                  </div>
+                                  <div id="b3" style="padding-top: 8px;border-width: 1.5px;border-style: dotted;">
+                                      <input type="radio" name="credit"  >現場付款</input>
+                                  </div>  
+                                  <div id="b1" style="padding-top: 8px ;border-width: 1.5px;border-style: dotted;"> 
+                                       <input type="radio" name="credit"  >信用卡</input>
+                                  <div style="padding-top: 8px ;padding-bottom: 3px">
+                                  <input type="text" id="credit_number" disabled="true" maxlength="10" >   
+                                  </div>     
+                                  </div>
+                            </form> -->
+                              <div class="container" > 
+                              
+                              <div class="btn-group" style="padding-bottom: 10px;margin-left: -20px;margin-right: -20px">
+
+                                <button id="b1" class="btn-primary" style="background-color: #0066FF;">
+                                <img src="__PUBLIC__/images/dollar.png" style="width: 40px;height: 40px">
+                                <div>餘額付款</div>
+
+                                </button>
+
+                                <button id="b2" class="btn-primary" style="background-color: #0066FF;padding-left: 0px">
+                                <img src="__PUBLIC__/images/card.png" style="width: 40px;height: 40px">
+                                <div >信用卡付款</div>
+
+                                </button>
+
+                                <button id="b3" class="btn-primary" style="background-color: #0066FF;padding-left: 0px">
+                                <img src="__PUBLIC__/images/theater.png" style="width: 40px;height: 40px">
+                                <div>現場付款</div>
+
+                                </button>
+                              
+                            <!--     <button id="b1" class="btn-primary " style="background-color: #0066FF;" ><img src="__PUBLIC__/images/cardd.png" style="width: 50px;height: 50px"> 餘額付款</button> -->
+                                <!-- <button  id="b2" class="btn-primary ui-btn ui-icon-user ui-btn-icon-left"style="background-color: #0066FF" >信用卡付款</button>
+                                <button  id="b3" class="btn-primary ui-btn ui-icon-user ui-btn-icon-left"style="background-color: #0066FF" >現場付款</button> -->
+
+
+                              </div>
+                              <div>
+                              <input type="tel" id="credit_number" disabled="true"  maxlength="10"  placeholder="請輸入信用卡卡號" minlength="10" style="width: 200px;visibility: hidden;"  /> 
+                              </div>
+
+                            </div>
+                                                            
+
+                            </div>
                             </br>       
                         </div>
                         <div class="modal-footer" style="text-align:center;">
                             
-                            <button id="message_btn" type="button" class="btn btn-default" data-dismiss="modal" style="width:47%;" onclick="">確認</button>
+                            <button id="payfunction_btn" type="button" disabled="true"  class="btn btn-default" data-dismiss="modal" style="width:47%;" onclick="" >確認</button>
                         </div>
                     </div>
                 </div>
@@ -450,7 +582,15 @@
                             .appendTo($cart);
                             $counter.text(sc.find('selected').length+1);
                             $total.text(recalculateTotal(sc)+price);
-
+                           
+                          
+                            if(parseInt($total.text())>0)
+                            {
+                                 $('#buy').removeAttr('disabled')
+                              
+                            };
+                            
+                          
                             return 'selected';
                         } else if (this.status() == 'selected') { //已选中
                             //更新数量
@@ -459,6 +599,11 @@
                             $total.text(recalculateTotal(sc)-price);
                             //删除已预订座位
                             $('#cart-item-'+this.settings.id).remove();
+                              if(parseInt($total.text())<=0)
+                            {
+                                 $('#buy').attr('disabled',true)
+                              
+                            }
                             //可选座
                             return 'available';
                         } else if (this.status() == 'unavailable') { //已售出
@@ -466,6 +611,7 @@
                         } else {
                           return this.style();
                         }
+                       
                     }
                 });
                 //已售出的座位
@@ -475,9 +621,13 @@
             //計算訂票總金額
             function recalculateTotal(sc) {
                 var total = 0;
+
                 sc.find('selected').each(function () {
+
                     total += price;
+            
                 });
+
               return total;
             }
         </script>
